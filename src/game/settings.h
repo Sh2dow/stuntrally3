@@ -131,7 +131,7 @@ public:
 		int local_players = 1, num_laps = 2;  // 👥 split
 		//  🔨 game setup
 		std::string sim_mode{"normal"};
-		bool collis_veget =1, collis_cars =0, collis_roadw =0, dyn_objects =1, drive_horiz =0;
+		bool collis_veget =1, collis_cars =1, collis_roadw =0, dyn_objects =1, drive_horiz =0;
 		
 		int boost_type = 3, flip_type = 2, damage_type = 1, rewind_type = 1;
 		float damage_dec = 0.4f;

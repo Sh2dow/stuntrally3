@@ -1,5 +1,5 @@
 include(BundleUtilities)
-include(${BIN_DIR}/cmake/ConanBinDirs.cmake)
+include("D:/Repos/Games/OTHER GAMES/stuntrally3/CMake/ConanBinDirs.cmake")
 
 if (APPLE)
   set(PLUGIN_EXTENSION "dylib")
