@@ -40,6 +40,10 @@ class StuntRally3(ConanFile):
             self.requires("libwebp/1.3.2", override=True)
             self.requires("zlib/1.3", override=True)
 
+    def build_requirements(self):
+        # Force use of newer CMake for building dependencies
+        self.tool_requires("cmake/4.2.3")
+
     def generate(self):
         tc = CMakeToolchain(self)
         tc.generate()
