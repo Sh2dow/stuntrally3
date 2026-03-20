@@ -48,3 +48,4 @@ Build/
 cmake-build-*/
 .idea/
 _build
+/build.log

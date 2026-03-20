@@ -162,10 +162,9 @@ foreach( EXE ${EXE_LIST} )
     #  exe  ----
     add_executable(${EXE} WIN32 ${EXE_SOURCES})
 
-    #  Set output directory for executable - use default build directory
-    #  The executable will be built to build/Release, then copied to bin/Release in post-build
+    #  Set output directory for executable - use bin/Release
     set_target_properties(${EXE} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}"
     )
 
     # Generate source groups for use in IDEs
