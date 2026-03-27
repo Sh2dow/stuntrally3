@@ -440,6 +440,10 @@ void App::LoadGame()
 	
 	int numCars = mClient ? mClient->getPeerCount()+1 :  // 📡 networked
 		pSet->game.local_players;  // or 👥 splitscreen
+	
+	//  🤖 Bot cars - created separately after player cars
+	int numBotCars = pSet->game.local_bots;
+	
 	int i;
 	for (i = 0; i < numCars; ++i)
 	{
@@ -477,6 +481,33 @@ void App::LoadGame()
 			if (i != 0)  // not for local
 				car->pNickTxt = hud->CreateNickText(i, car->sDispName);
 		}
+	}
+
+	///  🤖 Create bot cars (AI cars with physics)
+	///  📏 Ensure mCams has enough cameras for all cars
+	int totalCars = numCars + numBotCars;
+	if (pGame->app && pGame->app->mCams.size() < totalCars)
+		pGame->app->mCams.resize(totalCars);
+	
+	for (int botIdx = 0; botIdx < numBotCars; ++botIdx)
+	{
+		int carIdx = numCars + botIdx;  // Bot car indices start after player cars
+		std::string carName = pSet->game.car[std::min(MAX_Players-1,1 + botIdx)];  // Use bot car configs
+		
+		//  need road looped here
+		String sRd = gcom->PathListTrk() + "/road.xml";
+		SplineRoad rd(pGame);  rd.LoadFile(sRd,false);
+		bool loop = !rd.isLooped && pSet->game.track_reversed ? true : false;
+		
+		//  Bot cars use CT_LOCAL type to get physics simulation
+		CarModel* car = new CarModel(carIdx, carIdx, CarModel::CT_LOCAL, carName, &mCams[carIdx], this);
+		car->Load(carIdx, loop);  // Use carIdx as startId for bot cars
+		carModels.push_back(car);
+		
+		//  Set bot car nickname
+		String botNick = "Bot " + toStr(botIdx + 1);
+		car->sDispName = botNick;
+		car->pNickTxt = hud->CreateNickText(carIdx, car->sDispName);
 	}
 
 	///  👻 ghost car - last in carModels

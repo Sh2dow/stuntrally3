@@ -104,7 +104,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "game.drive_horiz", gui.drive_horiz);
 
 	Param(c,w, "game.trk_reverse", gui.track_reversed);   Param(c,w, "game.sim_mode", gui.sim_mode);
-	Param(c,w, "game.local_players", gui.local_players);  Param(c,w, "game.num_laps", gui.num_laps);
+	Param(c,w, "game.local_players", gui.local_players);  Param(c,w, "game.local_bots", gui.local_bots);  Param(c,w, "game.num_laps", gui.num_laps);
 	Param(c,w, "game.start_order", gui.start_order);      Param(c,w, "game.split_vertically", split_vertically);
 
 	//  📉 graphs

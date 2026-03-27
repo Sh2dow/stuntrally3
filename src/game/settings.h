@@ -128,7 +128,7 @@ public:
 		std::vector<CarPaint> clr;     // [MAX_Vehicles]  also for ghosts 🎨  own paint.cfg
 
 		bool vr_mode =0;  // not used, copy in game from pSet->
-		int local_players = 1, num_laps = 2;  // 👥 split
+		int local_players = 1, local_bots = 2, num_laps = 2;  // 👥 split + 🤖 bots
 		//  🔨 game setup
 		std::string sim_mode{"normal"};
 		bool collis_veget =1, collis_cars =1, collis_roadw =0, dyn_objects =1, drive_horiz =0;

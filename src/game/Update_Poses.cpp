@@ -482,8 +482,12 @@ void App::updatePoses(float time)
 					if (carM->hideTime > gPar.ghostHideTime)
 						carM->setVisible(newVisible);
 				}
-		}	}
-
+			}
+		}
+		
+		//  🤖 Bot cars (non-ghost cars) should be visible
+		if (!carM->isGhost() && !carM->bVisible)
+			carM->setVisible(true);
 		
 		//  🚗💫 update car pos  ----
 		int q = iCurPoses[c];

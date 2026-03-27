@@ -529,6 +529,20 @@ void GAME::UpdateCarInputs(CAR & car)
 	//  Input
 	app->input->mPlayerInputStateMutex.lock();
 
+	// Check if this is a bot car (non-zero ID in local play)
+	// Bot cars have car.id != 0 and are not networked (app->mClient == nullptr)
+	bool isBotCar = (car.id != 0 && app->mClient == nullptr);  // Bot cars are non-zero IDs in local play
+	
+	// For bot cars, enable performance test mode to provide automatic inputs
+	bool bPerfTest = app->bPerfTest || isBotCar;
+	EPerfTest iPerfTestStage = app->iPerfTestStage;
+	
+	// For bot cars, use Accel stage (drive forward)
+	if (isBotCar && !app->bPerfTest) {
+		bPerfTest = true;
+		iPerfTestStage = PT_Accel;
+	}
+
 	const int id = std::min(MAX_Players-1, car.id);
 	for (int i=0; i < MAX_Players; ++i)
 	{
@@ -540,7 +554,7 @@ void GAME::UpdateCarInputs(CAR & car)
 		car.GetSpeedDir(),
 		pSet->steer_range[si], pSet->sss_effect[si], pSet->sss_velfactor[si],
 		app->mInputCtrlPlayer[id]->mbOneAxisThrottleBrake,
-		forceBrake, app->bPerfTest, app->iPerfTestStage);
+		forceBrake, bPerfTest, iPerfTestStage);
 
 	app->input->mPlayerInputStateMutex.unlock();
 
