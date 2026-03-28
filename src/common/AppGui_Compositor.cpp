@@ -270,25 +270,25 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 		//  splitting render of pipe glass messed up depth of fluids
 		if (ssao)
 		{	nd = AddNode(s0_ssao+si);  //++ node
-			
+
 			nd->setNumLocalTextureDefinitions( 4 );  //* textures
 			{
-				auto* td = nd->addTextureDefinition( "rtt_ssao" );  // color not needed..
-				td->widthFactor = 0.5f;  td->heightFactor = 0.5f;  // half
-				td->format = PFG_UNKNOWN;  td->fsaa = "1";  // off
+				auto* tdef = nd->addTextureDefinition( "rtt_ssao" );  // color not needed..
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;  // half
+				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "1";  // off
 
-				td = nd->addTextureDefinition( "depthHalf" );
-				td->widthFactor = 0.5f;  td->heightFactor = 0.5f;  // half
-				td->format = PFG_D32_FLOAT;  td->fsaa = "1";  // d
+				tdef = nd->addTextureDefinition( "depthHalf" );
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;  // half
+				tdef->format = PFG_D32_FLOAT;  tdef->fsaa = "1";  // d
 
-				td = nd->addTextureDefinition( "gNormals" );
-				td->widthFactor = 0.5f;  td->heightFactor = 0.5f;  // half
-				td->format = PFG_R10G10B10A2_UNORM;  td->fsaa = "1";  // n
-				// td->textureFlags |= TextureFlags::MsaaExplicitResolve;  //-?
+				tdef = nd->addTextureDefinition( "gNormals" );
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;  // half
+				tdef->format = PFG_R10G10B10A2_UNORM;  tdef->fsaa = "1";  // n
+				// tdef->textureFlags |= TextureFlags::MsaaExplicitResolve;  //-?
 
-				td = nd->addTextureDefinition( "gFog" );
-				td->widthFactor = 0.5f;  td->heightFactor = 0.5f;  // half
-				td->format = PFG_R16_FLOAT;  td->fsaa = "1";  // r  R32-
+				tdef = nd->addTextureDefinition( "gFog" );
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;  // half
+				tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";  // r  R32-
 
 				AddRtv(nd, "rtt_ssao", "rtt_ssao", "depthHalf", "gNormals", "gFog");
 				// AddRtv(nd, "rtt_ssao", "", "depthHalf", "gNormals", "gFog");  //bugs-
@@ -343,33 +343,33 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			}
 			nd->setNumLocalTextureDefinitions( (ssao ? 4 : 0) + 2 );  //* textures
 			{
-				auto* td = nd->addTextureDefinition( "rtt_first" );  // + 2
-				td->format = hdr ? PFG_RGBA16_FLOAT : PFG_UNKNOWN;  td->fsaa = "";
+				auto* tdef = nd->addTextureDefinition( "rtt_first" );  // + 2
+				tdef->format = hdr ? PFG_RGBA16_FLOAT : PFG_UNKNOWN;  tdef->fsaa = "";
 				// target_format  // PFG_RGBA8_UNORM_SRGB ^
 
-				td = nd->addTextureDefinition( "depthBuffer" );
-				td->format = PFG_D32_FLOAT;  td->fsaa = "";  // auto
-				// td->textureFlags = TextureFlags::RenderToTexture;  //- no discard between frames
+				tdef = nd->addTextureDefinition( "depthBuffer" );
+				tdef->format = PFG_D32_FLOAT;  tdef->fsaa = "";  // auto
+				// tdef->textureFlags = TextureFlags::RenderToTexture;  //- no discard between frames
 
 				AddRtv(nd, "rtt_first", "rtt_first", "depthBuffer"); //, ssao ? "gNormals" : "", ssao ? "gFog" : "");
 				if (ssao)
 				{
-					td = nd->addTextureDefinition( "ssaoTexture" );
-					td->widthFactor = 0.5f;  td->heightFactor = 0.5f;  //par HQ?, todo: 2nd ssao?
-					td->format = PFG_R16_FLOAT;  td->fsaa = "1";  // off
+					tdef = nd->addTextureDefinition( "ssaoTexture" );
+					tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;  //par HQ?, todo: 2nd ssao?
+					tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";  // off
 					AddRtv(nd, "ssaoTexture", "ssaoTexture");
-					// td->depthBufferId = 0;  //no- depth_pool 0
+					// tdef->depthBufferId = 0;  //no- depth_pool 0
 
-					td = nd->addTextureDefinition( "blurHoriz" );
-					td->format = PFG_R16_FLOAT;  td->fsaa = "1";
+					tdef = nd->addTextureDefinition( "blurHoriz" );
+					tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";
 					AddRtv(nd, "blurHoriz", "blurHoriz");
 
-					td = nd->addTextureDefinition( "blurVertical" );
-					td->format = PFG_R16_FLOAT;  td->fsaa = "1";
+					tdef = nd->addTextureDefinition( "blurVertical" );
+					tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";
 					AddRtv(nd, "blurVertical", "blurVertical");
 
-					td = nd->addTextureDefinition( "ssaoApply" );
-					td->format = PFG_UNKNOWN;  td->fsaa = "";  // target_format
+					tdef = nd->addTextureDefinition( "ssaoApply" );
+					tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";  // target_format
 					AddRtv(nd, "ssaoApply", "ssaoApply", "depthBuffer");
 				}
 			}
@@ -471,8 +471,8 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 			nd->setNumLocalTextureDefinitions(1);  //* textures
 			{
-				auto* td = nd->addTextureDefinition( "resolvedDB" );
-				td->format = PFG_R32_FLOAT;  td->fsaa = "1";  // D32 -> R32  off
+				auto* tdef = nd->addTextureDefinition( "resolvedDB" );
+				tdef->format = PFG_R32_FLOAT;  tdef->fsaa = "1";  // D32 -> R32  off
 				AddRtv(nd, "resolvedDB", "resolvedDB", "");
 			}
 			nd->mCustomIdentifier = "2-depth-"+si;
@@ -521,17 +521,17 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			
 			nd->setNumLocalTextureDefinitions( post + 1 );  //* textures
 			{
-				auto* td = nd->addTextureDefinition( "rtt_final" );
-				td->format = PFG_UNKNOWN;  td->fsaa = "";  // target_format, auto
+				auto* tdef = nd->addTextureDefinition( "rtt_final" );
+				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";  // target_format, auto
 				AddRtv(nd, "rtt_final", "rtt_final", "depthBuffer");
 			if (lens)
-			{	auto* td = nd->addTextureDefinition( "rtt_lens" );
-				td->format = PFG_UNKNOWN;  td->fsaa = "";
+			{	auto* tdef = nd->addTextureDefinition( "rtt_lens" );
+				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";
 				AddRtv(nd, "rtt_lens", "rtt_lens", "depthBuffer");
 			}
 			if (sunbeams)
-			{	auto* td = nd->addTextureDefinition( "rtt_beams" );
-				td->format = PFG_UNKNOWN;  td->fsaa = "";
+			{	auto* tdef = nd->addTextureDefinition( "rtt_beams" );
+				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";
 				AddRtv(nd, "rtt_beams", "rtt_beams", "depthBuffer");
 			}	}
 
@@ -594,10 +594,81 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			String final = "rtt_final";  // last rtt
 
 
-			//  🌅 Hdr  ----------------
+			//  🌅 Hdr / Carbon Bloom  ----------------
 			if (hdr)
 			{
-				// todo: add
+				//  Carbon-style bloom: simple bright pass + blur + combine
+				//  Add bloom texture definitions
+				nd->setNumLocalTextureDefinitions( post + 4 );  // +3 for bloom
+
+				{
+				auto* tdef = nd->addTextureDefinition( "hdrBright" );
+				tdef->format = PFG_RGBA16_FLOAT;  tdef->fsaa = "1";  // half size
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;
+				AddRtv(nd, "hdrBright", "hdrBright");
+
+				tdef = nd->addTextureDefinition( "hdrBlurH" );
+				tdef->format = PFG_RGBA16_FLOAT;  tdef->fsaa = "1";
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;
+				AddRtv(nd, "hdrBlurH", "hdrBlurH");
+
+				tdef = nd->addTextureDefinition( "hdrBlurV" );
+				tdef->format = PFG_RGBA16_FLOAT;  tdef->fsaa = "1";
+				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;
+				AddRtv(nd, "hdrBlurV", "hdrBlurV");
+
+				tdef = nd->addTextureDefinition( "hdrFinal" );
+				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";  // target_format
+				AddRtv(nd, "hdrFinal", "hdrFinal", "depthBuffer");
+				}
+
+				//  Bright pass target
+				td = nd->addTargetPass( "hdrBright" );
+				td->setNumPasses( 1 );
+				{
+					auto* pq = AddQuad(td);  // + quad
+					pq->setAllLoadActions( LoadAction::Clear );
+					pq->mClearColour[0] = ColourValue::Black;
+
+					pq->mMaterialName = "HDR/BrightPass";  pq->mProfilingId = "HDR Bright Pass";
+					pq->addQuadTextureSource( 0, "rtt_final" );  // input
+				}
+
+				//  Horizontal blur
+				td = nd->addTargetPass( "hdrBlurH" );
+				td->setNumPasses( 1 );
+				{
+					auto* pq = AddQuad(td);  // + quad
+					pq->setAllLoadActions( LoadAction::DontCare );
+
+					pq->mMaterialName = "HDR/BlurH";  pq->mProfilingId = "HDR Blur H";
+					pq->addQuadTextureSource( 0, "hdrBright" );  // input
+				}
+
+				//  Vertical blur
+				td = nd->addTargetPass( "hdrBlurV" );
+				td->setNumPasses( 1 );
+				{
+					auto* pq = AddQuad(td);  // + quad
+					pq->setAllLoadActions( LoadAction::DontCare );
+
+					pq->mMaterialName = "HDR/BlurV";  pq->mProfilingId = "HDR Blur V";
+					pq->addQuadTextureSource( 0, "hdrBlurH" );  // input
+				}
+
+				//  Combine bloom with original
+				td = nd->addTargetPass( "hdrFinal" );
+				td->setNumPasses( 1 );
+				{
+					auto* pq = AddQuad(td);  // + quad
+					pq->setAllLoadActions( LoadAction::DontCare );
+
+					pq->mMaterialName = "HDR/Combine";  pq->mProfilingId = "HDR Combine Bloom";
+					pq->addQuadTextureSource( 0, "rtt_final" );  // original
+					pq->addQuadTextureSource( 1, "hdrBlurV" );  // bloom
+				}
+
+				final = "hdrFinal";  // use HDR output
 			}
 
 			//  🔆 Lens flare  ----------------

@@ -285,6 +285,8 @@ void CHud::UpdCarTexts(int carId, Hud& h, float time, CAR* pCar)
 		float vel = pCar->GetSpeedometer() * 3.6f;
 		h.txVel->setTextColour(GetVelClr(vel));
 	#endif
+		//  🟢 Carbon HUD: update gauge colors
+		UpdateCarbonGauges(h, vel, rpm, gear);
 	}
 
 	//  💨 boost fuel (time)  ------

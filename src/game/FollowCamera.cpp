@@ -205,11 +205,41 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 
 			Real aggr = ca.mAggression > 0.f ? ca.mAggression : 1.f;
 			// Increase aggression with speed for more intense drift camera
-			aggr *= (1.f + mVel * 0.002f); 
+			aggr *= (1.f + mVel * 0.002f);
 			Real driftOfs = ca.mDriftOffset;
 
 			if (first)  {  qq = ory;  mDriftAngle = 0.f;  }
 			else  qq = orient.Slerp(ca.mSpeed * time * aggr, qq, ory, true);
+
+			//  💫 Compute drift angle from car's lateral velocity
+			//  Get car's forward and right vectors
+			Vector3 carFwd = orientGoal * Vector3::UNIT_Z;  carFwd.y = 0;  carFwd.normalise();
+			Vector3 carRight = orientGoal * Vector3::UNIT_X;  carRight.y = 0;  carRight.normalise();
+			
+			//  Get velocity direction (from position change)
+			static Vector3 posOld = posGoal;
+			Vector3 velDir = posGoal - posOld;
+			velDir.y = 0;
+			Real velLen = velDir.length();
+			if (velLen > 0.01f)
+			{
+				velDir.normalise();
+				//  Lateral velocity: projection onto car's right vector
+				Real latVel = velDir.dotProduct(carRight);
+				//  Longitudinal velocity: projection onto car's forward vector
+				Real lonVel = velDir.dotProduct(carFwd);
+				//  Drift angle: angle between velocity and car forward
+				mDriftAngle = atan2f(latVel, fabsf(lonVel)) * 180.f / PI_d;
+				//  Smooth drift angle
+				static Real driftAngleSmooth = 0.f;
+				driftAngleSmooth += (mDriftAngle - driftAngleSmooth) * time * 5.f;
+				mDriftAngle = driftAngleSmooth;
+			}
+			else
+			{
+				mDriftAngle += (0.f - mDriftAngle) * time * 3.f;
+			}
+			posOld = posGoal;
 
 			// Enhanced speed-based FOV for drift
 			Real speedFactor = 1.f + mSpeedFov * 0.3f * aggr;
@@ -220,7 +250,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 
 			Quaternion  qy = Quaternion(ca.mYaw, Vector3(0,1,0));
 			goalPos += qq * (driftXyz + ca.mOffset);
-			
+
 			camPosFinal = goalPos;
 			camRotFinal = qq * qy * Quaternion(Degree(-ca.mPitch - mATilt), Vector3(1,0,0));
 			manualOrient = true;
@@ -527,6 +557,10 @@ void FollowCamera::saveCamera()
 	c.mName = ca.mName;  c.mType = ca.mType;  c.mSpeed = ca.mSpeed;
 	c.mYaw = ca.mYaw;    c.mPitch = ca.mPitch;
 	c.mDist = ca.mDist;  c.mOffset = ca.mOffset;
+	//  Carbon fields: save camera-specific settings
+	c.mFovSpeed = ca.mFovSpeed;
+	c.mDriftOffset = ca.mDriftOffset;
+	c.mAggression = ca.mAggression;
 }
 
 
@@ -624,6 +658,11 @@ bool FollowCamera::loadCameras()
 			a = cam->Attribute("speed");	if (a)  c.mSpeed = s2r(a);
 			a = cam->Attribute("spRot");	if (a)  c.mSpeedRot = s2r(a);  else  c.mSpeedRot = c.mSpeed;
 			a = cam->Attribute("bounce");	if (a)  c.mOfsMul = s2r(a);
+
+			//  Carbon fields: load camera-specific settings
+			a = cam->Attribute("fovSpeed");	if (a)  c.mFovSpeed = s2r(a);
+			a = cam->Attribute("driftOffset");	if (a)  c.mDriftOffset = s2r(a);
+			a = cam->Attribute("aggression");	if (a)  c.mAggression = s2r(a);
 
 			if (c.mMain >= 0)
 			{	mViews.push_back(c);  miCount++;  }
