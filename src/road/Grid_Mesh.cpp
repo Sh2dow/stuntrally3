@@ -105,6 +105,10 @@ void GridCellLods::Create()
 	#endif
 		vertexElements.push_back( VertexElement2( VET_FLOAT2, VES_TEXTURE_COORDINATES) );
 	}
+	else
+	{	// trail needs UV coordinates for PBR material hash calculation, even if not used
+		vertexElements.push_back( VertexElement2( VET_FLOAT2, VES_TEXTURE_COORDINATES) );
+	}
 	// vertexElements.push_back( VertexElement2( VET_FLOAT2, VES_TEXTURE_COORDINATES) );  //2nd uv-
 	if (hasClr)
 		vertexElements.push_back( VertexElement2( VET_FLOAT4, VES_DIFFUSE ) );
@@ -122,6 +126,7 @@ void GridCellLods::Create()
 		for (uint i=0; i < vertCnt; ++i)
 		{
 			v[a++] = pos[i].x;  v[a++] = pos[i].y;  v[a++] = pos[i].z;  aabox.merge( pos[i] );
+			v[a++] = 0.f;       v[a++] = 0.f;  // dummy UV coordinates for PBR material hash
 			v[a++] = clr[i].x;  v[a++] = clr[i].y;  v[a++] = clr[i].z;  v[a++] = clr[i].w;
 		}
 	else if (hasClr)

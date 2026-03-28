@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "par.h"
 #include "cardefs.h"
 #include "Def_Str.h"
@@ -123,32 +123,48 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	if (!FileExists(mesh))
 		return;
 	LogO("C==C CreatePart " + sCarI + " " + mesh + " r "+  sCarI + " mtr " + sMat);
-	
+
 	Item *item =0;
 	try
 	{	item = mSceneMgr->createItem( mesh, sCarI, SCENE_DYNAMIC );
 		pApp->SetTexWrap(item);
 
-		//**  set reflection cube
-		if (pApp->mCubeReflTex)
+		//**  set reflection cube - only if we have valid subitems
+		if (pApp->mCubeReflTex && item->getNumSubItems() > 0)
 		{
 			if (!body)
 			{
-				assert( dynamic_cast<HlmsPbsDatablock *>( item->getSubItem(0)->getDatablock() ) );
-				HlmsPbsDatablock* pDb = static_cast<HlmsPbsDatablock *>( item->getSubItem(0)->getDatablock() );
-				pDb->setTexture( PBSM_REFLECTION, pApp->mCubeReflTex );
+				HlmsPbsDatablock* pDb = dynamic_cast<HlmsPbsDatablock*>( item->getSubItem(0)->getDatablock() );
+				if (pDb && pApp->mCubeReflTex)
+					pDb->setTexture( PBSM_REFLECTION, pApp->mCubeReflTex );
 			}else
 			{	//  body_paint db2
 			#if 1
 				// LogO("CAR MAT: "+sDirname+"_"+sMat);
-				item->setDatablockOrMaterialName(sDirname+"_"+sMat);
-				
-				HlmsPbsDb2* pDb = dynamic_cast<HlmsPbsDb2*>( item->getSubItem(0)->getDatablock() );
-				LogO(pDb ? "db2 cast ok" : "db2 cast fail");
-				if (pDb)
-				{	db = pDb;
-					db->setTexture( PBSM_REFLECTION, pApp->mCubeReflTex );
-					SetPaint();
+				String matName = isGhostTrk() ? "car_ghost" : sDirname+"_"+sMat;
+				try {
+					item->setDatablockOrMaterialName(matName);
+				} catch (...) {
+					LogO("## Failed to set datablock: " + matName);
+				}
+
+				if (item->getNumSubItems() > 0)
+				{
+					HlmsPbsDb2* pDb = dynamic_cast<HlmsPbsDb2*>( item->getSubItem(0)->getDatablock() );
+					LogO(pDb ? "db2 cast ok" : "db2 cast fail");
+					if (pDb)
+					{	db = pDb;
+						LogO("db assigned, refl tex: " + String(pApp->mCubeReflTex ? "valid" : "null"));
+						if (pApp->mCubeReflTex)
+						{
+							LogO("setting reflection texture...");
+							db->setTexture( PBSM_REFLECTION, pApp->mCubeReflTex );
+							LogO("reflection texture set");
+						}
+						LogO("calling SetPaint...");
+						SetPaint();
+						LogO("SetPaint done");
+					}
 				}
 			#else  //-
 				HlmsPbsDb2* pDb = dynamic_cast<HlmsPbsDb2*>( item->getSubItem(0)->getDatablock() );
@@ -170,7 +186,8 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 				//db->setBrdf(PbsBrdf::DefaultHasDiffuseFresnel);  // ogre 2.4 mirror
 			#endif
 			}
-	}	}
+		}
+	}
 	catch (Ogre::Exception ex)
 	{
 		LogO(String("## Vehicle CreatePart failed! ") + ex.what());
@@ -253,7 +270,7 @@ void CarModel::CreateLight(SceneNode* ndCar, LiType type, Vector3 pos, ColourVal
         l->mTexLightMaskDiffuseMipStart = ( Ogre::uint16 )( 0.95f * 65535 );/**/
 	}
 	l->setCastShadows( front && pSet->li.front_shdw);
-	l->setVisible( under || front && sc->needLights);  // auto on for dark tracks  set pCar ..
+	l->setVisible( under || front && sc && sc->needLights);  // auto on for dark tracks  set pCar ..
 
 	li.li = l;  li.type = type;
 	lights.push_back(li);  // add
@@ -286,6 +303,10 @@ void CarModel::Create()
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
 	auto& resMgr = ResourceGroupManager::getSingleton();
+	//  Destroy existing resource group if it exists (prevent duplicate error)
+	if (resMgr.resourceGroupExists(resGrpId))
+		resMgr.destroyResourceGroup(resGrpId);
+	
 	resMgr.createResourceGroup(resGrpId);
 	resMgr.addResourceLocation(sCars, "FileSystem", resGrpId);
 	resMgr.addResourceLocation(sCars + "/textures", "FileSystem", resGrpId);
@@ -302,11 +323,11 @@ void CarModel::Create()
 	if (cam && pCar)
 	{
 		fCam = new FollowCamera(cam, pSet);
-		fCam->chassis = pCar->dynamics.chassis;
-		fCam->loadCameras();
+		if (pCar) fCam->chassis = pCar->dynamics.chassis;
+		if (hasCam()) fCam->loadCameras();  // only load cameras for cars that have them
 	}
 	//  set car type cameras offset from .car
-	if (fCam)
+	if (fCam && !fCam->mViews.empty())
 	for (auto& c : fCam->mViews)
 	{
 		c.mDist *= camDist;
@@ -380,7 +401,7 @@ void CarModel::Create()
 		for (int i=0; i < numLights; ++i)
 		if (i < cnt)
 		// if (fsFlares.lit[i])
-			CreateLight(ndCar, LI_Front, fsFlares.pos[i], fsFlares.clr, fsFlares.lit[i]);  //💡
+			CreateLight(ndCar, LI_Front, fsFlares.pos[i], fsFlares.clr, fsFlares.lit[i]);  //рџ’Ў
 	}
 
 	if (pSet->li.under && !ghost)
@@ -416,13 +437,12 @@ void CarModel::Create()
 			if (bLogInfo && (w==0 || w==2))  LogMeshInfo(eWh, name, 2);
 
 			//**  set reflection cube
-			if (pApp->mCubeReflTex)
+			if (pApp->mCubeReflTex && eWh->getNumSubItems() > 0)
 			{
-				assert( dynamic_cast<HlmsPbsDatablock *>( eWh->getSubItem(0)->getDatablock() ) );
-				HlmsPbsDatablock* db =
-					static_cast<HlmsPbsDatablock *>( eWh->getSubItem(0)->getDatablock() );
-				db->setTexture( PBSM_REFLECTION, pApp->mCubeReflTex );
-		}	}
+				HlmsPbsDatablock* db = dynamic_cast<HlmsPbsDatablock*>( eWh->getSubItem(0)->getDatablock() );
+				if (db) db->setTexture( PBSM_REFLECTION, pApp->mCubeReflTex );
+			}
+		}
 		if (FileExists(sCar + "_brake.mesh") && !ghostTrk)
 		{
 			String name = sDirname + "_brake.mesh";
@@ -456,7 +476,7 @@ void CarModel::Create()
 			{
 				bsBrakes->createBillboard(pos, fsBrakes.clr);
 				if (fsBrakes.lit[n] && pSet->li.brake && !ghost)
-					CreateLight(ndCar, LI_Brake, pos, fsBrakes.clr, fsBrakes.lit[n]);  //💡
+					CreateLight(ndCar, LI_Brake, pos, fsBrakes.clr, fsBrakes.lit[n]);  //рџ’Ў
 				++n;
 			}
 			bsBrakes->setDatablockOrMaterialName("flare1", "Popular");
@@ -476,7 +496,7 @@ void CarModel::Create()
 			bsFlares->setDatablockOrMaterialName("flare1", "Popular");
 			nd->attachObject(bsFlares);
 			if (pCar)  // on
-			{	if (sc->needLights)
+			{	if (sc && sc->needLights)
 					pCar->bLightsOn = 1;
 				bsFlares->setVisible(pSet->li.front && pCar->bLightsOn);
 			}
@@ -493,7 +513,7 @@ void CarModel::Create()
 			{
 				bsReverse->createBillboard(pos, fsReverse.clr);
 				if (fsReverse.lit[n] && pSet->li.reverse && !ghost)
-					CreateLight(ndCar, LI_Revese, pos, fsReverse.clr, fsReverse.lit[n]);  //💡
+					CreateLight(ndCar, LI_Revese, pos, fsReverse.clr, fsReverse.lit[n]);  //рџ’Ў
 				++n;
 			}
 			bsReverse->setDatablockOrMaterialName("flare1", "Popular");
@@ -531,14 +551,14 @@ void CarModel::Create()
 
 				if (pSet->li.boost && !ghost)
 					CreateLight(ndCar, LI_Boost, pos,
-						ColourValue(boostClr[0], boostClr[1], boostClr[2]), 1.f);  //💡
+						ColourValue(boostClr[0], boostClr[1], boostClr[2]), 1.f);  //рџ’Ў
 
 				if (bRotFix)
 					parBoost[i]->getEmitter(0)->setDirection(Vector3(0,0,-1));
 				parBoost[i]->getEmitter(0)->setEmissionRate(0);
 		}	}
 
-		///  💨 spaceship thrusters ^  ------------------------
+		///  рџ’Ё spaceship thrusters ^  ------------------------
 		for (int w=0; w < PAR_THRUST; ++w)
 		{	const auto& t = thruster[w];
 			if (t.sPar.empty())  continue;
@@ -563,7 +583,7 @@ void CarModel::Create()
 
 				if (t.lit && pSet->li.boost && !ghost)
 					CreateLight(ndCar, LI_Thrust, pos,
-						ColourValue(thrustClr[0], thrustClr[1], thrustClr[2]), 1.f);  //💡
+						ColourValue(thrustClr[0], thrustClr[1], thrustClr[2]), 1.f);  //рџ’Ў
 		}	}
 
 		///  ⚫💭 wheel emitters  ------------------------
@@ -571,9 +591,23 @@ void CarModel::Create()
 		{
 			const static String sPar[PAR_ALL] = {
 				"Smoke","Mud","Dust", "FlWater","FlMud","FlMudS"};  // for ogre name
-			//  particle type names
-			const String sName[PAR_ALL] = {
-				sc->sParSmoke, sc->sParMud, sc->sParDust, sc->sFluidWater, sc->sFluidMud, sc->sFluidMudSoft};
+			//  particle type names - use defaults if sc is null
+			String sName[PAR_ALL];
+
+			// copy defaults first
+			for (int i = 0; i < PAR_ALL; ++i)
+				sName[i] = sPar[i];
+
+			// override if sc exists
+			if (sc)
+			{
+				sName[0] = sc->sParSmoke;
+				sName[1] = sc->sParMud;
+				sName[2] = sc->sParDust;
+				sName[3] = sc->sFluidWater;
+				sName[4] = sc->sFluidMud;
+				sName[5] = sc->sFluidMudSoft;
+			}
 			
 			for (int w=0; w < numWheels; ++w)
 			{
@@ -623,3 +657,4 @@ void CarModel::Create()
 	}
 	LogO("C--L ----- Created Vehicle: "+sDirname+"  total lights: "+toStr(lights.size())+" -----\n");
 }
+

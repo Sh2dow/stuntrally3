@@ -130,57 +130,14 @@
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#D0D080#{Effects}"/>
 						
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="2 24 738 472" name="RSrest">
+							<Property key="CanvasSize" value="1200 1200"/>
+						
 						<Widget type="ImageBox" skin="ImageBox" position="660 12 56 56">
 							<Property key="ImageCoord" value="896 256 128 128"/>
 							<Property key="Alpha" value="0.5"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
-
-						<!-- brightness -->
-						<Widget type="TextBox" skin="TextBox" position="32 406 248 24">
-							<Property key="Caption" value="#{Brightness}"/>
-							<Property key="TextColour" value="0.9 0.7 0.7"/>
-							<Property key="Alpha" value="0.8"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 406 48 24" name="BrightVal">
-							<Property key="TextColour" value="0.9 0.7 0.7"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 406 216 16" name="Bright">
-							<Property key="Colour" value="0.9 0.7 0.7"/>
-						</Widget>
-
-						<Widget type="TextBox" skin="TextBox" position="32 436 248 24">
-							<Property key="Caption" value="#{Contrast}"/>
-							<Property key="TextColour" value="0.9 0.5 0.5"/>
-							<Property key="Alpha" value="0.8"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 436 48 24" name="ContrastVal">
-							<Property key="TextColour" value="0.9 0.5 0.5"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 436 216 16" name="Contrast">
-							<Property key="Colour" value="0.9 0.5 0.5"/>
-						</Widget>
-						
-						<!-- <Widget type="Button" skin="CheckBox" position="28 30 408 24" name="AllEffects">
-							<Property key="Caption" value="#{AllEffects}"/>
-							<Property key="TextColour" value="1.0 1.0 0.7"/>
-							<Property key="TextShadow" value="true"/>
-							<Property key="FontName" value="font.big"/>
-						</Widget> -->
-
-						<!-- <Widget type="Button" skin="CheckBox" position="28 60 164 24" name="Bloom">
-							<Property key="Caption" value="#{Bloom}"/>
-							<Property key="TextColour" value="1 1 0.3"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 90 128 24">
-							<Property key="Caption" value="#{Intensity}"/>
-							<Property key="TextColour" value="1.0 0.9 0.0"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 90 60 26" name="BloomIntVal">
-							<Property key="TextColour" value="1.0 1 0.2"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 90 320 18" name="BloomInt"/> -->
-
 
 						<Widget type="TextBox" skin="TextBox" position="362 10 248 24">
 							<Property key="Caption" value="#{Needed}: #{Water} #{WaterRefraction}"/>
@@ -216,41 +173,130 @@
 						</Widget>
 
 						<!-- 🔆 LensFlare -->
-						<Widget type="Button" skin="CheckBox" position="28 130 556 24" name="LensFlare">
+						<Widget type="Button" skin="CheckBox" position="28 120 556 24" name="LensFlare">
 							<Property key="Caption" value="#{LensFlare} *"/>
 							<Property key="TextColour" value="0.84 0.87 0.9"/>
 						</Widget>
-						
+
 						<!-- 🌄 SunBeams -->
-						<Widget type="Button" skin="CheckBox" position="28 160 556 24" name="SunBeams">
+						<Widget type="Button" skin="CheckBox" position="28 150 556 24" name="SunBeams">
 							<Property key="Caption" value="#{SunBeams} *"/>
 							<Property key="TextColour" value="0.8 0.8 0.6"/>
 						</Widget>
 
-
-						<!-- 🌅 HDR -->
-						<!-- <Widget type="Button" skin="CheckBox" position="28 210 556 24" name="HDR">
-							<Property key="Caption" value="#{HDR} ** #603030 = #{NotDone}"/>
+						<!-- ============================================ -->
+						<!-- 🌅 HDR Section -->
+						<!-- ============================================ -->
+						<Widget type="TextBox" skin="TextBox" position="28 186 200 24">
+							<Property key="Caption" value="#{HDR} **"/>
 							<Property key="TextColour" value="0.8 0.6 0.3"/>
-						</Widget> -->
-
-						<!-- <Widget type="Button" skin="CheckBox" position="28 150 256 24" name="SoftParticles">
-							<Property key="Caption" value="#{SoftParticles}"/>
-							<Property key="TextColour" value="1 0.75 0.4"/>
+							<Property key="FontName" value="font.big"/>
+							<Property key="TextShadow" value="true"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="196 210 118 24">
+						<!-- 🌅 HDR Toggle -->
+						<Widget type="Button" skin="CheckBox" position="28 214 556 24" name="HDR">
+							<Property key="Caption" value=""/>
+							<Property key="TextColour" value="0.8 0.6 0.3"/>
+						</Widget>
+
+						<!-- HDR Adaptation Scale -->
+						<Widget type="TextBox" skin="TextBox" position="32 244 248 24">
 							<Property key="Caption" value="#{HDRAdaptationScale}"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 210 60 24" name="HDRAdaptScaleVal">
+						<Widget type="TextBox" skin="TextBox" position="296 244 48 24" name="HDRAdaptScaleVal">
 							<Property key="TextColour" value="0.7 0.86 1.0"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 210 320 18" name="HDRAdaptScale"/>
-						<Widget type="TextBox" skin="TextBox" position="196 94 128 24">
-							<Property key="Caption" value="#{HDRIntensity}"/>
+						<Widget type="Slider" skin="Slider" position="344 244 216 16" name="HDRAdaptScale">
+							<Property key="Colour" value="0.6 0.76 0.9"/>
+						</Widget>
+
+						<!-- HDR Bloom Intensity -->
+						<Widget type="TextBox" skin="TextBox" position="32 274 248 24">
+							<Property key="Caption" value="#{HDRBloomInt}"/>
+							<Property key="TextColour" value="1.0 0.9 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 274 48 24" name="HdrBloomIntVal">
+							<Property key="TextColour" value="1.0 0.9 0.3"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 274 216 16" name="HdrBloomInt">
+							<Property key="Colour" value="1.0 0.9 0.3"/>
+						</Widget>
+
+						<!-- HDR Bloom Threshold -->
+						<Widget type="TextBox" skin="TextBox" position="32 304 248 24">
+							<Property key="Caption" value="#{HDRBloomThresh}"/>
+							<Property key="TextColour" value="1.0 0.7 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 304 48 24" name="HdrBloomThreshVal">
+							<Property key="TextColour" value="1.0 0.7 0.3"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 304 216 16" name="HdrBloomThresh">
+							<Property key="Colour" value="1.0 0.7 0.3"/>
+						</Widget>
+
+						<!-- ============================================ -->
+						<!-- 🟢 Bloom Section -->
+						<!-- ============================================ -->
+						<Widget type="TextBox" skin="TextBox" position="28 336 200 24">
+							<Property key="Caption" value="#{Bloom}"/>
+							<Property key="TextColour" value="1 1 0.3"/>
+							<Property key="FontName" value="font.big"/>
+							<Property key="TextShadow" value="true"/>
+						</Widget>
+
+						<!-- 🟢 Bloom Toggle -->
+						<Widget type="Button" skin="CheckBox" position="28 364 556 24" name="Bloom">
+							<Property key="Caption" value=""/>
+							<Property key="TextColour" value="1 1 0.3"/>
+						</Widget>
+
+						<!-- Bloom Intensity -->
+						<Widget type="TextBox" skin="TextBox" position="32 394 248 24">
+							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
-						</Widget> -->
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 394 48 24" name="BloomIntVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 394 216 16" name="BloomInt">
+							<Property key="Colour" value="1.0 0.9 0.3"/>
+						</Widget>
+
+						<!-- 🟢 All Effects toggle -->
+						<Widget type="Button" skin="CheckBox" position="28 424 408 24" name="AllEffects">
+							<Property key="Caption" value="#{AllEffects}"/>
+							<Property key="TextColour" value="1.0 1.0 0.7"/>
+							<Property key="TextShadow" value="true"/>
+							<Property key="FontName" value="font.big"/>
+						</Widget>
+
+						<!-- brightness (moved to bottom) -->
+						<Widget type="TextBox" skin="TextBox" position="32 456 248 24">
+							<Property key="Caption" value="#{Brightness}"/>
+							<Property key="TextColour" value="0.9 0.7 0.7"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 456 48 24" name="BrightVal">
+							<Property key="TextColour" value="0.9 0.7 0.7"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 456 216 16" name="Bright">
+							<Property key="Colour" value="0.9 0.7 0.7"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 482 248 24">
+							<Property key="Caption" value="#{Contrast}"/>
+							<Property key="TextColour" value="0.9 0.5 0.5"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 482 48 24" name="ContrastVal">
+							<Property key="TextColour" value="0.9 0.5 0.5"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 482 216 16" name="Contrast">
+							<Property key="Colour" value="0.9 0.5 0.5"/>
+						</Widget>
+						</Widget>
 					</Widget>
 
 

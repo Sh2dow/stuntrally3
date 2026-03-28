@@ -53,9 +53,12 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.hdr_bloom_int", hdr_bloom_int);
 	Param(c,w, "video_eff.hdr_bloom_thresh", hdr_bloom_thresh);
 
-	// Param(c,w, "video_eff.all_effects", all_effects);
-	// Param(c,w, "video_eff.softparticles", softparticles);
-	// Param(c,w, "video_eff.bloom", bloom);
+	//  🟢 Legacy effects
+	Param(c,w, "video_eff.all_effects", all_effects);
+	Param(c,w, "video_eff.bloom_enabled", bloom_enabled);
+	Param(c,w, "video_eff.bloom_int", bloom_int);
+	Param(c,w, "video_eff.softparticles", softparticles);
+
 	// Param(c,w, "video_eff.boost_fov", boost_fov);
 
 

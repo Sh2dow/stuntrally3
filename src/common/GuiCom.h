@@ -249,7 +249,15 @@ public:
 
 	Ck ckLensFlare, ckSunbemas;
 	Ck ckHDR;
-	
+
+	//  🟢 Carbon HDR Bloom
+	SV svHdrBloomInt, svHdrBloomThresh;  void slHdrBloom(SV*);
+
+	//  🟢 Legacy Effects
+	Ck ckAllEffects;  void chkAllEffects(Ck*);
+	Ck ckBloom;  SV svBloomInt;  void chkBloom(Ck*), slBloomInt(SV*);
+	// Ck ckSoftPar;  void chkSoftPar(Ck*);  // todo: add to layout
+
 	Ck ckGI;
 	Txt txGIinfo =0;
 	void btnGInext(WP), btnGIhq(WP), btnGIvis(WP), btnGIvis2(WP);

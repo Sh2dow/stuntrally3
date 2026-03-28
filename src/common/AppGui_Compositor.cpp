@@ -260,11 +260,12 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 	//  node  🪩 New Refract  * * *
 	//------------------------------------------------------------------------------------------------------------------------------------------
-	if (refract)  // needed for all effects
+	//  Create full compositor when refraction OR any effect (SSAO, lens, sunbeams, HDR) is enabled
+	if (refract || ssao || lens || sunbeams || hdr)
 	{
 		if (createRTT)
 			rtt = AddSplitRTT(si, width, height);
-		
+
 	// 0  s0_ssao  Pre render
 	//--------------------------------------------------------------------------------------------------------------------------
 		//  own node, for more control of render RQG, no pipe glass, etc
@@ -520,8 +521,11 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			nd->addTextureSourceName("depthBufferNoMsaa", 3, inp);
 
 			const int post = (lens ? 1 : 0) + (sunbeams ? 1 : 0);
+			const int hdrTargets = hdr ? 4 : 0;
+			const int finalLocalTextures = post + 1 + hdrTargets;
+			const int finalTargetPasses = post + 2 + hdrTargets;
 			
-			nd->setNumLocalTextureDefinitions( post + 1 );  //* textures
+			nd->setNumLocalTextureDefinitions( finalLocalTextures );  //* textures
 			{
 				auto* tdef = nd->addTextureDefinition( "rtt_final" );
 				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";  // target_format, auto
@@ -539,7 +543,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 			nd->mCustomIdentifier = "3-Final-"+si;
 
-			nd->setNumTargetPass( post + 2 );  //* targets
+			nd->setNumTargetPass( finalTargetPasses );  //* targets
 
 			//  🌊 Final  ----
 			td = nd->addTargetPass( "rtt_final" );
@@ -599,10 +603,8 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			//  🌅 Hdr / Carbon Bloom  ----------------
 			if (hdr)
 			{
-				//  Carbon-style bloom: simple bright pass + blur + combine
-				//  Add bloom texture definitions
-				nd->setNumLocalTextureDefinitions( post + 4 );  // +3 for bloom
-
+				//  Carbon-style bloom: bright pass + blur + final combine.
+				//  Texture/pass counts were reserved before adding any definitions.
 				{
 				auto* tdef = nd->addTextureDefinition( "hdrBright" );
 				tdef->format = PFG_RGBA16_FLOAT;  tdef->fsaa = "1";  // half size
@@ -634,6 +636,10 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 					pq->mMaterialName = "HDR/BrightPass_Start";  pq->mProfilingId = "HDR Bright Pass";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // input
+					// Reuse the current HDR scene colour as a fallback luminance source.
+					// The original HDR pipeline had a dedicated lumRt chain, which this
+					// simplified Carbon bloom path does not build yet.
+					pq->addQuadTextureSource( 1, "rtt_final" );
 					//  🟢 Carbon bloom params - set via material
 				}
 
@@ -668,7 +674,8 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 					pq->mMaterialName = "HDR/FinalToneMapping";  pq->mProfilingId = "HDR Combine Bloom";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // original
-					pq->addQuadTextureSource( 1, "hdrBlurV" );  // bloom
+					pq->addQuadTextureSource( 1, "rtt_final" );  // fallback lumRt
+					pq->addQuadTextureSource( 2, "hdrBlurV" );  // bloom
 					//  🟢 Carbon bloom intensity - set via material
 				}
 
@@ -883,20 +890,8 @@ void AppGui::SetupCompositors()
 
 		//  🪄 Create []  ----
 		IdString wsName;
-		if (!hdr)
-		{
-			CreateCompositor(0, -1, 1,  1.f, 1.f);
-			wsName = sWork + "0";
-		}
-		else  // test hdr
-		{
-			RenderSystem *renderSystem = mRoot->getRenderSystem();
-			const RenderSystemCapabilities *caps = renderSystem->getCapabilities();
-
-			wsName = "HdrWorkspace";
-			if (mWindow->isMultisample() && caps->hasCapability( RSC_EXPLICIT_FSAA_RESOLVE ))
-				wsName = "HdrWorkspaceMsaa";
-		}
+		CreateCompositor(0, -1, 1,  1.f, 1.f);
+		wsName = sWork + "0";
 
 		//  render Window external channels  ----
 		CompositorChannelVec chWnd( mCubeReflTex ? 2 : 1 );

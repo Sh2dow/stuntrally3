@@ -19,6 +19,7 @@
 #include <Vct/OgreVctVoxelizer.h>
 #include <IrradianceField/OgreIrradianceField.h>
 #include <MyGUI.h>
+#include "Utils/HdrUtils.h"
 using namespace MyGUI;
 using namespace Ogre;
 using namespace std;
@@ -241,19 +242,23 @@ void CGuiCom::GuiInitGraphics()  // ? not yet: called on preset change with bGI 
 
 	ck= &ckLensFlare;		ck->Init("LensFlare",	&pSet->g.lens_flare);  // 🔆
 	ck= &ckSunbemas;		ck->Init("SunBeams",	&pSet->g.sunbeams);  // 🌄
-	// ck= &ckHDR;			ck->Init("HDR",			&pSet->g.hdr);  // 🌅 HDR
+	ck= &ckHDR;				ck->Init("HDR",			&pSet->g.hdr);  // 🌅 HDR
+
+	//  🟢 Carbon HDR Bloom settings
+	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 1.5f);  sv->DefaultF(0.5f);  SevC(HdrBloom);
+	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,1.5f, 1.5f);  sv->DefaultF(0.7f);  SevC(HdrBloom);
+
+	//  🟢 Legacy Effects
+	ck= &ckAllEffects;		ck->Init("AllEffects",	&pSet->all_effects);  CevC(AllEffects);
+	ck= &ckBloom;			ck->Init("Bloom",		&pSet->bloom_enabled);  CevC(Bloom);
+	sv= &svBloomInt;		sv->Init("BloomInt",	&pSet->bloom_int, 0.0f,1.0f, 1.5f);  sv->DefaultF(0.13f);  SevC(BloomInt);
+	// ck= &ckSoftPar;		ck->Init("SoftParticles",&pSet->softparticles);  CevC(SoftPar);  // todo: add to layout
 
 	ck= &ckGI;				ck->Init("GI",			&pSet->gi);  // 🌇 GI
 	txGIinfo = fTxt("GItext");
 	BtnC("GInext", btnGInext);  BtnC("GIhq", btnGIhq);  BtnC("GIiso", btnGIiso);
 	BtnC("GIvis", btnGIvis);  BtnC("GIvis2", btnGIvis2);
 	BtnC("GIbncInc", btnGIbncInc);  BtnC("GIbncDec", btnGIbncDec);
-
-	// ck= &ckAllEffects;	ck->Init("AllEffects",	&pSet->all_effects);  Cev(AllEffects);
-
-	// ck= &ckBloom;		ck->Init("Bloom",		&pSet->bloom);  Cev(EffUpd);
-	// sv= &svBloomInt;		sv->Init("BloomInt",	&pSet->bloom_int);   sv->DefaultF(0.13f);  Sev(EffUpd);
-	// ck= &ckSoftPar;		ck->Init("SoftParticles",&pSet->softparticles);  Cev(EffUpdShd);
 
 
 	//  🔉 Sound
@@ -348,7 +353,41 @@ void CGuiCom::slFps(SV*)
 
 
 //  events
-//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  🟢 Carbon HDR Bloom
+void CGuiCom::slHdrBloom(SV*)
+{
+	//  Update HDR bloom parameters at runtime when user moves sliders
+	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh * 1.214f);
+	Demo::HdrUtils::setBloomIntensity(pSet->hdr_bloom_int);
+}
+
+//  🟢 Legacy Effects
+void CGuiCom::chkAllEffects(Ck*)
+{
+	//  Master effects toggle - could enable/disable all effects
+	//  For now, just toggle the setting
+}
+
+void CGuiCom::chkBloom(Ck*)
+{
+	//  Toggle bloom on/off
+}
+
+void CGuiCom::slBloomInt(SV*)
+{
+	//  Update legacy bloom intensity
+	//  Sync with HDR bloom intensity
+	pSet->hdr_bloom_int = pSet->bloom_int;
+	slHdrBloom(nullptr);
+}
+
+// void CGuiCom::chkSoftPar(Ck*)
+// {
+// 	//  Toggle soft particles
+// 	//  Would need compositor reload
+// }  // todo: implement when SoftParticles widget added to layout
+
 //  🌇 GI
 void CGuiCom::btnGInext(WP)
 {

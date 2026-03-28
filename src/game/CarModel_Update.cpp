@@ -716,9 +716,12 @@ void CarModel::UpdWhTerMtr()
 //-------------------------------------------------------------------------------------------------------
 void CarModel::SetPaint()
 {
+	if (!db)  return;  // must be set first
+
 	int i = iColor;
+	if (!pSet || i >= pSet->gui.clr.size())  return;
 	auto gc = pSet->gui.clr[i];
-	
+
 	ColourValue diff, spec;  //, fresn1, fresn2;
 	auto c = gc.clr[0];
 	diff.setHSB(1.f - c.hue, c.sat, c.val);

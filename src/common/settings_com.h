@@ -140,6 +140,12 @@ public:
 	float hdr_bloom_int = 0.5f;  // bloom intensity
 	float hdr_bloom_thresh = 0.7f;  // brightness threshold for bloom
 
+	//  🟢 Legacy effects params
+	bool all_effects = 0;  // master effects toggle
+	bool bloom_enabled = 0;  // legacy bloom toggle
+	float bloom_int = 0.0f;  // legacy bloom intensity
+	bool softparticles = 0;  // soft particles
+
 	// bool all_effects =0;  //?
 	// bool soft_particles, motion_blur;
 	// float bloom_int, bloom_orig, blur_intensity;
