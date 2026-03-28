@@ -105,6 +105,23 @@ void GraphicsSystem::loadHlmsDiskCache()
 	Archive *arch =
 		archiveManager.load( mCacheFolder, "FileSystem", true );
 
+	//  Get shader profile suffix for separate caches per backend (glsl, glslvk, hlsl, etc.)
+	String profileSuffix = "_";
+	if( mRoot->getRenderSystem() )
+	{
+		const String& rsName = mRoot->getRenderSystem()->getName();
+		if( rsName.find( "Vulkan" ) != String::npos )
+			profileSuffix += "glslvk_";
+		else if( rsName.find( "Direct3D11" ) != String::npos )
+			profileSuffix += "hlsl_";
+		else if( rsName.find( "Direct3D9" ) != String::npos )
+			profileSuffix += "hlsl9_";
+		else if( rsName.find( "Metal" ) != String::npos )
+			profileSuffix += "metal_";
+		else
+			profileSuffix += "glsl_";  // OpenGL
+	}
+
 	if( mUseMicrocodeCache )
 	{
 		//  Make sure the microcode cache is enabled
@@ -123,7 +140,7 @@ void GraphicsSystem::loadHlmsDiskCache()
 			Hlms *hlms = hlmsManager->getHlms( static_cast<HlmsTypes>( i ) );
 			if( hlms )
 			{
-				String filename = "hlmsCache" + StringConverter::toString( i ) + ".bin";
+				String filename = "hlmsCache" + profileSuffix + StringConverter::toString( i ) + ".bin";
 				try
 				{
 					if( arch->exists( filename ) )
@@ -157,6 +174,23 @@ void GraphicsSystem::saveHlmsDiskCache()
 		ArchiveManager &archMgr = ArchiveManager::getSingleton();
 		Archive *arch = archMgr.load( mCacheFolder, "FileSystem", false );
 
+		//  Get shader profile suffix for separate caches per backend (glsl, glslvk, hlsl, etc.)
+		String profileSuffix = "_";
+		if( mRoot->getRenderSystem() )
+		{
+			const String& rsName = mRoot->getRenderSystem()->getName();
+			if( rsName.find( "Vulkan" ) != String::npos )
+				profileSuffix += "glslvk_";
+			else if( rsName.find( "Direct3D11" ) != String::npos )
+				profileSuffix += "hlsl_";
+			else if( rsName.find( "Direct3D9" ) != String::npos )
+				profileSuffix += "hlsl9_";
+			else if( rsName.find( "Metal" ) != String::npos )
+				profileSuffix += "metal_";
+			else
+				profileSuffix += "glsl_";  // OpenGL
+		}
+
 		if( mUseHlmsDiskCache )
 		{
 			for (size_t i = HLMS_LOW_LEVEL + 1u; i < HLMS_MAX; ++i)
@@ -167,7 +201,7 @@ void GraphicsSystem::saveHlmsDiskCache()
 					diskCache.copyFrom( hlms );
 
 					DataStreamPtr diskCacheFile =
-						arch->create( "hlmsCache" +
+						arch->create( "hlmsCache" + profileSuffix +
 							StringConverter::toString( i ) + ".bin" );
 					diskCache.saveTo( diskCacheFile );
 			}	}

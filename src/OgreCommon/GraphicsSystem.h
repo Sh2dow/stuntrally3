@@ -67,6 +67,7 @@ protected:
 
 	bool  mQuit;
 	bool  mAlwaysAskForConfig;
+	bool  mForceSkipConfig;  // for --no-cfg flag
 	//  hlms
 	bool  mUseHlmsDiskCache;
 	bool  mUseMicrocodeCache;

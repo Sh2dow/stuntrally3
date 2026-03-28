@@ -133,6 +133,53 @@ String CHud::StrClr(ColourValue c)
 	return String(hex);
 }
 
+void CHud::SetCarbonStyle(bool enable)
+{
+	carbonStyle = enable;
+	if (enable)
+	{
+		carbonAccent = ColourValue(0.f, 0.9f, 1.f);
+		carbonOrange = ColourValue(1.f, 0.4f, 0.f);
+		carbonBg = ColourValue(0.08f, 0.08f, 0.12f, 0.75f);
+	}
+}
+
+void CHud::UpdateCarbonGauges(Hud& h, float vel, float rpm, int gear)
+{
+	if (!carbonStyle) return;
+	
+	// Carbon-style gauge colors - more vibrant and contrasting
+	if (vel > 200.f) {
+		h.txVel->setColour(MyGUI::Colour(carbonAccent.r, carbonAccent.g, carbonAccent.b));
+	} else if (vel > 100.f) {
+		h.txVel->setColour(MyGUI::Colour(carbonOrange.r, carbonOrange.g, carbonOrange.b));
+	} else {
+		h.txVel->setColour(MyGUI::Colour(1.f, 1.f, 1.f));
+	}
+	
+	// RPM gauge with color shift at high RPMs
+	if (rpm > 5000.f) {
+		h.txGear->setColour(MyGUI::Colour(carbonAccent.r, carbonAccent.g, carbonAccent.b));
+	} else if (rpm > 3000.f) {
+		h.txGear->setColour(MyGUI::Colour(carbonOrange.r, carbonOrange.g, carbonOrange.b));
+	} else {
+		h.txGear->setColour(MyGUI::Colour(1.f, 1.f, 1.f));
+	}
+	
+	// Boost/fuel gauge (if available)
+	if (h.icoBFuel) {
+		// Pulsing effect for low fuel/boost
+		static float pulse = 0.f;
+		pulse += 0.05f;
+		if (pulse > 6.28f) pulse = 0.f;
+		float pulseFactor = (sinf(pulse) + 1.f) * 0.5f; // 0 to 1
+		
+		if (vel < 30.f) { // Low speed - show boost status
+			h.icoBFuel->setColour(MyGUI::Colour(0.2f + pulseFactor*0.3f, 0.2f, 0.8f));
+		}
+	}
+}
+
 
 #ifndef BT_NO_PROFILE
 ///  Bullet profiling text

@@ -69,9 +69,14 @@ Args MainEntryPoints::args;
 bool Args::has(const string& s) const
 {
 	for (const auto& a : all)
-		// if (a.find(s) != string::npos)  // s inside
-		if (a == s)  // exact
+	{
+		// Check exact match
+		if (a == s)
 			return true;
+		// Also check with -- prefix (e.g., "--no-cfg" matches "no-cfg")
+		if (a.size() > 2 && a.substr(0, 2) == "--" && a.substr(2) == s)
+			return true;
+	}
 
 	return false;
 }

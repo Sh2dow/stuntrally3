@@ -76,7 +76,7 @@ public:
 	bool show_cam =1, cam_tilt =1;  // info
 	bool cam_loop_chng =1;  int cam_in_loop = 1;
 	bool cam_bounce =1;  float cam_bnc_mul = 1.f;
-	float fov_min = 85.f, fov_boost = 15.f, fov_smooth = 3.f;  // Carbon: aggressive speed FOV
+	float fov_min = 90.f, fov_boost = 5.f, fov_smooth = 5.f;  // fov
 	//  🚦 pacenotes
 	bool pace_show =1;  int pace_next = 4;
 
@@ -128,7 +128,7 @@ public:
 		std::vector<CarPaint> clr;     // [MAX_Vehicles]  also for ghosts 🎨  own paint.cfg
 
 		bool vr_mode =0;  // not used, copy in game from pSet->
-		int local_players = 1, local_bots = 2, num_laps = 2;  // 👥 split + 🤖 bots
+		int local_players = 1, num_laps = 2;  // 👥 split
 		//  🔨 game setup
 		std::string sim_mode{"normal"};
 		bool collis_veget =1, collis_cars =1, collis_roadw =0, dyn_objects =1, drive_horiz =0;

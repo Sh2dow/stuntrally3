@@ -197,6 +197,57 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			camRotFinal = qq * qy * Quaternion(Degree(-ca.mPitch - mATilt), Vector3(1,0,0));
 			manualOrient = true;
 		}	break;
+
+		case CAM_Drift:    /* 5 Carbon Drift - aggressive, close chase */
+		{
+			Quaternion  orient = orientGoal * qOrRot;
+			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
+
+			Real aggr = ca.mAggression > 0.f ? ca.mAggression : 1.f;
+			// Increase aggression with speed for more intense drift camera
+			aggr *= (1.f + mVel * 0.002f); 
+			Real driftOfs = ca.mDriftOffset;
+
+			if (first)  {  qq = ory;  mDriftAngle = 0.f;  }
+			else  qq = orient.Slerp(ca.mSpeed * time * aggr, qq, ory, true);
+
+			// Enhanced speed-based FOV for drift
+			Real speedFactor = 1.f + mSpeedFov * 0.3f * aggr;
+			// Add drift angle influence on camera offset
+			Real driftInfluence = mDriftAngle * 0.02f;
+			Vector3 driftXyz = xyz * speedFactor;
+			driftXyz.z -= (driftOfs * 3.f) + driftInfluence;
+
+			Quaternion  qy = Quaternion(ca.mYaw, Vector3(0,1,0));
+			goalPos += qq * (driftXyz + ca.mOffset);
+			
+			camPosFinal = goalPos;
+			camRotFinal = qq * qy * Quaternion(Degree(-ca.mPitch - mATilt), Vector3(1,0,0));
+			manualOrient = true;
+		}	break;
+
+		case CAM_Canyon:    /* 6 Carbon Canyon - wide, cinematic for drift races */
+		{
+			Quaternion  orient = orientGoal * qOrRot;
+			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
+
+			if (first)  {  qq = ory;  }
+			else  qq = orient.Slerp(ca.mSpeed * time * 0.7f, qq, ory, true);
+
+			// Enhanced wide angle for more cinematic feel
+			Real wider = 1.5f;
+			Vector3 canyonXyz = xyz * wider;
+			// Increased height for better canyon views
+			canyonXyz.y += 0.8f;
+
+			// Smoother yaw rotation for cinematic panning
+			Quaternion  qy = Quaternion(ca.mYaw * 0.3f, Vector3(0,1,0));
+			goalPos += qq * (canyonXyz + ca.mOffset);
+			
+			camPosFinal = goalPos;
+			camRotFinal = qq * qy * Quaternion(Degree(-ca.mPitch * 0.6f - mATilt), Vector3(1,0,0));
+			manualOrient = true;
+		}	break;
 		default:  break;
 	}
 

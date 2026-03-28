@@ -12,11 +12,13 @@ enum CamTypes
 	CAM_Arena,		//  2 Arena  - free pos & rot, fly
 	CAM_Car,		//  3 Car    - car pos & rot, full
 	CAM_ExtAng,		//  4 Extended, angles - car rotY & pos, smooth, const distance
+	CAM_Drift,		//  5 Carbon Drift - aggressive, close chase camera
+	CAM_Canyon,		//  6 Carbon Canyon - wide, cinematic for drift races
 	CAM_ALL
 };
 
-const char CAM_Str[CAM_ALL][10] =
-	{"Follow", "Free", "Arena", "Car", "ExtAng" };
+const char CAM_Str[CAM_ALL][16] =
+	{"Follow", "Free", "Arena", "Car", "ExtAng", "Drift", "Canyon" };
 
 
 class CameraView
@@ -28,6 +30,9 @@ public:
 	Ogre::Radian  mYaw{0.f}, mPitch{7.f};
 	Ogre::Vector3 mOffset{0, 1.2f, 0.f};
 	int mMain = 0, mHideGlass = 0;
+	Ogre::Real  mFovSpeed = 0.f;  // Carbon: speed-based FOV response
+	Ogre::Real  mDriftOffset = 0.f;  // Carbon: drift camera offset
+	Ogre::Real  mAggression = 1.f;  // Carbon: camera aggression multiplier
 };
 
 
@@ -61,6 +66,8 @@ public:
 
 	Ogre::Real mVel =0.f;
 	Ogre::Real mDistReduce =0.f;  //float dbgLen;
+	Ogre::Real mSpeedFov =0.f;  // Carbon: current speed-based FOV
+	Ogre::Real mDriftAngle =0.f;  // Carbon: drift angle for camera offset
 
 	#ifdef CAM_TILT_DBG
 		Ogre::Vector3 posHit[4] ={{0,0,0},{0,0,0},{0,0,0},{0,0,0}};

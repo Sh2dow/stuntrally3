@@ -240,9 +240,17 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	if (fCam && cType != CT_REMOTE)
 	{	fCam->Apply(posInfoCam);
 
-		if (pCar && cam && pSet->boost_fov)  // not here?-
-		 	cam->cam->setFOVy(Degree( 0.5f * (
-				pSet->fov_min + pSet->fov_boost * pCar->dynamics.fBoostFov)));
+		if (pCar && cam && pSet->boost_fov)
+		{
+			Ogre::Real speedFov = pCar->dynamics.fBoostFov;
+			Ogre::Real targetFov = pSet->fov_min + pSet->fov_boost * speedFov;
+			Ogre::Real currentFov = cam->cam->getFOVy().valueDegrees();
+			Ogre::Real smoothFov = currentFov + (targetFov - currentFov) / (pSet->fov_smooth + 1.f);
+		 	cam->cam->setFOVy(Degree(smoothFov));
+
+			if (fCam->mSpeedFov != speedFov)
+				fCam->mSpeedFov += (speedFov - fCam->mSpeedFov) * 0.1f;
+		}
 		
 
 		///~~  💧🎥 camera in fluid fog, detect and compute

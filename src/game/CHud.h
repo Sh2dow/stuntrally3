@@ -109,6 +109,12 @@ public:
 	Txt txDbgCar[4] ={0,0,0,0}; //, txDbgTxt =0, txDbgExt =0;
 	Txt txDbgSurf =0, txDbgProfTim =0, txDbgProfBlt =0;
 
+	//  Carbon HUD styling
+	Ogre::ColourValue carbonAccent{0.f, 0.8f, 1.f};  // Cyan accent
+	Ogre::ColourValue carbonOrange{1.f, 0.5f, 0.f};  // Orange for warnings
+	Ogre::ColourValue carbonBg{0.1f, 0.1f, 0.15f, 0.7f};  // Dark translucent bg
+	bool carbonStyle = false;
+
 	constexpr static int MAX_TireVis = 4;
 	Ogre::SceneNode *ndTireVis[MAX_TireVis] ={0,0,0,0,};
 	HudRenderable   *hrTireVis[MAX_TireVis] ={0,0,0,0,};
@@ -175,6 +181,10 @@ public:
 	//  string utils
 	static Ogre::String StrClr(Ogre::ColourValue c);
 	static MyGUI::Colour GetVelClr(float vel);
+
+	//  Carbon HUD methods
+	void SetCarbonStyle(bool enable);
+	void UpdateCarbonGauges(Hud& h, float vel, float rpm, int gear);
 
 #ifndef BT_NO_PROFILE
 	//  bullet debug text

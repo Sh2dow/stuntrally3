@@ -93,6 +93,7 @@ GraphicsSystem::GraphicsSystem(
 
 	mQuit( false ),
 	mAlwaysAskForConfig( app->pSet->ogre_dialog ),  //**  init cfg
+	mForceSkipConfig( false ),
 	//  hlms cache files, and debug in shaders/
 	mUseHlmsDiskCache( app->pSet->cache_hlms ),
 	mUseMicrocodeCache( app->pSet->cache_shaders ),
@@ -123,6 +124,11 @@ GraphicsSystem::GraphicsSystem(
 	const Args& a = MainEntryPoints::args;  //**
 	if (a.has("c") || a.has("cfg"))
 		mAlwaysAskForConfig = true;
+	if (a.has("no-cfg"))
+	{
+		mAlwaysAskForConfig = false;
+		mForceSkipConfig = true;  // force skip dialog even if no config exists
+	}
 }
 
 //-----------------------------------------------------------------------------------
@@ -213,7 +219,7 @@ void GraphicsSystem::initialize( const String &windowTitle )
 	}
 
 	//  🪟📄 Config Dialog  --------
-	if( mAlwaysAskForConfig || !mRoot->restoreConfig() )
+	if( !mForceSkipConfig && (mAlwaysAskForConfig || !mRoot->restoreConfig()) )
 	{
 		if( !mRoot->showConfigDialog() )
 		{

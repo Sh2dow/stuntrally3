@@ -1,12 +1,8 @@
-# Build script for StuntRally3
-# Ensures executables go to bin/Release directly
-
 Write-Host "Building StuntRally3..." -ForegroundColor Green
 
 # Clean previous build directory
 if (Test-Path "build") {
     Write-Host "Removing build directory..." -ForegroundColor Yellow
-    # Use a retry loop to handle file locking issues
     $maxRetries = 5
     $retryCount = 0
     while ($retryCount -lt $maxRetries) {
@@ -25,10 +21,11 @@ if (Test-Path "build") {
 Write-Host "Configuring..." -ForegroundColor Yellow
 cmake -S . -B build -A "x64" -DCMAKE_TOOLCHAIN_FILE="../generators/conan_toolchain.cmake"
 
-# Build
+# Build (errors -> errors.log)
 Write-Host "Building..." -ForegroundColor Yellow
-cmake --build build --config Release
-
-# DLLs are placed in bin/Release by the build system via fixup_bundle
+cmake --build build --config Release -- `
+    /verbosity:quiet `
+    /clp:ErrorsOnly `
+    "/flp:logfile=errors.log;errorsonly"
 
 Write-Host "Build complete!" -ForegroundColor Green

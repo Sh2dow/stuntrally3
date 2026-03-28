@@ -42,6 +42,7 @@ void Args::Common(bool ed)
 	cout << "  ? or help - Displays this info\n";
 	cout << "  \n";
 	cout << "  c or cfg - force show Ogre config dialog\n";
+	cout << "  no-cfg - skip Ogre config dialog (use existing config)\n";
 	cout << "  \n";
 	cout << "Results in Ogre"<< ed <<".log or console, lines with )))\n";
 	cout << "  \n";
