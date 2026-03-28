@@ -456,6 +456,9 @@ void CHud::Create()
 	LogO(":::* Time Create Hud: "+fToStr(ti.getMilliseconds(),0,3)+" ms");
 
 	app->CreateGraphs();  //
+
+	//  🟢 Carbon HUD style
+	SetCarbonStyle(pSet->g.carbon_hud);
 }
 
 

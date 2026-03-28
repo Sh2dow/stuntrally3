@@ -215,7 +215,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			//  Get car's forward and right vectors
 			Vector3 carFwd = orientGoal * Vector3::UNIT_Z;  carFwd.y = 0;  carFwd.normalise();
 			Vector3 carRight = orientGoal * Vector3::UNIT_X;  carRight.y = 0;  carRight.normalise();
-			
+
 			//  Get velocity direction (from position change)
 			static Vector3 posOld = posGoal;
 			Vector3 velDir = posGoal - posOld;
@@ -241,8 +241,8 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			}
 			posOld = posGoal;
 
-			// Enhanced speed-based FOV for drift
-			Real speedFactor = 1.f + mSpeedFov * 0.3f * aggr;
+			// Enhanced speed-based FOV using camera's mFovSpeed setting
+			Real speedFactor = 1.f + mSpeedFov * ca.mFovSpeed * aggr;
 			// Add drift angle influence on camera offset
 			Real driftInfluence = mDriftAngle * 0.02f;
 			Vector3 driftXyz = xyz * speedFactor;

@@ -38,6 +38,11 @@ struct PS_INPUT
 	float2 uv0;
 };
 
+struct Params
+{
+	float bloomIntensity;
+};
+
 fragment float4 main_metal
 (
 	PS_INPUT inPs [[stage_in]],
@@ -45,7 +50,8 @@ fragment float4 main_metal
 	texture2d<float, access::read>	lumRt			[[texture(1)]],
 	texture2d<float>				bloomRt			[[texture(2)]],
 	sampler							samplerPoint	[[sampler(0)]],
-	sampler							samplerBilinear	[[sampler(2)]]
+	sampler							samplerBilinear	[[sampler(2)]],
+	constant Params&				params			[[buffer(0)]]
 )
 {
 	float fInvLumAvg = lumRt.read( uint2( 0, 0 ) ).x;
@@ -53,7 +59,7 @@ fragment float4 main_metal
 	float4 vSample = rt0.sample( samplerPoint, inPs.uv0 );
 
 	vSample.xyz *= fInvLumAvg;
-	vSample.xyz	+= fromSRGB( bloomRt.sample( samplerBilinear, inPs.uv0 ).xyz ) * 16.0;
+	vSample.xyz	+= fromSRGB( bloomRt.sample( samplerBilinear, inPs.uv0 ).xyz ) * 16.0 * params.bloomIntensity;
 	vSample.xyz  = FilmicTonemap( vSample.xyz ) / FilmicTonemap( W );
 	//vSample.xyz  = vSample.xyz / (1 + vSample.xyz); //Reinhard Simple
 	vSample.xyz  = ( vSample.xyz - 0.5f ) * 1.25f + 0.5f + 0.11f;

@@ -630,8 +630,9 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					pq->setAllLoadActions( LoadAction::Clear );
 					pq->mClearColour[0] = ColourValue::Black;
 
-					pq->mMaterialName = "HDR/BrightPass";  pq->mProfilingId = "HDR Bright Pass";
+					pq->mMaterialName = "HDR/BrightPass_Start";  pq->mProfilingId = "HDR Bright Pass";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // input
+					//  🟢 Carbon bloom params - set via material
 				}
 
 				//  Horizontal blur
@@ -641,7 +642,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					auto* pq = AddQuad(td);  // + quad
 					pq->setAllLoadActions( LoadAction::DontCare );
 
-					pq->mMaterialName = "HDR/BlurH";  pq->mProfilingId = "HDR Blur H";
+					pq->mMaterialName = "HDR/BoxBlurH";  pq->mProfilingId = "HDR Blur H";
 					pq->addQuadTextureSource( 0, "hdrBright" );  // input
 				}
 
@@ -652,7 +653,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					auto* pq = AddQuad(td);  // + quad
 					pq->setAllLoadActions( LoadAction::DontCare );
 
-					pq->mMaterialName = "HDR/BlurV";  pq->mProfilingId = "HDR Blur V";
+					pq->mMaterialName = "HDR/BoxBlurV";  pq->mProfilingId = "HDR Blur V";
 					pq->addQuadTextureSource( 0, "hdrBlurH" );  // input
 				}
 
@@ -663,9 +664,10 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					auto* pq = AddQuad(td);  // + quad
 					pq->setAllLoadActions( LoadAction::DontCare );
 
-					pq->mMaterialName = "HDR/Combine";  pq->mProfilingId = "HDR Combine Bloom";
+					pq->mMaterialName = "HDR/FinalToneMapping";  pq->mProfilingId = "HDR Combine Bloom";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // original
 					pq->addQuadTextureSource( 1, "hdrBlurV" );  // bloom
+					//  🟢 Carbon bloom intensity - set via material
 				}
 
 				final = "hdrFinal";  // use HDR output

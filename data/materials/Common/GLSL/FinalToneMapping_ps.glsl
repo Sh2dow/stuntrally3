@@ -65,6 +65,10 @@ vulkan_layout( ogre_t2 ) uniform texture2D bloomRt;
 vulkan( layout( ogre_s0 ) uniform sampler samplerPoint );
 vulkan( layout( ogre_s2 ) uniform sampler samplerBilinear );
 
+vulkan( layout( ogre_P0 ) uniform Params { )
+	uniform float bloomIntensity;
+vulkan( }; )
+
 void main()
 {
 	float fInvLumAvg = texture( vkSampler2D( lumRt, samplerPoint ), vec2( 0.0, 0.0 ) ).x;
@@ -73,9 +77,9 @@ void main()
 
 	vSample.xyz *= fInvLumAvg;
 	vSample.xyz	+= fromSRGB( texture( vkSampler2D( bloomRt, samplerBilinear ),
-									  inPs.uv0 ).xyz ) * 16.0;
+									  inPs.uv0 ).xyz ) * 16.0 * bloomIntensity;
 	vSample.xyz  = FilmicTonemap( vSample.xyz ) / FilmicTonemap( W );
-	
+
 	//vSample.xyz  = vSample.xyz / (1 + vSample.xyz); //Reinhard Simple
 	vSample.xyz  = ( vSample.xyz - 0.5 ) * 1.25 + 0.5 + 0.11;
 

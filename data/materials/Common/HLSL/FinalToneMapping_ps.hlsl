@@ -38,6 +38,11 @@ Texture2D<float3> bloomRt	: register(t2);
 SamplerState samplerPoint	: register(s0);
 SamplerState samplerBilinear: register(s2);
 
+cbuffer Params : register(b0)
+{
+	float bloomIntensity;
+};
+
 float4 main
 (
 	in float2 uv : TEXCOORD0
@@ -48,7 +53,7 @@ float4 main
 	float4 vSample = rt0.Sample( samplerPoint, uv );
 
 	vSample.xyz *= fInvLumAvg;
-	vSample.xyz	+= fromSRGB( bloomRt.Sample( samplerBilinear, uv ).xyz ) * 16.0;
+	vSample.xyz	+= fromSRGB( bloomRt.Sample( samplerBilinear, uv ).xyz ) * 16.0 * bloomIntensity;
 	vSample.xyz  = FilmicTonemap( vSample.xyz ) / FilmicTonemap( W );
 	//vSample.xyz  = vSample.xyz / (1 + vSample.xyz); //Reinhard Simple
 	vSample.xyz  = ( vSample.xyz - 0.5f ) * 1.25f + 0.5f + 0.11f;

@@ -128,16 +128,17 @@ public:
 		bool lens_flare =0;  // 🔆
 		bool sunbeams =0;  // 🌄
 		bool hdr =0;  // 🌅 bloom
+		//  🟢 Carbon HUD
+		bool carbon_hud = 0;  // Carbon-style HUD colors
 	} g;
 
 	//  🪄 effects params  --------
 	float ssao_radius = 1.f, ssao_scale = 1.5f;
 	bool gi =0;  // not in presets-
 
-	//  🟢 Carbon post-processing settings
+	//  🟢 Carbon bloom params
 	float hdr_bloom_int = 0.5f;  // bloom intensity
 	float hdr_bloom_thresh = 0.7f;  // brightness threshold for bloom
-	bool carbon_hud = 0;  // Carbon-style HUD colors
 
 	// bool all_effects =0;  //?
 	// bool soft_particles, motion_blur;
