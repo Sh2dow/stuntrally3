@@ -60,5 +60,12 @@ namespace Demo
 			Scale is the same as minThreshold.
 		*/
 		static void setBloomThreshold( float minThreshold, float fullColourThreshold );
+
+		/** Controls the bloom intensity multiplier.
+		@param intensity
+			Bloom intensity multiplier. 1.0 = default, higher = more bloom.
+			Valid range is [0; inf]
+		*/
+		static void setBloomIntensity( float intensity );
 	};
 }

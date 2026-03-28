@@ -124,4 +124,17 @@ namespace Demo
 										1.0f / (fullColourThreshold - minThreshold),
 										0, 0 ) );
 	}
+	//-----------------------------------------------------------------------------------
+	void HdrUtils::setBloomIntensity( float intensity )
+	{
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().load(
+					"HDR/FinalToneMapping",
+					Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME ).
+				staticCast<Ogre::Material>();
+
+		Ogre::Pass *pass = material->getTechnique( 0 )->getPass( 0 );
+
+		Ogre::GpuProgramParametersSharedPtr psParams = pass->getFragmentProgramParameters();
+		psParams->setNamedConstant( "bloomIntensity", intensity );
+	}
 }

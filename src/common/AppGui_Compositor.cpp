@@ -32,6 +32,8 @@
 #include <Compositor/Pass/PassIblSpecular/OgreCompositorPassIblSpecularDef.h>
 using namespace Ogre;
 
+#include "Utils/HdrUtils.h"
+
 
 /*  Legend, marks for only:
 	[]  Single 🖥️
