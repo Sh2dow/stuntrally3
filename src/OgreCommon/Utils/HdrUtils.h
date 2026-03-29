@@ -73,5 +73,11 @@ namespace Demo
 			warm street lights, cool ambient shadows.
 		*/
 		static void setCarbonNightPreset();
+		
+		/** Update HDR exposure at runtime */
+		static void setExposureValue(float ev);
+		
+		/** Update HDR adaptation speed at runtime */
+		static void setAdaptationSpeed(float speed);
 	};
 }

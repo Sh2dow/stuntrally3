@@ -806,6 +806,8 @@
 	<Tag name="HDRTab">HDR</Tag>
 	<Tag name="HDR">HDR and Bloom (High Dynamic Range)</Tag>
 	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
+	<Tag name="HDRExposure">Exposure</Tag>
+	<Tag name="HDRAdaptSpeed">Adapt Speed</Tag>
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="HDRParam1">Exposure</Tag>

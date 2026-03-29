@@ -245,8 +245,10 @@ void CGuiCom::GuiInitGraphics()  // ? not yet: called on preset change with bGI 
 	ck= &ckHDR;				ck->Init("HDR",			&pSet->g.hdr);  CevC(Hdr);  // 🌅 HDR
 
 	//  🟢 Carbon HDR Bloom settings
-	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 1.5f);  sv->DefaultF(0.35f);  SevC(HdrBloom);
-	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,1.5f, 1.5f);  sv->DefaultF(0.5f);  SevC(HdrBloom);
+	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 1.5f);  sv->DefaultF(0.15f);  SevC(HdrBloom);
+	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,1.5f, 1.5f);  sv->DefaultF(0.65f);  SevC(HdrBloom);
+	sv= &svHdrExposure;		sv->Init("HdrExposure",	&pSet->hdr_exposure, 0.0f,10.0f, 1.5f);  sv->DefaultF(2.0f);  SevC(HdrExposure);
+	sv= &svHdrAdapt;		sv->Init("HdrAdapt",	&pSet->hdr_adapt_speed, 0.0f,5.0f, 1.5f);  sv->DefaultF(1.0f);  SevC(HdrAdapt);
 
 	//  🟢 Legacy Effects
 	ck= &ckAllEffects;		ck->Init("AllEffects",	&pSet->all_effects);  CevC(AllEffects);
@@ -363,8 +365,9 @@ void CGuiCom::chkHdr(Ck*)
 		//  HDR enabled - apply Carbon night preset
 		Demo::HdrUtils::setCarbonNightPreset();
 		//  Update sliders to match preset values
-		svHdrBloomInt.SetValueF(0.35f);
-		svHdrBloomThresh.SetValueF(0.5f);
+		svHdrBloomInt.SetValueF(0.15f);
+		svHdrBloomThresh.SetValueF(0.65f);
+		//  Update exposure slider if it exists
 	}
 	//  When disabled, compositor will be rebuilt without HDR path
 }
@@ -373,8 +376,22 @@ void CGuiCom::chkHdr(Ck*)
 void CGuiCom::slHdrBloom(SV*)
 {
 	//  Update HDR bloom parameters at runtime when user moves sliders
-	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh * 1.214f);
+	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh * 1.308f);
 	Demo::HdrUtils::setBloomIntensity(pSet->hdr_bloom_int);
+}
+
+//  🟢 HDR Exposure
+void CGuiCom::slHdrExposure(SV*)
+{
+	//  Update HDR exposure at runtime
+	Demo::HdrUtils::setExposureValue(pSet->hdr_exposure);
+}
+
+//  🟢 HDR Adaptation Speed
+void CGuiCom::slHdrAdapt(SV*)
+{
+	//  Update HDR adaptation speed at runtime
+	Demo::HdrUtils::setAdaptationSpeed(pSet->hdr_adapt_speed);
 }
 
 //  🟢 Legacy Effects

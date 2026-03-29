@@ -52,6 +52,8 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.carbon_hud", g.carbon_hud);
 	Param(c,w, "video_eff.hdr_bloom_int", hdr_bloom_int);
 	Param(c,w, "video_eff.hdr_bloom_thresh", hdr_bloom_thresh);
+	Param(c,w, "video_eff.hdr_exposure", hdr_exposure);
+	Param(c,w, "video_eff.hdr_adapt_speed", hdr_adapt_speed);
 
 	//  🟢 Legacy effects
 	Param(c,w, "video_eff.all_effects", all_effects);

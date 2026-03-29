@@ -141,15 +141,40 @@ namespace Demo
 	void HdrUtils::setCarbonNightPreset()
 	{
 		//  Carbon-style night racing HDR preset
-		//  Exposure: EV 10 (moodier, darker midtones)
-		//  Auto-exposure bounds: min=3, max=8 (prevents extreme swings)
-		setExposure( 10.0f, 3.0f, 8.0f );
+		//  Exposure: EV 2 (very dark, moody)
+		//  Auto-exposure bounds: min=1, max=4 (prevents extreme swings)
+		setExposure( 2.0f, 1.0f, 4.0f );
 		
-		//  Bloom threshold: lower = more highlights bloom
-		//  minThreshold=0.5, fullThreshold=0.7 (aggressive but controlled)
-		setBloomThreshold( 0.5f, 0.7f );
+		//  Bloom threshold: higher = less bloom, only brightest highlights
+		//  minThreshold=0.65, fullThreshold=0.85
+		setBloomThreshold( 0.65f, 0.85f );
 		
-		//  Bloom intensity: restrained, not overwhelming
-		setBloomIntensity( 0.35f );
+		//  Bloom intensity: very restrained
+		setBloomIntensity( 0.15f );
+	}
+	//-----------------------------------------------------------------------------------
+	void HdrUtils::setExposureValue( float ev )
+	{
+		//  Update exposure value: exposure.x = 1024 * 2^(ev-2)
+		float exposureX = 1024.0f * powf( 2.0f, ev - 2.0f );
+		
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().load(
+					"HDR/DownScale03_SumLumEnd",
+					Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME ).
+				staticCast<Ogre::Material>();
+
+		Ogre::Pass *pass = material->getTechnique( 0 )->getPass( 0 );
+		Ogre::GpuProgramParametersSharedPtr psParams = pass->getFragmentProgramParameters();
+		
+		// Set full exposure vector (x=exposure, y=maxAuto, z=minAuto)
+		// Keep existing auto-exposure bounds
+		const Ogre::Vector3 exposureParams( exposureX, 3.5f, 6.5f );
+		psParams->setNamedConstant( "exposure", exposureParams );
+	}
+	//-----------------------------------------------------------------------------------
+	void HdrUtils::setAdaptationSpeed( float speed )
+	{
+		//  For future implementation when temporal adaptation is added back
+		//  Currently a no-op as temporal adaptation is disabled
 	}
 }
