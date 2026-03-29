@@ -1,0 +1,106 @@
+// ============================================================================
+// SR3 Arcade Handling Preset - Carbon Style
+// ============================================================================
+// Copy this section into your .car file to enable Carbon-style arcade handling.
+// Place it at the end of the file, after all other sections.
+//
+// This preset provides:
+// - Speed-sensitive steering (reduces steering angle at high speed)
+// - Downforce / high-speed grip boost
+// - Yaw stabilization (prevents uncontrolled spins)
+// - Drift assist (helps initiate and maintain drifts)
+// - Enhanced nitro/boost force
+// - Weight transfer simulation
+// - Air control
+
+// ============================================================================
+// ARCADE HANDLING ASSISTS
+// ============================================================================
+
+[ arcade-assists ]
+// Master switch: 0 = disabled, 1 = enabled
+enabled = 1
+
+// Global strength multiplier for all assists (0.0 to 1.0)
+strength = 1.0
+
+// ----------------------------------------------------------------------------
+// 1. Speed-Sensitive Steering
+// ----------------------------------------------------------------------------
+// Reduces steering angle at high speeds for stability.
+// steerSpeedFactor: 0 = no reduction, 1 = full Carbon-style reduction
+steerSpeedFactor = 1.0
+// steerSpeedKnee: m/s - speed at which reduction begins (~108 km/h)
+steerSpeedKnee = 30.0
+// steerSpeedMax: m/s - speed at which max reduction is reached (~216 km/h)
+steerSpeedMax = 60.0
+// steerSpeedMinMult: minimum steering multiplier at high speed (0.4 = 40%)
+steerSpeedMinMult = 0.4
+
+// ----------------------------------------------------------------------------
+// 2. Downforce / High-Speed Grip
+// ----------------------------------------------------------------------------
+// Adds artificial downforce that scales with speed squared.
+downforceBase = 0.0
+downforceSpeedMult = 0.02
+downforceMax = 3000.0
+gripSpeedMult = 0.15
+gripSpeedKnee = 25.0
+
+// ----------------------------------------------------------------------------
+// 3. Yaw Stabilization
+// ----------------------------------------------------------------------------
+// Applies counter-yaw torque to prevent uncontrolled spins.
+yawStabEnabled = 1.0
+yawStabGain = 800.0
+yawStabDamping = 200.0
+yawStabDeadzone = 0.1
+yawStabSpeedMin = 10.0
+
+// ----------------------------------------------------------------------------
+// 4. Drift Assist
+// ----------------------------------------------------------------------------
+// Helps initiate and maintain controlled drifts.
+driftAssistEnabled = 1.0
+driftBrakeThreshold = 0.7
+driftSteerMult = 1.3
+driftYawTarget = 0.3
+driftYawGain = 500.0
+driftRearGripReduction = 0.6
+driftSpeedMin = 15.0
+
+// ----------------------------------------------------------------------------
+// 5. Nitro Boost Enhancement
+// ----------------------------------------------------------------------------
+// Enhances the existing boost system.
+nitroForceMult = 1.0
+nitroSteerReduction = 0.5
+nitroGripBoost = 0.3
+nitroDuration = 0.0
+
+// ----------------------------------------------------------------------------
+// 6. Weight Transfer / Grip Shaping
+// ----------------------------------------------------------------------------
+// Simulates dynamic weight transfer during acceleration/braking.
+weightTransferEnabled = 1.0
+weightTransferLong = 0.25
+weightTransferLat = 0.15
+gripFrontBase = 1.0
+gripRearBase = 1.0
+gripLoadSensitivity = 0.3
+
+// ----------------------------------------------------------------------------
+// 7. Air Control
+// ----------------------------------------------------------------------------
+// Allows limited steering/yaw control while airborne.
+airControlEnabled = 1.0
+airSteerMult = 0.3
+airYawTorque = 300.0
+airPitchTorque = 200.0
+airRollDamping = 50.0
+
+// ----------------------------------------------------------------------------
+// Debug
+// ----------------------------------------------------------------------------
+// Enable debug output (0 = off, 1 = on)
+debugOutput = 0

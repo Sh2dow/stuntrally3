@@ -651,6 +651,16 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		c.GetParam("hover_h.hov_riseP",hov.hov_riseP);	c.GetParam("hover_h.hov_rise", hov.hov_rise);
 	}
 
+	//  🎮 Arcade Handling Assists - Load parameters
+	//  These parameters are optional and have defaults in ArcadeAssistParams
+	arcadeHandling.LoadParams(c);
+	
+	// Enable arcade assists if configured (default: enabled if any params are present)
+	int enabled = 1;
+	c.GetParam("arcade-assists.enabled", enabled);
+	if (enabled)
+		arcadeAssistsEnabled = true;
+
 	UpdateMass();
 
 	LogO(":::* Time .car dynamics load: " + fToStr(ti.getMilliseconds(),0,3) + " ms");

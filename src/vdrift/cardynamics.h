@@ -23,6 +23,8 @@
 #include "btBulletDynamicsCommon.h"
 #include "Buoyancy.h"
 
+#include "ArcadeHandling.h"  // 🎮 Arcade handling assist layer
+
 class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;  class GAME;
 class SETTINGS;  class Scene;  class FluidsXml;  class SField;
 
@@ -121,6 +123,12 @@ public:
 // traction control
 	void SetABS(const bool newabs);  bool GetABSEnabled() const;  bool GetABSActive() const;
 	void SetTCS(const bool newtcs);  bool GetTCSEnabled() const;  bool GetTCSActive() const;
+
+// arcade handling assists
+	void EnableArcadeAssists(bool enabled) { arcadeAssistsEnabled = enabled; }
+	bool AreArcadeAssistsEnabled() const { return arcadeAssistsEnabled; }
+	ArcadeHandling& GetArcadeHandling() { return arcadeHandling; }
+	const ArcadeHandling& GetArcadeHandling() const { return arcadeHandling; }
 
 // cardynamics
 	void SetPosition(const MATHVECTOR<Dbl,3> & pos);
@@ -272,6 +280,10 @@ public:
 	
 	std::vector <CARSUSPENSION> suspension;
 	std::vector <CARAERO> aerodynamics;
+
+	/// 🎮 Arcade handling assist layer
+	ArcadeHandling arcadeHandling;
+	bool arcadeAssistsEnabled = false;  // Master switch for arcade assists
 
 	std::list<std::pair <Dbl, MATHVECTOR<Dbl,3> > > mass_only_particles;
 	

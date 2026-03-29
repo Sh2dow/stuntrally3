@@ -247,3 +247,64 @@ position =  1.05, 1.35, 0.5
 [ particle-03 ]
 mass = 400.0
 position = -1.05, 1.35, 0.5
+
+# ============================================================================
+# Arcade Handling Assists - Carbon Style
+# ============================================================================
+[ arcade-assists ]
+enabled = 1
+strength = 1.0
+
+# Speed-sensitive steering
+steerSpeedFactor = 1.0
+steerSpeedKnee = 30.0
+steerSpeedMax = 60.0
+steerSpeedMinMult = 0.4
+
+# Downforce / high-speed grip
+downforceBase = 0.0
+downforceSpeedMult = 0.02
+downforceMax = 3000.0
+gripSpeedMult = 0.15
+gripSpeedKnee = 25.0
+
+# Yaw stabilization
+yawStabEnabled = 1.0
+yawStabGain = 800.0
+yawStabDamping = 200.0
+yawStabDeadzone = 0.1
+yawStabSpeedMin = 10.0
+
+# Drift assist
+driftAssistEnabled = 1.0
+driftBrakeThreshold = 0.7
+driftSteerMult = 1.3
+driftYawTarget = 0.3
+driftYawGain = 500.0
+driftRearGripReduction = 0.6
+driftSpeedMin = 15.0
+
+# Nitro boost enhancement
+nitroForceMult = 1.0
+nitroSteerReduction = 0.5
+nitroGripBoost = 0.3
+nitroDuration = 0.0
+
+# Weight transfer
+weightTransferEnabled = 1.0
+weightTransferLong = 0.25
+weightTransferLat = 0.15
+gripFrontBase = 1.0
+gripRearBase = 1.0
+gripLoadSensitivity = 0.3
+
+# Air control
+airControlEnabled = 1.0
+airSteerMult = 0.3
+airYawTorque = 300.0
+airPitchTorque = 200.0
+airRollDamping = 50.0
+
+# Debug (0 = off, 1 = on)
+debugOutput = 0
+

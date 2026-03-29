@@ -1,0 +1,178 @@
+// 🎮 SR3 Arcade Handling Preset - Carbon-Style
+// Copy these parameters into your .car file to enable Carbon-style arcade handling
+//
+// This preset provides:
+// - Speed-sensitive steering (reduces steering angle at high speed)
+// - Downforce / high-speed grip boost
+// - Yaw stabilization (prevents uncontrolled spins)
+// - Drift assist (helps initiate and maintain drifts)
+// - Enhanced nitro/boost force
+// - Weight transfer simulation
+// - Air control
+
+// ============================================================================
+// MASTER SWITCH
+// ============================================================================
+// Enable/disable all arcade assists (0 = disabled, 1 = enabled)
+// arcade-assists-enabled = 1
+
+// Global strength multiplier for all assists (0.0 to 1.0)
+arcade-assists.strength = 1.0
+
+
+// ============================================================================
+// 1. SPEED-SENSITIVE STEERING
+// ============================================================================
+// Reduces steering angle at high speeds for stability
+// while maintaining responsiveness at low speeds.
+
+// 0 = no reduction, 1 = full Carbon-style reduction
+arcade-assists.steerSpeedFactor = 1.0
+
+// m/s - speed at which steering reduction begins (~108 km/h)
+arcade-assists.steerSpeedKnee = 30.0
+
+// m/s - speed at which max reduction is reached (~216 km/h)
+arcade-assists.steerSpeedMax = 60.0
+
+// Minimum steering multiplier at high speed (0.4 = 40% of normal)
+arcade-assists.steerSpeedMinMult = 0.4
+
+
+// ============================================================================
+// 2. DOWNFORCE / HIGH-SPEED GRIP
+// ============================================================================
+// Adds artificial downforce that scales with speed squared.
+
+// Base downforce coefficient (N per m/s²)
+arcade-assists.downforceBase = 0.0
+
+// Downforce scaling with speed² (higher = more grip at speed)
+arcade-assists.downforceSpeedMult = 0.02
+
+// Maximum downforce force (N)
+arcade-assists.downforceMax = 3000.0
+
+// Additional tire grip at high speed (0.15 = 15% boost)
+arcade-assists.gripSpeedMult = 0.15
+
+// Speed at which grip boost begins (m/s)
+arcade-assists.gripSpeedKnee = 25.0
+
+
+// ============================================================================
+// 3. YAW STABILIZATION
+// ============================================================================
+// Applies counter-yaw torque to prevent uncontrolled spins.
+
+// 0 = off, 1 = full stabilization
+arcade-assists.yawStabEnabled = 1.0
+
+// Stabilization torque gain (higher = stronger correction)
+arcade-assists.yawStabGain = 800.0
+
+// Yaw rate damping
+arcade-assists.yawStabDamping = 200.0
+
+// Deadzone for small yaw rates (prevents overcorrection)
+arcade-assists.yawStabDeadzone = 0.1
+
+// Minimum speed for activation (m/s)
+arcade-assists.yawStabSpeedMin = 10.0
+
+
+// ============================================================================
+// 4. DRIFT ASSIST
+// ============================================================================
+// Helps initiate and maintain controlled drifts.
+
+// 0 = off, 1 = full drift assist
+arcade-assists.driftAssistEnabled = 1.0
+
+// Brake pressure to initiate drift assist (0.0 to 1.0)
+arcade-assists.driftBrakeThreshold = 0.7
+
+// Steering multiplier during drift (1.3 = 30% more steering)
+arcade-assists.driftSteerMult = 1.3
+
+// Target yaw rate for sustained drift (rad/s)
+arcade-assists.driftYawTarget = 0.3
+
+// Gain for yaw rate control
+arcade-assists.driftYawGain = 500.0
+
+// Rear grip reduction during drift (0.6 = 40% less rear grip)
+arcade-assists.driftRearGripReduction = 0.6
+
+// Minimum speed for drift assist (m/s)
+arcade-assists.driftSpeedMin = 15.0
+
+
+// ============================================================================
+// 5. NITRO BOOST ENHANCEMENT
+// ============================================================================
+// Enhances the existing boost system.
+
+// Multiplier for nitro forward force
+arcade-assists.nitroForceMult = 1.0
+
+// Steering reduction during nitro (0.5 = 50% less steering)
+arcade-assists.nitroSteerReduction = 0.5
+
+// Temporary grip increase during nitro (0.3 = 30% more grip)
+arcade-assists.nitroGripBoost = 0.3
+
+// Optional: force duration override (0 = use default)
+arcade-assists.nitroDuration = 0.0
+
+
+// ============================================================================
+// 6. WEIGHT TRANSFER / GRIP SHAPING
+// ============================================================================
+// Simulates dynamic weight transfer during acceleration/braking.
+
+// 0 = off, 1 = full weight transfer
+arcade-assists.weightTransferEnabled = 1.0
+
+// Longitudinal weight transfer factor
+arcade-assists.weightTransferLong = 0.25
+
+// Lateral weight transfer factor
+arcade-assists.weightTransferLat = 0.15
+
+// Front axle grip multiplier
+arcade-assists.gripFrontBase = 1.0
+
+// Rear axle grip multiplier
+arcade-assists.gripRearBase = 1.0
+
+// How much grip changes with load
+arcade-assists.gripLoadSensitivity = 0.3
+
+
+// ============================================================================
+// 7. AIR CONTROL
+// ============================================================================
+// Allows limited steering/yaw control while airborne.
+
+// 0 = off, 1 = full air control
+arcade-assists.airControlEnabled = 1.0
+
+// Steering effectiveness in air (0.3 = 30% of normal)
+arcade-assists.airSteerMult = 0.3
+
+// Yaw torque available in air
+arcade-assists.airYawTorque = 300.0
+
+// Pitch torque available in air
+arcade-assists.airPitchTorque = 200.0
+
+// Roll damping in air
+arcade-assists.airRollDamping = 50.0
+
+
+// ============================================================================
+// DEBUG
+// ============================================================================
+// Enable debug output (0 = off, 1 = on)
+arcade-assists.debugOutput = 0

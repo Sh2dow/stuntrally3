@@ -62,7 +62,7 @@ SR3 work areas:
 - `src/game/Update_Poses.cpp`
 - `src/game/CGame.*`
 
-## Phase 2: Presentation Foundation
+## Phase 2: Presentation Foundation - Done
 
 Once handling starts feeling right, align the screen language with Carbon.
 
