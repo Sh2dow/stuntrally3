@@ -251,7 +251,7 @@ public:
 	Ck ckHDR;
 
 	//  🟢 Carbon HDR Bloom
-	SV svHdrBloomInt, svHdrBloomThresh;  void slHdrBloom(SV*);
+	SV svHdrBloomInt, svHdrBloomThresh;  void slHdrBloom(SV*), chkHdr(Ck*);
 
 	//  🟢 Legacy Effects
 	Ck ckAllEffects;  void chkAllEffects(Ck*);

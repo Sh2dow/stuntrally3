@@ -23,7 +23,6 @@ fragment float4 main_metal
 (
 	PS_INPUT inPs [[stage_in]],
 	texture2d<float>				lumRt			[[texture(0)]],
-	texture2d<float, access::read>	oldLumRt		[[texture(1)]],
 	sampler							samplerBilinear	[[sampler(0)]],
 
 	constant Params &p [[buffer(PARAMETER_SLOT)]]
@@ -36,9 +35,6 @@ fragment float4 main_metal
 
 	fLumAvg *= 0.25f; // /= 4.0f;
 
-	float newLum = p.exposure.x / exp( clamp( fLumAvg, p.exposure.y, p.exposure.z ) );
-	float oldLum = oldLumRt.read( uint2( 0, 0 ) ).x;
-
-	//Adapt luminicense based 75% per second.
-	return mix( newLum, oldLum, pow( 0.25f, p.timeSinceLast ) );
+	// Instant exposure response (no temporal adaptation)
+	return p.exposure.x / exp( clamp( fLumAvg, p.exposure.y, p.exposure.z ) );
 }

@@ -137,4 +137,19 @@ namespace Demo
 		Ogre::GpuProgramParametersSharedPtr psParams = pass->getFragmentProgramParameters();
 		psParams->setNamedConstant( "bloomIntensity", intensity );
 	}
+	//-----------------------------------------------------------------------------------
+	void HdrUtils::setCarbonNightPreset()
+	{
+		//  Carbon-style night racing HDR preset
+		//  Exposure: EV 10 (moodier, darker midtones)
+		//  Auto-exposure bounds: min=3, max=8 (prevents extreme swings)
+		setExposure( 10.0f, 3.0f, 8.0f );
+		
+		//  Bloom threshold: lower = more highlights bloom
+		//  minThreshold=0.5, fullThreshold=0.7 (aggressive but controlled)
+		setBloomThreshold( 0.5f, 0.7f );
+		
+		//  Bloom intensity: restrained, not overwhelming
+		setBloomIntensity( 0.35f );
+	}
 }

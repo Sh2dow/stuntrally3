@@ -58,11 +58,18 @@ fragment float4 main_metal
 
 	float4 vSample = rt0.sample( samplerPoint, inPs.uv0 );
 
+	//  Apply real exposure from luminance chain
 	vSample.xyz *= fInvLumAvg;
+	
+	//  Add bloom (already in linear HDR space)
 	vSample.xyz	+= fromSRGB( bloomRt.sample( samplerBilinear, inPs.uv0 ).xyz ) * 16.0 * params.bloomIntensity;
+	
+	//  Filmic tonemapping (Uncharted 2 style)
 	vSample.xyz  = FilmicTonemap( vSample.xyz ) / FilmicTonemap( W );
-	//vSample.xyz  = vSample.xyz / (1 + vSample.xyz); //Reinhard Simple
-	vSample.xyz  = ( vSample.xyz - 0.5f ) * 1.25f + 0.5f + 0.11f;
+	
+	//  Carbon: removed hardcoded lift/contrast to preserve authored exposure
+	//  Old: vSample.xyz  = ( vSample.xyz - 0.5f ) * 1.25f + 0.5f + 0.11f;
+	//  The +0.11 was compensating for missing luminance - no longer needed
 
 	return vSample;
 }

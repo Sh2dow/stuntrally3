@@ -67,5 +67,11 @@ namespace Demo
 			Valid range is [0; inf]
 		*/
 		static void setBloomIntensity( float intensity );
+		
+		/** Sets Carbon-style HDR preset for night racing.
+			Tuned for: darker mids, strong highlights, restrained bloom,
+			warm street lights, cool ambient shadows.
+		*/
+		static void setCarbonNightPreset();
 	};
 }

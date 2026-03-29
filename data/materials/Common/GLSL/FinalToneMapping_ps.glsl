@@ -75,13 +75,19 @@ void main()
 
 	vec4 vSample = texture( vkSampler2D( rt0, samplerPoint ), inPs.uv0 );
 
+	//  Apply real exposure from luminance chain
 	vSample.xyz *= fInvLumAvg;
+	
+	//  Add bloom (already in linear HDR space)
 	vSample.xyz	+= fromSRGB( texture( vkSampler2D( bloomRt, samplerBilinear ),
 									  inPs.uv0 ).xyz ) * 16.0 * bloomIntensity;
+	
+	//  Filmic tonemapping (Uncharted 2 style)
 	vSample.xyz  = FilmicTonemap( vSample.xyz ) / FilmicTonemap( W );
 
-	//vSample.xyz  = vSample.xyz / (1 + vSample.xyz); //Reinhard Simple
-	vSample.xyz  = ( vSample.xyz - 0.5 ) * 1.25 + 0.5 + 0.11;
+	//  Carbon: removed hardcoded lift/contrast to preserve authored exposure
+	//  Old: vSample.xyz  = ( vSample.xyz - 0.5 ) * 1.25 + 0.5 + 0.11;
+	//  The +0.11 was compensating for missing luminance - no longer needed
 
 	fragColour = vSample;
 }

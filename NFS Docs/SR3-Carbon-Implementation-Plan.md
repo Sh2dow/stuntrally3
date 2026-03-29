@@ -6,9 +6,10 @@ Do not aim for a literal Carbon clone first.
 
 Aim for this in order:
 
-1. make SR3 feel like Carbon within a track-based structure,
-2. add Carbon-specific race/camera/presentation systems,
-3. only then decide whether open-world, cops, and full territory gameplay are worth the architectural cost.
+1. make SR3 handling and race feel closer to Carbon,
+2. add Carbon-specific presentation and authored track behavior,
+3. build event modes and FE progression around that slice,
+4. only then decide whether open-world, cops, and full territory gameplay are worth the architectural cost.
 
 That order matches SR3's existing architecture and gives the highest return per hour.
 
@@ -32,6 +33,23 @@ Existing capabilities already include:
 - camera collision avoidance
 - speed/FOV response
 - loop-specific camera switching
+
+### Vehicle physics base
+
+Current SR3 vehicle ownership is already concentrated in:
+
+- `src/vdrift/car.cpp`
+- `src/vdrift/cardynamics_update.cpp`
+- `src/game/Update_Poses.cpp`
+- `src/game/CGame.*`
+
+Existing capabilities already include:
+
+- real vehicle dynamics baseline
+- boost / rewind / replay integration
+- a physics update path SR3 already trusts
+
+What is missing is not "physics exists" but "Carbon-style control assists and grip shaping".
 
 ### HUD and race guidance
 
@@ -110,8 +128,10 @@ SR3 is feature-rich, but its identity is rally/stunt/sci-fi. Carbon is urban, no
 
 The missing Carbon-specific layers are:
 
+- a Carbon-style handling controller layer above the simulation baseline
 - a Carbon-style visual direction
 - a Carbon-style chase/drift/canyon camera language
+- front-end track metadata and preview usage
 - authored race trigger zones like jump cameras, vertigo beats, traffic patterns, and barrier states
 - district/territory style progression
 - crew, boss, reward, and garage loop depth
@@ -136,17 +156,49 @@ Live `ida-pro-mcp` type reads confirm these Carbon systems are real and distinct
 
 This suggests the Carbon-conversion priority for SR3 should be:
 
-1. camera and HUD language,
-2. world-map style progression shell,
-3. canyon event logic,
-4. rewards / busted / pursuit-facing FE states,
-5. deeper customization.
+1. handling/controller layer,
+2. camera and HUD language,
+3. track metadata / world-map preview shell,
+4. canyon and authored event logic,
+5. rewards / busted / pursuit-facing FE states,
+6. deeper customization.
 
 That priority is better aligned with the actual Carbon architecture than starting with only art swaps or only physics tuning.
 
 ## Recommended Phases
 
-## Phase 1: Carbon Presentation Pass
+## Phase 1: Carbon Handling Foundation
+
+Highest gameplay ROI. Do this before larger FE or world structure work.
+
+Target systems:
+
+- speed-sensitive steering
+- high-speed grip / downforce shaping
+- yaw stabilization
+- brake-to-drift behavior
+- nitro as forward-force boost
+- front/rear grip and weight-transfer shaping
+
+Primary SR3 files:
+
+- `src/vdrift/car.cpp`
+- `src/vdrift/cardynamics_update.cpp`
+- `src/game/Update_Poses.cpp`
+- `src/game/CGame.*`
+
+Deliverables:
+
+- one Carbon-oriented handling preset
+- one drift-capable preset
+- one nitro/assist profile that feels arcade instead of sim-heavy
+
+Implementation rule:
+
+- add a control/assist layer above the current vehicle baseline
+- do not start by rewriting Bullet
+
+## Phase 2: Carbon Presentation Pass
 
 Highest ROI. Do this first.
 
@@ -176,13 +228,18 @@ Deliverables:
 
 Carbon asset references already available locally for this phase:
 
-- `D:\Games\NFSC PS3\GLOBAL\HUDTEXRACE.BIN`
-- `D:\Games\NFSC PS3\GLOBAL\HUDTEXSPLIT.BIN`
-- `D:\Games\NFSC PS3\GLOBAL\HUDTEXTURESPHOTOFINISH.BIN`
-- `D:\Games\NFSC PS3\FX\MODULES\tonemap_variants.fx`
-- `D:\Games\NFSC PS3\NIS\Scene_FINISHCAMCANYON_BundleB.bun`
+- `D:\Games\NFSC Redux\GLOBAL\HUDTEXRACE.BIN`
+- `D:\Games\NFSC Redux\GLOBAL\HUDTEXSPLIT.BIN`
+- `D:\Games\NFSC Redux\GLOBAL\HUDTEXTURESPHOTOFINISH.BIN`
+- `D:\Games\NFSC Redux\FX\MODULES\tonemap_variants.fx`
+- `D:\Games\NFSC Redux\NIS\Scene_FINISHCAMCANYON_BundleB.bun`
 
-## Phase 2: Carbon Track Metadata Layer
+Important technical note:
+
+- the current HDR path still needs a real luminance chain before final tuning should be treated as complete
+- see `NFS Docs/SR3-Carbon-HDR-Luminance-Fix-Plan.md`
+
+## Phase 3: Carbon Track Metadata Layer
 
 Add authored event metadata to SR3 tracks instead of jumping straight to open world.
 
@@ -210,7 +267,17 @@ Why this phase matters:
 - it gives SR3 Carbon-style authored spectacle without requiring a free-roam city first,
 - it creates the same kind of trigger vocabulary that `hyperlinked` exposes in `track_path.hpp`.
 
-## Phase 3: Event Mode Layer
+Track research now also confirms the correct order for Carbon track usage:
+
+1. FE track metadata and previews,
+2. track-path zones and barriers,
+3. only later full streamed section/runtime road-network usage.
+
+See:
+
+- `NFS Docs/NFSC-Track-Usage-Research.md`
+
+## Phase 4: Event Mode Layer
 
 Build Carbon-flavored event logic on top of SR3's existing challenge/championship framework.
 
@@ -241,7 +308,7 @@ Implementation note:
 - do not wait for full career or open world before adding these modes,
 - prove the event feel first on handcrafted tracks.
 
-## Phase 4: Career, Garage, and Territory
+## Phase 5: Career, Garage, and Territory
 
 SR3 already has a stub career model. Expand that instead of replacing it.
 
@@ -278,7 +345,24 @@ Asset-backed reason:
 - Carbon ships locked/unlocked minimap binaries and `TrackMaps.bin`,
 - this strongly suggests territory state and map presentation were central authored assets, not just dynamic overlays.
 
-## Phase 5: Vehicle Identity and Customization
+## Phase 6: Traffic, Racing AI, and Pursuit Hooks
+
+Traffic can arrive before full pursuit, but after track metadata and event flow exist.
+
+Priority order inside this phase:
+
+- racing line / spline-guided AI behavior
+- route metadata usage on authored tracks
+- traffic lanes and route markers
+- pursuit/busted FE state hooks
+- only later full police gameplay
+
+Why this order:
+
+- Carbon route and zone metadata is more reusable early than full police logic
+- AI benefits from the same authored track vocabulary needed by canyon/sprint events
+
+## Phase 7: Vehicle Identity and Customization
 
 SR3 already supports paint editing, but Carbon identity needs stronger street-car authorship.
 
@@ -306,29 +390,18 @@ IDA-backed reason:
 - `AutoSculpt` is confirmed as a real type in the live IDB,
 - but the current MCP resource surface does not yet expose enough layout or call-graph detail to justify making it an early milestone.
 
-## Phase 6: Traffic and Pursuit
+## Phase 8: Optional Full Streaming / Open World
 
-This is late-stage work, not first-slice work.
+This is last, not first.
 
-Traffic can be introduced earlier on authored tracks, but pursuit should wait until:
+Only consider it after the earlier phases work because Carbon's full runtime track usage depends on:
 
-- track trigger zones exist,
-- event flow exists,
-- urban layouts exist,
-- camera/HUD presentation already feels Carbon.
+- `TrackStreamer`
+- visible section manager data
+- topology/scenery group toggling
+- `WRoadNetwork`
 
-Likely work areas:
-
-- new AI/gameplay systems
-- route metadata integration from Phase 2
-- HUD/FE updates for police state
-- additional collision and spawn management
-
-Asset-backed note:
-
-- `FeBustedScreen` exists in the IDB,
-- shipped media also includes `seq02_busted` movies and subtitles,
-- SR3 can defer full police gameplay, but should still reserve UI/state hooks for busted-style failure presentation if pursuit ever lands.
+That is a much larger architectural step than FE previews, track zones, or canyon/event logic.
 
 ## What Not To Do First
 
@@ -367,11 +440,12 @@ Use the current `ida-pro-mcp` session to validate:
 
 If implementation starts now, the order should be:
 
-1. Carbon visual preset pack for SR3 rendering and sky/fog.
-2. Carbon chase/drift camera rewrite in `FollowCamera`.
-3. Carbon HUD layout/theme pass in `CHud` and `Hud_*`.
-4. Carbon trigger metadata for tracks and editor.
-5. One new Carbon-style event mode on a dedicated track.
-6. Expanded `ProgressCareer` and territory front end.
+1. Carbon handling foundation in the existing vehicle update path.
+2. Carbon visual preset pack for SR3 rendering and sky/fog.
+3. Carbon chase/drift camera rewrite in `FollowCamera`.
+4. Carbon HUD layout/theme pass in `CHud` and `Hud_*`.
+5. Carbon FE track metadata and track-zone vocabulary.
+6. One new Carbon-style event mode on a dedicated track.
+7. Expanded `ProgressCareer` and territory front end.
 
 That sequence keeps SR3's architecture intact while moving the game toward Carbon in the shortest path.

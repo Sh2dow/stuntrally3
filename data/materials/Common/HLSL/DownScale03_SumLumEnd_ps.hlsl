@@ -25,9 +25,6 @@ float4 main
 
 	fLumAvg *= 0.25f; // /= 4.0f;
 
-	float newLum = exposure.x / exp( clamp( fLumAvg, exposure.y, exposure.z ) );
-	float oldLum = oldLumRt.Sample( samplerPoint, float( 0.0 ).xx ).x;
-
-	//Adapt luminicense based 75% per second.
-	return lerp( newLum, oldLum, pow( 0.25f, timeSinceLast ) );
+	// Instant exposure response (no temporal adaptation)
+	return exposure.x / exp( clamp( fLumAvg, exposure.y, exposure.z ) );
 }

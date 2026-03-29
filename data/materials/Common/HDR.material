@@ -238,10 +238,14 @@ fragment_program HDR/DownScale03_SumLumEnd_ps unified
 	delegate HDR/DownScale03_SumLumEnd_ps_VK
 	delegate HDR/DownScale03_SumLumEnd_ps_HLSL
 	delegate HDR/DownScale03_SumLumEnd_ps_Metal
-	
+
 	default_params
 	{
-		param_named			exposure				float3 138.5833 5 10
+		//  🟢 Carbon exposure: EV=2 (very dark), minAuto=1, maxAuto=4
+		//  exposure.x = 1024 * 2^(2-2) = 1024 * 1 = 1024
+		//  exposure.y = 7.5 - maxAuto = 7.5 - 4 = 3.5
+		//  exposure.z = 7.5 - minAuto = 7.5 - 1 = 6.5
+		param_named			exposure				float3 1024.0 3.5 6.5
 		param_named_auto	tex0Size				packed_texture_size 0
 		param_named_auto	timeSinceLast			frame_time 1
 	}
@@ -256,8 +260,8 @@ fragment_program HDR/FinalToneMapping_ps unified
 
 	default_params
 	{
-		//  🟢 Carbon bloom intensity (multiplier)
-		param_named			bloomIntensity		float1 0.5
+		//  🟢 Carbon bloom intensity (multiplier) - very restrained
+		param_named			bloomIntensity		float1 0.15
 	}
 }
 
@@ -270,9 +274,10 @@ fragment_program HDR/BrightPass_Start_ps unified
 
 	default_params
 	{
-		//  🟢 Carbon bloom threshold: minThreshold, 1/(fullThreshold - minThreshold)
-		// Defaults: threshold=0.7, fullThreshold=0.85 -> 0.7, 1/(0.85-0.7)=6.67
-		param_named			brightThreshold			float2 0.7 1.428
+		//  🟢 Carbon bloom threshold: minThreshold=0.65, fullThreshold=0.85
+		//  Higher threshold = less bloom, only brightest highlights
+		//  1/(0.85-0.65) = 5.0
+		param_named			brightThreshold			float2 0.65 5.0
 	}
 }
 

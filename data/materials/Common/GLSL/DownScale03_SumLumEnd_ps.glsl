@@ -40,9 +40,6 @@ void main()
 
 	fLumAvg *= 0.25; // /= 4.0;
 
-	float newLum = exposure.x / exp( clamp( fLumAvg, exposure.y, exposure.z ) );
-	float oldLum = texture( vkSampler2D( oldLumRt, samplerPoint ), vec2( 0.0, 0.0 ) ).x;
-
-	//Adapt luminicense based 75% per second.
-	fragColour = mix( newLum, oldLum, pow( 0.25, timeSinceLast /* *0.3 slower */ ) );
+	// Instant exposure response (no temporal adaptation)
+	fragColour = exposure.x / exp( clamp( fLumAvg, exposure.y, exposure.z ) );
 }

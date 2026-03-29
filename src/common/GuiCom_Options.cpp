@@ -242,11 +242,11 @@ void CGuiCom::GuiInitGraphics()  // ? not yet: called on preset change with bGI 
 
 	ck= &ckLensFlare;		ck->Init("LensFlare",	&pSet->g.lens_flare);  // 🔆
 	ck= &ckSunbemas;		ck->Init("SunBeams",	&pSet->g.sunbeams);  // 🌄
-	ck= &ckHDR;				ck->Init("HDR",			&pSet->g.hdr);  // 🌅 HDR
+	ck= &ckHDR;				ck->Init("HDR",			&pSet->g.hdr);  CevC(Hdr);  // 🌅 HDR
 
 	//  🟢 Carbon HDR Bloom settings
-	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 1.5f);  sv->DefaultF(0.5f);  SevC(HdrBloom);
-	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,1.5f, 1.5f);  sv->DefaultF(0.7f);  SevC(HdrBloom);
+	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 1.5f);  sv->DefaultF(0.35f);  SevC(HdrBloom);
+	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,1.5f, 1.5f);  sv->DefaultF(0.5f);  SevC(HdrBloom);
 
 	//  🟢 Legacy Effects
 	ck= &ckAllEffects;		ck->Init("AllEffects",	&pSet->all_effects);  CevC(AllEffects);
@@ -354,6 +354,21 @@ void CGuiCom::slFps(SV*)
 
 //  events
 //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  🟢 Carbon HDR
+void CGuiCom::chkHdr(Ck*)
+{
+	//  Toggle Carbon-style HDR preset when HDR is enabled/disabled
+	if (pSet->g.hdr)
+	{
+		//  HDR enabled - apply Carbon night preset
+		Demo::HdrUtils::setCarbonNightPreset();
+		//  Update sliders to match preset values
+		svHdrBloomInt.SetValueF(0.35f);
+		svHdrBloomThresh.SetValueF(0.5f);
+	}
+	//  When disabled, compositor will be rebuilt without HDR path
+}
+
 //  🟢 Carbon HDR Bloom
 void CGuiCom::slHdrBloom(SV*)
 {

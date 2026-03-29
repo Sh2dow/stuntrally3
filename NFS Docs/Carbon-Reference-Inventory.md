@@ -6,7 +6,7 @@ Reference repos and data sources inspected locally:
 
 - `D:\Repos\Games\NFSC\hyperlinked`
 - `D:\Repos\Games\NFSC\nfsc-sdk`
-- `D:\Games\NFSC PS3`
+- `D:\Games\NFSC Redux`
 
 Goal of this document:
 
@@ -39,7 +39,7 @@ This document is no longer only source-backed. It now includes initial IDA-backe
 
 ## Game Resource Source
 
-`D:\Games\NFSC PS3` contains useful full-game data buckets for future extraction:
+`D:\Games\NFSC Redux` contains useful full-game data buckets for future extraction:
 
 - `CARS`
 - `FRONTEND`
@@ -59,7 +59,7 @@ Use this path for:
 - vehicle/track content discovery
 - event/frontend package naming cross-checks
 
-Initial filename-level evidence from `D:\Games\NFSC PS3` already confirms several Carbon-specific systems:
+Initial filename-level evidence from `D:\Games\NFSC Redux` already confirms several Carbon-specific systems:
 
 - HUD textures:
   - `GLOBAL\HUDTEXRACE.BIN`
