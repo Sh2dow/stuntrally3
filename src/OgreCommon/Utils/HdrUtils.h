@@ -1,4 +1,4 @@
-
+#pragma once
 #include <OgrePrerequisites.h>
 
 namespace Demo

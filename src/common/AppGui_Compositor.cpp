@@ -4,6 +4,8 @@
 #include "settings.h"
 #include "settings_com.h"
 #include "AppGui.h"
+#include "GuiCom.h"
+#include "Utils/HdrUtils.h"
 #include "Cam.h"
 #include "RenderConst.h"
 
@@ -181,8 +183,9 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 		
 		combine = view >= nCombine,  // split, last
 		createRTT = ed ? 0 : splits > 1,  // for split
-		addHudGui = ed ? 0 : splits <= 1,
-		msaa = mWindow->getSampleDescription().isMultisample();
+		addHudGui = ed ? 0 : splits <= 1;
+	const auto sampleDesc = mWindow->getSampleDescription();
+	const bool msaa = sampleDesc.isMultisample();
 
 	//  log
 	LogO("CC+# Create Compositor   "+getWsInfo());
@@ -521,7 +524,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			nd->addTextureSourceName("depthBufferNoMsaa", 3, inp);
 
 			const int post = (lens ? 1 : 0) + (sunbeams ? 1 : 0);
-			const int hdrTargets = hdr ? 4 : 0;
+			const int hdrTargets = hdr ? 5 : 0;
 			const int finalLocalTextures = post + 1 + hdrTargets;
 			const int finalTargetPasses = post + 2 + hdrTargets;
 			
@@ -621,9 +624,25 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;
 				AddRtv(nd, "hdrBlurV", "hdrBlurV");
 
+				tdef = nd->addTextureDefinition( "hdrLumDummy" );
+				tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";
+				AddRtv(nd, "hdrLumDummy", "hdrLumDummy");
+
 				tdef = nd->addTextureDefinition( "hdrFinal" );
 				tdef->format = PFG_UNKNOWN;  tdef->fsaa = "";  // target_format
 				AddRtv(nd, "hdrFinal", "hdrFinal", "depthBuffer");
+				}
+
+				td = nd->addTargetPass( "hdrLumDummy" );
+				td->setNumPasses( 1 );
+				{
+					auto* psLum = AddScene(td);
+					psLum->setAllLoadActions( LoadAction::Clear );
+					psLum->mClearColour[0] = ColourValue::White;
+					psLum->mStoreActionColour[0] = StoreAction::Store;
+					psLum->mVisibilityMask = 0;
+					psLum->mIncludeOverlays = false;
+					psLum->mProfilingId = "HDR Init Luminance";
 				}
 
 				//  Bright pass target
@@ -636,10 +655,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 					pq->mMaterialName = "HDR/BrightPass_Start";  pq->mProfilingId = "HDR Bright Pass";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // input
-					// Reuse the current HDR scene colour as a fallback luminance source.
-					// The original HDR pipeline had a dedicated lumRt chain, which this
-					// simplified Carbon bloom path does not build yet.
-					pq->addQuadTextureSource( 1, "rtt_final" );
+					pq->addQuadTextureSource( 1, "hdrLumDummy" );
 					//  🟢 Carbon bloom params - set via material
 				}
 
@@ -674,7 +690,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 					pq->mMaterialName = "HDR/FinalToneMapping";  pq->mProfilingId = "HDR Combine Bloom";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // original
-					pq->addQuadTextureSource( 1, "rtt_final" );  // fallback lumRt
+					pq->addQuadTextureSource( 1, "hdrLumDummy" );
 					pq->addQuadTextureSource( 2, "hdrBlurV" );  // bloom
 					//  🟢 Carbon bloom intensity - set via material
 				}
@@ -798,6 +814,8 @@ void AppGui::SetupCompositors()
 	LogO("CC## Setup Compositor    "+getWsInfo());
 	auto* mgr = mRoot->getCompositorManager2();
 	const bool hdr = pSet->g.hdr;
+	if( hdr && mWindow->getSampleDescription().isMultisample() )
+		Demo::HdrUtils::init( mWindow->getSampleDescription().getColourSamples() );
 	
 #ifndef SR_EDITOR  // game
 	const int views = pSet->game.local_players;
@@ -939,4 +957,9 @@ void AppGui::SetupCompositors()
 	}
 #endif
 	LogO("CC## Done Compositor === "+getWsInfo());
+
+	if (hdr && gcom)
+	{
+		gcom->slHdrBloom( nullptr );
+	}
 }
