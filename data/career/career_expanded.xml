@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SR3 Career Data - Expanded Districts
+10 districts with increasing difficulty
+-->
+<career>
+
+    <!-- Districts 1-5 (original) -->
+    <districts>
+        
+        <!-- District 1: Downtown -->
+        <district id="1" name="Downtown" desc="The heart of the city"
+                  minimap="data/career/district_1.png"
+                  cameraDist="400"
+                  requiredRep="0"
+                  requiredBosses="0"
+                  completionCash="2000"
+                  completionRep="500"
+                  unlockCar="FN">
+            <events>
+                <event>sprint_downtown_01</event>
+                <event>sprint_downtown_02</event>
+                <event>circuit_downtown_01</event>
+                <event>drift_downtown_01</event>
+                <event>drift_downtown_02</event>
+            </events>
+            <bossEvent>boss_downtown</bossEvent>
+        </district>
+        
+        <!-- District 2: Industrial -->
+        <district id="2" name="Industrial" desc="Factory district with wide roads"
+                  minimap="data/career/district_2.png"
+                  cameraDist="500"
+                  requiredRep="500"
+                  requiredBosses="1"
+                  completionCash="3000"
+                  completionRep="750"
+                  unlockCar="LF">
+            <events>
+                <event>sprint_industrial_01</event>
+                <event>sprint_industrial_02</event>
+                <event>sprint_industrial_03</event>
+                <event>circuit_industrial_01</event>
+                <event>canyon_industrial_01</event>
+                <event>drift_industrial_01</event>
+            </events>
+            <bossEvent>boss_industrial</bossEvent>
+        </district>
+        
+        <!-- District 3: Harbor -->
+        <district id="3" name="Harbor" desc="Waterfront with tight corners"
+                  minimap="data/career/district_3.png"
+                  cameraDist="450"
+                  requiredRep="1500"
+                  requiredBosses="2"
+                  completionCash="4000"
+                  completionRep="1000"
+                  unlockCar="MO">
+            <events>
+                <event>sprint_harbor_01</event>
+                <event>sprint_harbor_02</event>
+                <event>circuit_harbor_01</event>
+                <event>circuit_harbor_02</event>
+                <event>canyon_harbor_01</event>
+                <event>canyon_harbor_02</event>
+                <event>drift_harbor_01</event>
+            </events>
+            <bossEvent>boss_harbor</bossEvent>
+        </district>
+        
+        <!-- District 4: Airport -->
+        <district id="4" name="Airport" desc="Long straights and technical sections"
+                  minimap="data/career/district_4.png"
+                  cameraDist="600"
+                  requiredRep="3000"
+                  requiredBosses="3"
+                  completionCash="5000"
+                  completionRep="1500"
+                  unlockCar="ES">
+            <events>
+                <event>sprint_airport_01</event>
+                <event>sprint_airport_02</event>
+                <event>sprint_airport_03</event>
+                <event>circuit_airport_01</event>
+                <event>circuit_airport_02</event>
+                <event>canyon_run_airport_01</event>
+                <event>canyon_run_airport_02</event>
+                <event>drift_airport_01</event>
+            </events>
+            <bossEvent>boss_airport</bossEvent>
+        </district>
+        
+        <!-- District 5: Hills -->
+        <district id="5" name="Mountain Hills" desc="Canyon roads in the mountains"
+                  minimap="data/career/district_5.png"
+                  cameraDist="550"
+                  requiredRep="5000"
+                  requiredBosses="4"
+                  completionCash="7500"
+                  completionRep="2000"
+                  unlockCar="R1">
+            <events>
+                <event>canyon_hills_01</event>
+                <event>canyon_hills_02</event>
+                <event>canyon_hills_03</event>
+                <event>canyon_run_hills_01</event>
+                <event>canyon_run_hills_02</event>
+                <event>canyon_run_hills_03</event>
+                <event>drift_hills_01</event>
+                <event>drift_hills_02</event>
+            </events>
+            <bossEvent>boss_hills</bossEvent>
+        </district>
+        
+        <!-- District 6: Suburbs (NEW) -->
+        <district id="6" name="Suburbs" desc="Residential area with mixed roads"
+                  minimap="data/career/district_6.png"
+                  cameraDist="500"
+                  requiredRep="8000"
+                  requiredBosses="5"
+                  completionCash="9000"
+                  completionRep="2500"
+                  unlockCar="HR">
+            <events>
+                <event>sprint_suburbs_01</event>
+                <event>sprint_suburbs_02</event>
+                <event>sprint_suburbs_03</event>
+                <event>circuit_suburbs_01</event>
+                <event>circuit_suburbs_02</event>
+                <event>drift_suburbs_01</event>
+                <event>drift_suburbs_02</event>
+                <event>pursuit_suburbs_01</event>
+            </events>
+            <bossEvent>boss_suburbs</bossEvent>
+        </district>
+        
+        <!-- District 7: Beach (NEW) -->
+        <district id="7" name="Beach District" desc="Coastal roads with ocean views"
+                  minimap="data/career/district_7.png"
+                  cameraDist="650"
+                  requiredRep="12000"
+                  requiredBosses="6"
+                  completionCash="11000"
+                  completionRep="3000"
+                  unlockCar="HI">
+            <events>
+                <event>sprint_beach_01</event>
+                <event>sprint_beach_02</event>
+                <event>circuit_beach_01</event>
+                <event>circuit_beach_02</event>
+                <event>circuit_beach_03</event>
+                <event>canyon_run_beach_01</event>
+                <event>drift_beach_01</event>
+                <event>drift_beach_02</event>
+                <event>pursuit_beach_01</event>
+            </events>
+            <bossEvent>boss_beach</bossEvent>
+        </district>
+        
+        <!-- District 8: Old Town (NEW) -->
+        <district id="8" name="Old Town" desc="Historic district with narrow streets"
+                  minimap="data/career/district_8.png"
+                  cameraDist="400"
+                  requiredRep="17000"
+                  requiredBosses="7"
+                  completionCash="13000"
+                  completionRep="3500"
+                  unlockCar="FR4">
+            <events>
+                <event>sprint_oldtown_01</event>
+                <event>sprint_oldtown_02</event>
+                <event>sprint_oldtown_03</event>
+                <event>circuit_oldtown_01</event>
+                <event>drift_oldtown_01</event>
+                <event>drift_oldtown_02</event>
+                <event>drift_oldtown_03</event>
+                <event>canyon_oldtown_01</event>
+                <event>pursuit_oldtown_01</event>
+            </events>
+            <bossEvent>boss_oldtown</bossEvent>
+        </district>
+        
+        <!-- District 9: Financial District (NEW) -->
+        <district id="9" name="Financial District" desc="Modern skyscrapers and wide avenues"
+                  minimap="data/career/district_9.png"
+                  cameraDist="700"
+                  requiredRep="23000"
+                  requiredBosses="8"
+                  completionCash="15000"
+                  completionRep="4000"
+                  unlockCar="H2">
+            <events>
+                <event>sprint_financial_01</event>
+                <event>sprint_financial_02</event>
+                <event>sprint_financial_03</event>
+                <event>circuit_financial_01</event>
+                <event>circuit_financial_02</event>
+                <event>circuit_financial_03</event>
+                <event>canyon_run_financial_01</event>
+                <event>drift_financial_01</event>
+                <event>pursuit_financial_01</event>
+                <event>pursuit_financial_02</event>
+            </events>
+            <bossEvent>boss_financial</bossEvent>
+        </district>
+        
+        <!-- District 10: Underground (NEW - Final) -->
+        <district id="10" name="Underground" desc="Secret racing venue beneath the city"
+                  minimap="data/career/district_10.png"
+                  cameraDist="500"
+                  requiredRep="30000"
+                  requiredBosses="9"
+                  completionCash="20000"
+                  completionRep="5000"
+                  unlockCar="S8">
+            <events>
+                <event>sprint_underground_01</event>
+                <event>sprint_underground_02</event>
+                <event>circuit_underground_01</event>
+                <event>circuit_underground_02</event>
+                <event>canyon_underground_01</event>
+                <event>canyon_underground_02</event>
+                <event>drift_underground_01</event>
+                <event>drift_underground_02</event>
+                <event>pursuit_underground_01</event>
+                <event>ultimate_challenge</event>
+            </events>
+            <bossEvent>boss_underground</bossEvent>
+        </district>
+        
+    </districts>
+    
+    <!-- Rivals for new districts -->
+    <rivals>
+        
+        <!-- Original bosses (1-5) -->
+        <rival id="boss_downtown" name="Wolf" desc="King of the downtown streets"
+               district="1" car="R3" difficulty="3"
+               defeatCash="2000" defeatRep="500"
+               unlockEvent="district_2_unlock">
+            <dialogue intro="You think you can take me on? Let's see what you got!"
+                      outro="Not bad... but this isn't over."/>
+        </rival>
+        
+        <rival id="boss_industrial" name="Razor" desc="Factory worker by day, racer by night"
+               district="2" car="FR4" difficulty="4"
+               defeatCash="3000" defeatRep="750"
+               unlockEvent="district_3_unlock">
+            <dialogue intro="Welcome to my turf. You're gonna regret stepping here."
+                      outro="How... how did you beat me?"/>
+        </rival>
+        
+        <rival id="boss_harbor" name="Kaze" desc="Drift master of the harbor"
+               district="3" car="HI" difficulty="4"
+               defeatCash="4000" defeatRep="1000"
+               unlockEvent="district_4_unlock">
+            <dialogue intro="The harbor is my playground. You're just visiting."
+                      outro="Your drift... it's better than mine. Teach me."/>
+        </rival>
+        
+        <rival id="boss_airport" name="Jax" desc="Speed demon who owns the airport run"
+               district="4" car="H2" difficulty="5"
+               defeatCash="5000" defeatRep="1500"
+               unlockEvent="district_5_unlock">
+            <dialogue intro="You're fast. But I'm faster."
+                      outro="Impossible... nobody beats me on the runway!"/>
+        </rival>
+        
+        <rival id="boss_hills" name="Darius" desc="The ultimate canyon king"
+               district="5" car="S8" difficulty="5"
+               defeatCash="10000" defeatRep="5000"
+               unlockEvent="district_6_unlock">
+            <dialogue intro="You've come far. But the hills are where legends are made."
+                      outro="You've earned it. The title of Canyon King is yours."/>
+        </rival>
+        
+        <!-- New bosses (6-10) -->
+        <rival id="boss_suburbs" name="Nikki" desc="Street racer with local knowledge"
+               district="6" car="TU" difficulty="4"
+               defeatCash="9000" defeatRep="2500"
+               unlockEvent="district_7_unlock">
+            <dialogue intro="These streets? I know every corner. You don't stand a chance."
+                      outro="Okay, you're good. But can you handle what's next?"/>
+        </rival>
+        
+        <rival id="boss_beach" name="Taz" desc="Surfer turned street racer"
+               district="7" car="BV" difficulty="4"
+               defeatCash="11000" defeatRep="3000"
+               unlockEvent="district_8_unlock">
+            <dialogue intro="Beach vibes and fast rides. That's my style."
+                      outro="Dude... you're insane. Respect."/>
+        </rival>
+        
+        <rival id="boss_oldtown" name="Sal" desc="Old school racer, old school tactics"
+               district="8" car="BE" difficulty="5"
+               defeatCash="13000" defeatRep="3500"
+               unlockEvent="district_9_unlock">
+            <dialogue intro="Been racing these streets for 20 years. You're just a kid."
+                      outro="Maybe... maybe the old dog can learn new tricks."/>
+        </rival>
+        
+        <rival id="boss_financial" name="Victoria" desc="Corporate executive, ruthless racer"
+               district="9" car="ES" difficulty="5"
+               defeatCash="15000" defeatRep="4000"
+               unlockEvent="district_10_unlock">
+            <dialogue intro="I don't lose. It's not in my business plan."
+                      outro="You've disrupted my... operations. Impressive."/>
+        </rival>
+        
+        <rival id="boss_underground" name="The King" desc="Mysterious ruler of underground racing"
+               district="10" car="OT" difficulty="5"
+               defeatCash="25000" defeatRep="10000"
+               unlockEvent="career_complete">
+            <dialogue intro="Welcome to the final stage. Only one leaves as King."
+                      outro="The crown is yours. The underground is yours. Race on."/>
+        </rival>
+        
+    </rivals>
+    
+</career>

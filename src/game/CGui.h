@@ -49,6 +49,7 @@ public:
 	//  🪧 Main Menu
 	void InitMainMenu();
 	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
+	void ShowCareerWnd();  // NEW Career window
 
 	Cmb simList;  void comboSim(CMB);
 	Cmb diffList;  void comboDiff(CMB);

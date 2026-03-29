@@ -16,10 +16,10 @@ class CarModel;  class SETTINGS;  class GraphicsSystem;
 
 
 //  main, race menus
-enum Menu_Btns {  Menu_Setup, Menu_Replays, Menu_Help, Menu_Options,  ciMainBtns };
+enum Menu_Btns {  Menu_Setup, Menu_Replays, Menu_Help, Menu_Options, Menu_Career,  ciMainBtns };
 enum Setup_Btns {  Setup_Games,  Setup_HowToPlay,  Setup_Difficulty, Setup_Simulation,  Setup_Back, ciSetupBtns };
-enum Games_Btns {  Games_Single, Games_SplitScreen, Games_Multiplayer, 
-					Games_Tutorial, Games_Champ, Games_Challenge, Games_Collection, //Games_Career,
+enum Games_Btns {  Games_Single, Games_SplitScreen, Games_Multiplayer,
+					Games_Tutorial, Games_Champ, Games_Challenge, Games_Collection, Games_Career,
 					Games_Stats, Games_Back, ciGamesBtns };
 //  gui
 enum TAB_Game    {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup, TAB_Split,TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
@@ -116,7 +116,7 @@ public:
 
 
 	///  🪧 main menu  // pSet->inMenu  3 levels
-	Wnd mWMainMenu =0, mWMainSetup =0, mWMainGames =0;  WP mWndGameInfo =0;
+	Wnd mWMainMenu =0, mWMainSetup =0, mWMainGames =0, mWCareer =0;  WP mWndGameInfo =0;
 	Img mMainPanels[ciMainBtns] ={0,}, mMainSetupPanels[ciSetupBtns] ={0,}, mMainGamesPanels[ciGamesBtns] ={0,};
 	Btn mMainBtns  [ciMainBtns] ={0,}, mMainSetupBtns  [ciSetupBtns] ={0,}, mMainGamesBtns  [ciGamesBtns] ={0,};
 	void updPanGames(int yToSet=-1);

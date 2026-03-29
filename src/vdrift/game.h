@@ -13,6 +13,7 @@
 #include <thread>
 
 class SoundMgr;  class Sound;  class App;  class SETTINGS;
+class TrackZoneManager;  // 🗺️ Track zones
 
 
 class GAME
@@ -75,6 +76,9 @@ public:
 	bool bResetObj = 0;
 	
 	TIMER timer;  // ⏱️
+
+	/// 🗺️ Track Zone Manager
+	TrackZoneManager* zoneManager = nullptr;
 
 
 	//  🔉 Sound  ----

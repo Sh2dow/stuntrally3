@@ -112,6 +112,28 @@
 			<Property key="FontName" value="font.big"/>
 		</Widget>
 
+		<!-- Career Button (NEW) -->
+		<Widget type="ImageBox" skin="ImageBox" position="32 380 56 56">
+			<Property key="ImageCoord" value="768 256 128 128"/>
+			<Property key="Colour" value="1.0 0.7 0.7"/>
+			<Property key="Alpha" value="0.9"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="92 372 436 72" name="PanMenu4">
+			<Property key="Colour" value="1.0 0.6 0.6"/>
+			<Property key="ImageTexture" value="menu_cur.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="108 384 404 50" name="BtnMenu4">
+			<Property key="Caption" value="#{Career}"/>
+			<Property key="Colour" value="1.0 0.6 0.6"/>
+			<Property key="TextColour" value="1.0 0.6 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.big"/>
+			<UserString key="tip" value="#{CareerInfo}"/>
+		</Widget>
+
 		<Widget type="ImageBox" skin="ImageBox" position="32 422 56 56">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="sr-editor.png"/>
@@ -428,7 +450,8 @@
 			<UserString key="tip" value="#{CollectInfo}"/>
 		</Widget>
 
-		<!-- <Widget type="ImageBox" skin="ImageBox" position="532 380 56 56">
+		<!-- Career Button (NEW - Enabled) -->
+		<Widget type="ImageBox" skin="ImageBox" position="532 380 56 56">
 			<Property key="ImageCoord" value="768 256 128 128"/>
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -446,8 +469,8 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
 			<UserString key="tip" value="#{CareerInfo}"/>
-		</Widget> -->
-		
+		</Widget>
+
 		<!-- stats -->
 		<Widget type="ImageBox" skin="ImageBox" position="32 508 56 56">
 			<Property key="ImageCoord" value="128 896 128 128"/>
@@ -455,12 +478,12 @@
 			<Property key="ImageTexture" value="gui_icons.png"/>
 			<Property key="Colour" value="0.5 0.8 0.6"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="92 500 436 72" name="PanGames7">
+		<Widget type="ImageBox" skin="ImageBox" position="92 500 436 72" name="PanGames8">
 			<Property key="Colour" value="0.7 0.9 1.0"/>
 			<Property key="ImageTexture" value="menu_cur.png"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 512 404 50" name="BtnGames7">
+		<Widget type="Button" skin="Button" position="108 512 404 50" name="BtnGames8">
 			<Property key="Caption" value="#{GameStatistics}"/>
 			<Property key="Colour" value="0.6 0.8 0.9"/>
 			<Property key="TextColour" value="0.6 0.8 0.9"/>
@@ -474,12 +497,12 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="92 572 436 72" name="PanGames8">
+		<Widget type="ImageBox" skin="ImageBox" position="92 572 436 72" name="PanGames9">
 			<Property key="Colour" value="0.9 0.9 0.9"/>
 			<Property key="ImageTexture" value="menu_cur.png"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 584 404 50" name="BtnGames8">
+		<Widget type="Button" skin="Button" position="108 584 404 50" name="BtnGames9">
 			<Property key="Caption" value="&lt;#{BackMenu}"/>
 			<Property key="Colour" value="0.8 0.8 0.8"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>
@@ -498,6 +521,172 @@
 				<Property key="ImageTexture" value="gui_icons.png"/>
 				<Property key="NeedMouse" value="false"/>
 			</Widget>
+		</Widget>
+
+	</Widget>
+
+
+	<!-- Career Window (NEW) -->
+	<Widget type="Window" skin="WindowC" position="1768 156 1100 730" align="Center" layer="Overlapped" name="CareerWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="Caption" value="#{Career}"/>
+		<Property key="Alpha" value="0.7"/>
+		<Property key="Snap" value="true"/>
+		<UserString key="NotSized" value="1"/>
+
+		<!-- Career Info Panel -->
+		<Widget type="ImageBox" skin="ImageBox" position="32 20 500 150">
+			<Property key="Colour" value="0.2 0.2 0.25"/>
+			<Property key="ImageTexture" value="menu_cur.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBoxEmpty" position="44 32 476 126" name="edCareerInfo">
+			<Property key="TextColour" value="1.0 0.8 0.6"/>
+			<Property key="Colour" value="0.5 0.56 0.6"/>
+			<Property key="ReadOnly" value="true"/>
+			<Property key="WordWrap" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="Static" value="true"/>
+			<Property key="MaxTextLength" value="2000"/>
+			<Property key="NeedMouse" value="false"/>
+			<Property key="TextAlign" value="Left Top"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<!-- District Map Area -->
+		<Widget type="ImageBox" skin="ImageBox" position="32 180 500 400">
+			<Property key="Colour" value="0.15 0.15 0.2"/>
+			<Property key="ImageTexture" value="menu_cur.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="44 192 476 376" name="DistrictMapArea">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Alpha" value="0.9"/>
+		</Widget>
+
+		<!-- District Buttons (10 districts) -->
+		<Widget type="Button" skin="Button" position="552 192 200 40" name="BtnDistrict0">
+			<Property key="Caption" value="1. Downtown"/>
+			<Property key="Colour" value="0.6 1.0 0.6"/>
+			<Property key="TextColour" value="0.6 1.0 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="762 192 200 40" name="BtnDistrict1">
+			<Property key="Caption" value="2. Industrial"/>
+			<Property key="Colour" value="0.6 0.8 0.6"/>
+			<Property key="TextColour" value="0.6 0.8 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<Widget type="Button" skin="Button" position="552 242 200 40" name="BtnDistrict2">
+			<Property key="Caption" value="3. Harbor"/>
+			<Property key="Colour" value="0.6 0.8 1.0"/>
+			<Property key="TextColour" value="0.6 0.8 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="762 242 200 40" name="BtnDistrict3">
+			<Property key="Caption" value="4. Airport"/>
+			<Property key="Colour" value="0.7 0.7 1.0"/>
+			<Property key="TextColour" value="0.7 0.7 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<Widget type="Button" skin="Button" position="552 292 200 40" name="BtnDistrict4">
+			<Property key="Caption" value="5. Hills"/>
+			<Property key="Colour" value="0.8 0.6 1.0"/>
+			<Property key="TextColour" value="0.8 0.6 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="762 292 200 40" name="BtnDistrict5">
+			<Property key="Caption" value="6. Suburbs"/>
+			<Property key="Colour" value="1.0 0.6 0.6"/>
+			<Property key="TextColour" value="1.0 0.6 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<Widget type="Button" skin="Button" position="552 342 200 40" name="BtnDistrict6">
+			<Property key="Caption" value="7. Beach"/>
+			<Property key="Colour" value="1.0 0.8 0.6"/>
+			<Property key="TextColour" value="1.0 0.8 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="762 342 200 40" name="BtnDistrict7">
+			<Property key="Caption" value="8. Old Town"/>
+			<Property key="Colour" value="1.0 1.0 0.6"/>
+			<Property key="TextColour" value="1.0 1.0 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<Widget type="Button" skin="Button" position="552 392 200 40" name="BtnDistrict8">
+			<Property key="Caption" value="9. Financial"/>
+			<Property key="Colour" value="0.6 1.0 0.8"/>
+			<Property key="TextColour" value="0.6 1.0 0.8"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="762 392 200 40" name="BtnDistrict9">
+			<Property key="Caption" value="10. Underground"/>
+			<Property key="Colour" value="1.0 0.6 1.0"/>
+			<Property key="TextColour" value="1.0 0.6 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<!-- Player Stats -->
+		<Widget type="ImageBox" skin="ImageBox" position="552 452 410 100">
+			<Property key="Colour" value="0.2 0.2 0.25"/>
+			<Property key="ImageTexture" value="menu_cur.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBoxEmpty" position="564 464 386 76" name="edCareerStats">
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="Colour" value="0.5 0.56 0.6"/>
+			<Property key="ReadOnly" value="true"/>
+			<Property key="WordWrap" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="Static" value="true"/>
+			<Property key="MaxTextLength" value="1000"/>
+			<Property key="NeedMouse" value="false"/>
+			<Property key="TextAlign" value="Left Top"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.normal"/>
+		</Widget>
+
+		<!-- Back Button -->
+		<Widget type="ImageBox" skin="ImageBox" position="32 580 56 56">
+			<Property key="ImageCoord" value="256 896 128 128"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="92 572 436 72" name="PanCareerBack">
+			<Property key="Colour" value="0.9 0.9 0.9"/>
+			<Property key="ImageTexture" value="menu_cur.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="108 584 404 50" name="BtnCareerBack">
+			<Property key="Caption" value="&lt;#{BackMenu}"/>
+			<Property key="Colour" value="0.8 0.8 0.8"/>
+			<Property key="TextColour" value="0.9 0.9 0.9"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.big"/>
+		</Widget>
+
+		<!-- Start Career Button -->
+		<Widget type="Button" skin="Button" position="762 572 200 60" name="BtnStartCareer">
+			<Property key="Caption" value="Start Career"/>
+			<Property key="Colour" value="0.6 1.0 0.6"/>
+			<Property key="TextColour" value="0.6 1.0 0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.big"/>
 		</Widget>
 
 	</Widget>

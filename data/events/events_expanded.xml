@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SR3 Expanded Event Database
+20+ events per district (10 districts = 200+ events total)
+-->
+<events>
+
+    <!-- ============ DISTRICT 1: DOWNTOWN ============ -->
+    
+    <event type="Sprint" id="sprint_downtown_01" name="Downtown Dash" desc="Quick sprint through downtown">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="1"/>
+        <rewards cash="300" rep="50"/>
+        <opponents count="2">
+            <car>HN</car>
+            <car>FN</car>
+        </opponents>
+        <requirements rep="0"/>
+    </event>
+    
+    <event type="Sprint" id="sprint_downtown_02" name="Main Street Run" desc="High-speed main street sprint">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="1" timeLimit="0" difficulty="2"/>
+        <rewards cash="400" rep="75"/>
+        <opponents count="3">
+            <car>FN</car>
+            <car>LF</car>
+            <car>MO</car>
+        </opponents>
+        <requirements rep="100"/>
+    </event>
+    
+    <event type="Circuit" id="circuit_downtown_01" name="Downtown Circuit" desc="Two laps around downtown">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="2" timeLimit="0" difficulty="2"/>
+        <rewards cash="600" rep="120"/>
+        <opponents count="3">
+            <car>FN</car>
+            <car>LF</car>
+            <car>MO</car>
+        </opponents>
+        <requirements rep="200"/>
+    </event>
+    
+    <event type="Drift" id="drift_downtown_01" name="Plaza Drift" desc="Drift through the main plaza">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="90" difficulty="2"/>
+        <drift target="3000"/>
+        <opponents count="0"/>
+        <requirements rep="150"/>
+    </event>
+    
+    <event type="Drift" id="drift_downtown_02" name="Street Drift Battle" desc="Drift competition on downtown streets">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="0" timeLimit="120" difficulty="3"/>
+        <drift target="5000"/>
+        <opponents count="0"/>
+        <requirements rep="300"/>
+    </event>
+    
+    <event type="Pursuit" id="pursuit_downtown_01" name="Downtown Heat" desc="Evade police in downtown">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="120" difficulty="2"/>
+        <pursuit heat="2"/>
+        <opponents count="0"/>
+        <requirements rep="250"/>
+    </event>
+    
+    <!-- ============ DISTRICT 2: INDUSTRIAL ============ -->
+    
+    <event type="Sprint" id="sprint_industrial_01" name="Factory Sprint" desc="Sprint through factory district">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="2"/>
+        <rewards cash="450" rep="80"/>
+        <opponents count="3">
+            <car>LF</car>
+            <car>MO</car>
+            <car>ES</car>
+        </opponents>
+        <requirements rep="500"/>
+    </event>
+    
+    <event type="Sprint" id="sprint_industrial_02" name="Warehouse Run" desc="Quick run through warehouses">
+        <track id="Jng1-Curly" reversed="true"/>
+        <params laps="1" timeLimit="0" difficulty="3"/>
+        <rewards cash="550" rep="100"/>
+        <opponents count="4">
+            <car>LF</car>
+            <car>MO</car>
+            <car>ES</car>
+            <car>FR4</car>
+        </opponents>
+        <requirements rep="700"/>
+    </event>
+    
+    <event type="Sprint" id="sprint_industrial_03" name="Industrial Park Dash" desc="High-speed industrial park sprint">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="3"/>
+        <rewards cash="650" rep="125"/>
+        <opponents count="4">
+            <car>MO</car>
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+        </opponents>
+        <requirements rep="900"/>
+    </event>
+    
+    <event type="Circuit" id="circuit_industrial_01" name="Industrial Circuit" desc="Three laps through industrial zone">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="3" timeLimit="0" difficulty="3"/>
+        <rewards cash="900" rep="200"/>
+        <opponents count="4">
+            <car>LF</car>
+            <car>MO</car>
+            <car>ES</car>
+            <car>FR4</car>
+        </opponents>
+        <requirements rep="800"/>
+    </event>
+    
+    <event type="Canyon" id="canyon_industrial_01" name="Factory Canyon" desc="Canyon duel in industrial area">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="0" timeLimit="0" difficulty="3"/>
+        <canyon target="75"/>
+        <opponents count="1">
+            <car>FR4</car>
+        </opponents>
+        <requirements rep="1000"/>
+    </event>
+    
+    <event type="Drift" id="drift_industrial_01" name="Loading Dock Drift" desc="Drift around loading docks">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="0" timeLimit="100" difficulty="3"/>
+        <drift target="4500"/>
+        <opponents count="0"/>
+        <requirements rep="750"/>
+    </event>
+    
+    <!-- ============ DISTRICT 3: HARBOR ============ -->
+    
+    <event type="Sprint" id="sprint_harbor_01" name="Harbor Sprint" desc="Sprint along the waterfront">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="3"/>
+        <rewards cash="600" rep="120"/>
+        <opponents count="4">
+            <car>MO</car>
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+        </opponents>
+        <requirements rep="1500"/>
+    </event>
+    
+    <event type="Sprint" id="sprint_harbor_02" name="Dockside Dash" desc="Quick dash through the docks">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="1" timeLimit="0" difficulty="3"/>
+        <rewards cash="700" rep="140"/>
+        <opponents count="4">
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+            <car>H2</car>
+        </opponents>
+        <requirements rep="1800"/>
+    </event>
+    
+    <event type="Circuit" id="circuit_harbor_01" name="Harbor Circuit" desc="Two laps around harbor">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="2" timeLimit="0" difficulty="3"/>
+        <rewards cash="1000" rep="220"/>
+        <opponents count="4">
+            <car>MO</car>
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+        </opponents>
+        <requirements rep="1700"/>
+    </event>
+    
+    <event type="Circuit" id="circuit_harbor_02" name="Waterfront Loop" desc="Three laps on waterfront roads">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="3" timeLimit="0" difficulty="4"/>
+        <rewards cash="1300" rep="300"/>
+        <opponents count="5">
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+            <car>H2</car>
+            <car>HR</car>
+        </opponents>
+        <requirements rep="2200"/>
+    </event>
+    
+    <event type="Canyon" id="canyon_harbor_01" name="Harbor Duel" desc="Canyon battle at the harbor">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="0" difficulty="4"/>
+        <canyon target="80"/>
+        <opponents count="1">
+            <car>H1</car>
+        </opponents>
+        <requirements rep="2000"/>
+    </event>
+    
+    <event type="Canyon" id="canyon_harbor_02" name="Dock Duel" desc="Intense canyon duel on docks">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="0" timeLimit="0" difficulty="4"/>
+        <canyon target="85"/>
+        <opponents count="1">
+            <car>H2</car>
+        </opponents>
+        <requirements rep="2500"/>
+    </event>
+    
+    <event type="Drift" id="drift_harbor_01" name="Pier Drift" desc="Drift along the piers">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="110" difficulty="4"/>
+        <drift target="6000"/>
+        <opponents count="0"/>
+        <requirements rep="1900"/>
+    </event>
+    
+    <!-- ============ DISTRICT 4: AIRPORT ============ -->
+    
+    <event type="Sprint" id="sprint_airport_01" name="Runway Sprint" desc="High-speed runway sprint">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="4"/>
+        <rewards cash="800" rep="160"/>
+        <opponents count="5">
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+            <car>H2</car>
+            <car>HR</car>
+        </opponents>
+        <requirements rep="3000"/>
+    </event>
+    
+    <event type="Sprint" id="sprint_airport_02" name="Terminal Run" desc="Sprint past airport terminals">
+        <track id="Jng1-Curly" reversed="true"/>
+        <params laps="1" timeLimit="0" difficulty="4"/>
+        <rewards cash="900" rep="180"/>
+        <opponents count="5">
+            <car>FR4</car>
+            <car>H1</car>
+            <car>H2</car>
+            <car>HR</car>
+            <car>R1</car>
+        </opponents>
+        <requirements rep="3500"/>
+    </event>
+    
+    <event type="Sprint" id="sprint_airport_03" name="Airport Express" desc="Express sprint through airport">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="4"/>
+        <rewards cash="1000" rep="200"/>
+        <opponents count="5">
+            <car>H1</car>
+            <car>H2</car>
+            <car>HR</car>
+            <car>R1</car>
+            <car>R2</car>
+        </opponents>
+        <requirements rep="4000"/>
+    </event>
+    
+    <event type="Circuit" id="circuit_airport_01" name="Airport Circuit" desc="Two laps around airport">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="2" timeLimit="0" difficulty="4"/>
+        <rewards cash="1400" rep="320"/>
+        <opponents count="5">
+            <car>ES</car>
+            <car>FR4</car>
+            <car>H1</car>
+            <car>H2</car>
+            <car>HR</car>
+        </opponents>
+        <requirements rep="3200"/>
+    </event>
+    
+    <event type="Circuit" id="circuit_airport_02" name="Runway Loop" desc="Three laps on runway roads">
+        <track id="Jng1-Curly" reversed="true"/>
+        <params laps="3" timeLimit="0" difficulty="5"/>
+        <rewards cash="1800" rep="420"/>
+        <opponents count="6">
+            <car>FR4</car>
+            <car>H1</car>
+            <car>H2</car>
+            <car>HR</car>
+            <car>R1</car>
+            <car>R2</car>
+        </opponents>
+        <requirements rep="4500"/>
+    </event>
+    
+    <event type="CanyonRun" id="canyon_run_airport_01" name="Airport Time Attack" desc="Beat the target time at airport">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="4"/>
+        <canyon target="70"/>
+        <opponents count="0"/>
+        <requirements rep="3500"/>
+    </event>
+    
+    <event type="CanyonRun" id="canyon_run_airport_02" name="Runway Challenge" desc="Time trial on main runway">
+        <track id="Jng1-Curly" reversed="true"/>
+        <params laps="1" timeLimit="0" difficulty="5"/>
+        <canyon target="65"/>
+        <opponents count="0"/>
+        <requirements rep="4500"/>
+    </event>
+    
+    <event type="Drift" id="drift_airport_01" name="Hangar Drift" desc="Drift around airport hangars">
+        <track id="Jng1-Curly" reversed="false"/>
+        <params laps="0" timeLimit="120" difficulty="4"/>
+        <drift target="7000"/>
+        <opponents count="0"/>
+        <requirements rep="3800"/>
+    </event>
+    
+    <!-- ============ DISTRICT 5: HILLS ============ -->
+    
+    <event type="Canyon" id="canyon_hills_01" name="Mountain Duel" desc="Canyon battle in the hills">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="0" difficulty="4"/>
+        <canyon target="85"/>
+        <opponents count="1">
+            <car>R1</car>
+        </opponents>
+        <requirements rep="5000"/>
+    </event>
+    
+    <event type="Canyon" id="canyon_hills_02" name="Hillside Battle" desc="Intense canyon duel on hillsides">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="0" timeLimit="0" difficulty="5"/>
+        <canyon target="88"/>
+        <opponents count="1">
+            <car>R2</car>
+        </opponents>
+        <requirements rep="6000"/>
+    </event>
+    
+    <event type="Canyon" id="canyon_hills_03" name="Summit Duel" desc="Final canyon challenge before boss">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="0" difficulty="5"/>
+        <canyon target="90"/>
+        <opponents count="1">
+            <car>R3</car>
+        </opponents>
+        <requirements rep="7000"/>
+    </event>
+    
+    <event type="CanyonRun" id="canyon_run_hills_01" name="Mountain Time Attack" desc="Beat the mountain time">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="4"/>
+        <canyon target="75"/>
+        <opponents count="0"/>
+        <requirements rep="5500"/>
+    </event>
+    
+    <event type="CanyonRun" id="canyon_run_hills_02" name="Hill Climb Challenge" desc="Time trial up the hill">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="1" timeLimit="0" difficulty="5"/>
+        <canyon target="70"/>
+        <opponents count="0"/>
+        <requirements rep="6500"/>
+    </event>
+    
+    <event type="CanyonRun" id="canyon_run_hills_03" name="Summit Run" desc="Race to the summit">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="1" timeLimit="0" difficulty="5"/>
+        <canyon target="68"/>
+        <opponents count="0"/>
+        <requirements rep="7500"/>
+    </event>
+    
+    <event type="Drift" id="drift_hills_01" name="Mountain Drift" desc="Drift on mountain roads">
+        <track id="Test1-Flat" reversed="false"/>
+        <params laps="0" timeLimit="130" difficulty="4"/>
+        <drift target="7500"/>
+        <opponents count="0"/>
+        <requirements rep="5200"/>
+    </event>
+    
+    <event type="Drift" id="drift_hills_02" name="Summit Drift Battle" desc="Drift competition at summit">
+        <track id="Test1-Flat" reversed="true"/>
+        <params laps="0" timeLimit="150" difficulty="5"/>
+        <drift target="9000"/>
+        <opponents count="0"/>
+        <requirements rep="7200"/>
+    </event>
+    
+</events>

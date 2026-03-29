@@ -7,6 +7,7 @@
 
 namespace protocol {  struct CarStatePackage;  }
 class Sound;  class GAME;  class App;  class CarModel;
+class VehicleCustomization;  // 🎨 Forward declaration
 
 
 class CAR

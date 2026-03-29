@@ -7,6 +7,7 @@
 #include "GuiCom.h"
 #include "CScene.h"
 #include "settings.h"
+#include "Career.h"
 
 #include <OgreRoot.h>
 #include <OgreOverlay.h>
@@ -57,6 +58,10 @@ void CGui::InitMainMenu()
 		app->mMainPanels[i] = fImg("PanMenu"+s);
 		Btn("BtnMenu"+s, btnMainMenu);  app->mMainBtns[i] = btn;
 	}
+	// Career button (BtnMenu4)
+	app->mMainPanels[4] = fImg("PanMenu4");
+	Btn("BtnMenu4", btnMainMenu);  app->mMainBtns[4] = btn;
+	
 	for (i=0; i < ciSetupBtns; ++i)
 	{
 		auto s = toStr(i);
@@ -69,13 +74,16 @@ void CGui::InitMainMenu()
 		app->mMainGamesPanels[i] = fImg("PanGames"+s);
 		Btn("BtnGames"+s, btnMainMenu);  app->mMainGamesBtns[i] = btn;
 	}
+	// Career button in games (BtnGames7)
+	app->mMainGamesPanels[7] = fImg("PanGames7");
+	Btn("BtnGames7", btnMainMenu);  app->mMainGamesBtns[7] = btn;
 
 	//  center
 	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
-	
+
 	Wnd wnd = app->mWMainMenu;  IntSize w = wnd->getSize();
 	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
-	
+
 	wnd = app->mWMainSetup;  w = wnd->getSize();
 	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
@@ -85,7 +93,7 @@ void CGui::InitMainMenu()
 
 	//  Difficulty  ---
 	Cmb(diffList, "DiffList", comboDiff);
-	
+
 	auto add = [&](int diff)
 	{
 		auto clr = gcom->getClrDiff(diff);
@@ -100,13 +108,77 @@ void CGui::InitMainMenu()
 	{
 		auto clr = gcom->getClrDiff(clrDiff);
 		simList->addItem(clr+ TR("#{Diff"+toStr(diff)+"}"));
-		
+
 		StringUtil::toLowerCase(s);
 		if (pSet->gui.sim_mode == s)
 			simList->setIndexSelected(simList->getItemCount()-1);
 	};
 	sim(1,2,"Easy");  sim(4,3,"Normal");
 	//sim(6,4,"Hard");  // WIP test .. car HI
+}
+
+
+//  🏆 Career Window
+//----------------------------------------------------------------------------------------------------------------
+void CGui::ShowCareerWnd()
+{
+	// Show career window
+	if (app->mWCareer)
+	{
+		app->mWCareer->setVisible(true);
+		
+		// Update career info
+		Ed edInfo = fEd("edCareerInfo");
+		if (edInfo)
+		{
+			std::string info = "#{CareerDesc}\n\n";
+			info += "#{CareerInstructions}";
+			edInfo->setCaption(TR(info));
+		}
+		
+		// Update player stats
+		Ed edStats = fEd("edCareerStats");
+		if (edStats)
+		{
+			std::string stats;
+			stats += "#{Level}: " + toStr(CareerManager::Get().GetLevel()) + "\n";
+			stats += "#{Reputation}: " + toStr(CareerManager::Get().GetProgress().reputation) + "\n";
+			stats += "#{Cash}: $" + toStr(CareerManager::Get().GetProgress().cash) + "\n";
+			stats += "\n#{BossesDefeated}: " + toStr(CareerManager::Get().GetProgress().bossesDefeated) + "/10\n";
+			stats += "#{DistrictsComplete}: " + toStr(0) + "/10";  // TODO: count complete districts
+			edStats->setCaption(stats);
+		}
+		
+		// Update district buttons
+		for (int i = 0; i < 10; ++i)
+		{
+			Btn btn = fBtn("BtnDistrict" + toStr(i));
+			if (btn)
+			{
+				const District* district = CareerManager::Get().GetDistrict(i + 1);
+				if (district)
+				{
+					bool unlocked = CareerManager::Get().CanAccessDistrict(district->id);
+					btn->setEnabled(unlocked);
+					btn->setCaption(toStr(i + 1) + ". " + district->name);
+					
+					// Color based on completion
+					if (unlocked)
+					{
+						bool complete = CareerManager::Get().IsDistrictComplete(district->id);
+						if (complete)
+							btn->setTextColour(Colour(0.6, 1.0, 0.6));  // Green
+						else
+							btn->setTextColour(Colour(1.0, 1.0, 0.6));  // Yellow
+					}
+					else
+					{
+						btn->setTextColour(Colour(0.6, 0.6, 0.6));  // Gray
+					}
+				}
+			}
+		}
+	}
 }
 
 
@@ -121,6 +193,7 @@ void CGui::btnMainMenu(WP wp)
 		case Menu_Replays:  pSet->iMenu = MN_Replays;  break;
 		case Menu_Help:     pSet->iMenu = MN_Help;  break;
 		case Menu_Options:  pSet->iMenu = MN_Options;  break;
+		case Menu_Career:   pSet->iMenu = MN_Career;  ShowCareerWnd();  break;  // NEW Career
 		}
 		app->gui->toggleGui(false);
 		return;
@@ -149,8 +222,8 @@ void CGui::btnMainMenu(WP wp)
 		case Games_Challenge:  GuiShortcut(MN_Chall,    TAB_Champs, -1, i);  return;
 
 		case Games_Collection: GuiShortcut(MN_Collect, TAB_Champs, -1, i);  break;
-		// case Games_Career:     GuiShortcut(MN_Career,  TAB_Champs, -1, i);  break;
-		
+		case Games_Career:     pSet->iMenu = MN_Career;  ShowCareerWnd();  break;  // NEW Career
+
 		case Games_Stats:      app->mWndStats->setVisible(true);  break;
 		case Games_Back:       pSet->iMenu = MN1_Setup;  break;
 		}

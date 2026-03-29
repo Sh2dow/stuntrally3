@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SR3 Expanded Customization Content
+50+ paint jobs, 100+ vinyls, 20+ upgrades
+-->
+<customization>
+
+    <!-- ============ PAINT JOBS (50+) ============ -->
+    <paintJobs>
+        
+        <!-- Solid Colors (8) -->
+        <paint id="solid_white" name="Arctic White" type="solid" cost="0" unlockLevel="1">
+            <color r="1.0" g="1.0" b="1.0" a="1.0"/>
+        </paint>
+        <paint id="solid_black" name="Phantom Black" type="solid" cost="0" unlockLevel="1">
+            <color r="0.05" g="0.05" b="0.05" a="1.0"/>
+        </paint>
+        <paint id="solid_red" name="Victory Red" type="solid" cost="0" unlockLevel="1">
+            <color r="0.8" g="0.1" b="0.1" a="1.0"/>
+        </paint>
+        <paint id="solid_blue" name="Racing Blue" type="solid" cost="200" unlockLevel="2">
+            <color r="0.1" g="0.3" b="0.8" a="1.0"/>
+        </paint>
+        <paint id="solid_yellow" name="Taxi Yellow" type="solid" cost="200" unlockLevel="2">
+            <color r="1.0" g="0.9" b="0.1" a="1.0"/>
+        </paint>
+        <paint id="solid_green" name="Forest Green" type="solid" cost="200" unlockLevel="2">
+            <color r="0.1" g="0.5" b="0.2" a="1.0"/>
+        </paint>
+        <paint id="solid_orange" name="Safety Orange" type="solid" cost="200" unlockLevel="2">
+            <color r="1.0" g="0.5" b="0.0" a="1.0"/>
+        </paint>
+        <paint id="solid_purple" name="Royal Purple" type="solid" cost="300" unlockLevel="3">
+            <color r="0.4" g="0.1" b="0.6" a="1.0"/>
+        </paint>
+        
+        <!-- Metallic (12) -->
+        <paint id="metallic_silver" name="Sterling Silver" type="metallic" cost="500" unlockLevel="2" flake="0.7">
+            <color r="0.75" g="0.75" b="0.75" a="1.0"/>
+        </paint>
+        <paint id="metallic_gray" name="Gunmetal Gray" type="metallic" cost="500" unlockLevel="2" flake="0.5">
+            <color r="0.4" g="0.4" b="0.45" a="1.0"/>
+        </paint>
+        <paint id="metallic_blue" name="Laser Blue" type="metallic" cost="600" unlockLevel="3" flake="0.5">
+            <color r="0.1" g="0.3" b="0.8" a="1.0"/>
+        </paint>
+        <paint id="metallic_red" name="Candy Red" type="metallic" cost="600" unlockLevel="3" flake="0.6">
+            <color r="0.9" g="0.1" b="0.15" a="1.0"/>
+        </paint>
+        <paint id="metallic_green" name="Emerald Green" type="metallic" cost="600" unlockLevel="3" flake="0.5">
+            <color r="0.0" g="0.6" b="0.3" a="1.0"/>
+        </paint>
+        <paint id="metallic_gold" name="Gold Rush" type="metallic" cost="1000" unlockLevel="5" flake="0.8">
+            <color r="0.85" g="0.7" b="0.2" a="1.0"/>
+        </paint>
+        <paint id="metallic_bronze" name="Bronze Medal" type="metallic" cost="800" unlockLevel="4" flake="0.6">
+            <color r="0.7" g="0.45" b="0.2" a="1.0"/>
+        </paint>
+        <paint id="metallic_copper" name="Copper Penny" type="metallic" cost="800" unlockLevel="4" flake="0.6">
+            <color r="0.75" g="0.35" b="0.25" a="1.0"/>
+        </paint>
+        <paint id="metallic_navy" name="Navy Blue" type="metallic" cost="600" unlockLevel="3" flake="0.5">
+            <color r="0.05" g="0.1" b="0.4" a="1.0"/>
+        </paint>
+        <paint id="metallic_burgundy" name="Burgundy" type="metallic" cost="600" unlockLevel="3" flake="0.5">
+            <color r="0.5" g="0.1" b="0.15" a="1.0"/>
+        </paint>
+        <paint id="metallic_teal" name="Teal Dream" type="metallic" cost="600" unlockLevel="3" flake="0.5">
+            <color r="0.0" g="0.6" b="0.6" a="1.0"/>
+        </paint>
+        <paint id="metallic_pink" name="Hot Pink" type="metallic" cost="700" unlockLevel="4" flake="0.6">
+            <color r="1.0" g="0.3" b="0.7" a="1.0"/>
+        </paint>
+        
+        <!-- Pearl (10) -->
+        <paint id="pearl_white" name="Pearl White" type="pearl" cost="1000" unlockLevel="4">
+            <color r="0.95" g="0.95" b="0.98" a="1.0"/>
+        </paint>
+        <paint id="pearl_black" name="Black Pearl" type="pearl" cost="1200" unlockLevel="5">
+            <color r="0.08" g="0.08" b="0.1" a="1.0"/>
+        </paint>
+        <paint id="pearl_red" name="Ruby Pearl" type="pearl" cost="1100" unlockLevel="5">
+            <color r="0.85" g="0.15" b="0.2" a="1.0"/>
+        </paint>
+        <paint id="pearl_blue" name="Sapphire Pearl" type="pearl" cost="1100" unlockLevel="5">
+            <color r="0.15" g="0.25" b="0.85" a="1.0"/>
+        </paint>
+        <paint id="pearl_green" name="Jade Pearl" type="pearl" cost="1100" unlockLevel="5">
+            <color r="0.1" g="0.6" b="0.4" a="1.0"/>
+        </paint>
+        <paint id="pearl_silver" name="Moonlight Pearl" type="pearl" cost="1000" unlockLevel="4">
+            <color r="0.85" g="0.85" b="0.9" a="1.0"/>
+        </paint>
+        <paint id="pearl_gold" name="Golden Pearl" type="pearl" cost="1500" unlockLevel="6">
+            <color r="0.9" g="0.75" b="0.3" a="1.0"/>
+        </paint>
+        <paint id="pearl_champagne" name="Champagne Pearl" type="pearl" cost="1300" unlockLevel="5">
+            <color r="0.95" g="0.85" b="0.65" a="1.0"/>
+        </paint>
+        <paint id="pearl_purple" name="Amethyst Pearl" type="pearl" cost="1200" unlockLevel="5">
+            <color r="0.5" g="0.2" b="0.7" a="1.0"/>
+        </paint>
+        <paint id="pearl_orange" name="Sunset Pearl" type="pearl" cost="1200" unlockLevel="5">
+            <color r="1.0" g="0.55" b="0.2" a="1.0"/>
+        </paint>
+        
+        <!-- Matte (8) -->
+        <paint id="matte_black" name="Matte Black" type="matte" cost="1500" unlockLevel="6">
+            <color r="0.1" g="0.1" b="0.1" a="1.0"/>
+        </paint>
+        <paint id="matte_white" name="Matte White" type="matte" cost="1500" unlockLevel="6">
+            <color r="0.9" g="0.9" b="0.9" a="1.0"/>
+        </paint>
+        <paint id="matte_gray" name="Matte Gray" type="matte" cost="1400" unlockLevel="5">
+            <color r="0.45" g="0.45" b="0.45" a="1.0"/>
+        </paint>
+        <paint id="matte_red" name="Matte Red" type="matte" cost="1600" unlockLevel="7">
+            <color r="0.75" g="0.15" b="0.15" a="1.0"/>
+        </paint>
+        <paint id="matte_blue" name="Matte Blue" type="matte" cost="1600" unlockLevel="7">
+            <color r="0.15" g="0.25" b="0.7" a="1.0"/>
+        </paint>
+        <paint id="matte_green" name="Matte Green" type="matte" cost="1600" unlockLevel="7">
+            <color r="0.15" g="0.5" b="0.25" a="1.0"/>
+        </paint>
+        <paint id="matte_navy" name="Matte Navy" type="matte" cost="1600" unlockLevel="7">
+            <color r="0.1" g="0.15" b="0.35" a="1.0"/>
+        </paint>
+        <paint id="matte_bronze" name="Matte Bronze" type="matte" cost="1700" unlockLevel="8">
+            <color r="0.65" g="0.4" b="0.2" a="1.0"/>
+        </paint>
+        
+        <!-- Special/Chameleon (6) -->
+        <paint id="chameleon_1" name="Color Shift Red-Gold" type="chameleon" cost="3000" unlockLevel="10">
+            <color r="0.8" g="0.1" b="0.1" a="1.0"/>
+            <color2 r="0.85" g="0.7" b="0.2" a="1.0"/>
+        </paint>
+        <paint id="chameleon_2" name="Color Shift Blue-Purple" type="chameleon" cost="3000" unlockLevel="10">
+            <color r="0.1" g="0.3" b="0.8" a="1.0"/>
+            <color2 r="0.5" g="0.2" b="0.7" a="1.0"/>
+        </paint>
+        <paint id="chameleon_3" name="Color Shift Green-Blue" type="chameleon" cost="3000" unlockLevel="10">
+            <color r="0.0" g="0.6" b="0.3" a="1.0"/>
+            <color2 r="0.0" g="0.4" b="0.7" a="1.0"/>
+        </paint>
+        <paint id="chrome" name="Chrome" type="chrome" cost="5000" unlockLevel="15">
+            <color r="0.95" g="0.95" b="0.95" a="1.0"/>
+        </paint>
+        <paint id="carbon" name="Carbon Fiber" type="carbon" cost="4000" unlockLevel="12">
+            <color r="0.15" g="0.15" b="0.15" a="1.0"/>
+        </paint>
+        <paint id="rainbow" name="Rainbow Shift" type="rainbow" cost="10000" unlockLevel="20">
+            <color r="1.0" g="0.0" b="0.0" a="1.0"/>
+        </paint>
+        
+    </paintJobs>
+    
+    <!-- ============ VINYL DECALS (100+) ============ -->
+    <vinyls>
+        
+        <!-- Stripes (20) -->
+        <vinyl id="stripe_center_single" name="Single Center Stripe" type="stripe" cost="200" unlockLevel="1">
+            <shape type="rectangle" width="0.15" height="3.0"/>
+        </vinyl>
+        <vinyl id="stripe_center_dual" name="Dual Center Stripes" type="stripe" cost="300" unlockLevel="2">
+            <shape type="rectangle" width="0.1" height="3.0" mirrorX="true" offsetX="0.12"/>
+        </vinyl>
+        <vinyl id="stripe_center_quad" name="Quad Center Stripes" type="stripe" cost="400" unlockLevel="3">
+            <shape type="rectangle" width="0.08" height="3.0" mirrorX="true" offsetX="0.1"/>
+        </vinyl>
+        <vinyl id="stripe_side_left" name="Left Side Stripe" type="stripe" cost="250" unlockLevel="2">
+            <shape type="rectangle" width="0.2" height="3.0" offsetX="-0.35"/>
+        </vinyl>
+        <vinyl id="stripe_side_right" name="Right Side Stripe" type="stripe" cost="250" unlockLevel="2">
+            <shape type="rectangle" width="0.2" height="3.0" offsetX="0.35"/>
+        </vinyl>
+        <vinyl id="stripe_side_dual" name="Dual Side Stripes" type="stripe" cost="400" unlockLevel="3">
+            <shape type="rectangle" width="0.15" height="3.0" mirrorX="true" offsetX="0.35"/>
+        </vinyl>
+        <vinyl id="stripe_racing_le_mans" name="Le Mans Stripe" type="stripe" cost="500" unlockLevel="4">
+            <shape type="rectangle" width="0.4" height="3.0" opacity="0.8"/>
+        </vinyl>
+        <vinyl id="stripe_tapered" name="Tapered Stripe" type="stripe" cost="350" unlockLevel="3">
+            <shape type="tapered_rectangle" width="0.2" height="3.0"/>
+        </vinyl>
+        <vinyl id="stripe_arrow" name="Arrow Stripe" type="stripe" cost="400" unlockLevel="4">
+            <shape type="arrow" width="0.25" height="2.5"/>
+        </vinyl>
+        <vinyl id="stripe_lightning" name="Light Bolt Stripe" type="stripe" cost="450" unlockLevel="4">
+            <shape type="lightning" width="0.3" height="2.0"/>
+        </vinyl>
+        
+        <!-- Flames (15) -->
+        <vinyl id="flame_side_left" name="Left Side Flame" type="flame" cost="500" unlockLevel="3">
+            <shape type="flame_left" width="0.5" height="0.8" offsetX="-0.5" offsetY="0.3" rotation="-30"/>
+        </vinyl>
+        <vinyl id="flame_side_right" name="Right Side Flame" type="flame" cost="500" unlockLevel="3">
+            <shape type="flame_right" width="0.5" height="0.8" offsetX="0.5" offsetY="0.3" rotation="30"/>
+        </vinyl>
+        <vinyl id="flame_dual" name="Dual Side Flames" type="flame" cost="800" unlockLevel="4">
+            <shape type="flame_dual" width="0.45" height="0.7" mirrorX="true" offsetX="0.45"/>
+        </vinyl>
+        <vinyl id="flame_hood" name="Hood Flames" type="flame" cost="600" unlockLevel="4">
+            <shape type="flame_up" width="0.4" height="0.6" offsetX="0.0" offsetY="0.6"/>
+        </vinyl>
+        <vinyl id="flame_roof" name="Roof Flames" type="flame" cost="550" unlockLevel="4">
+            <shape type="flame_back" width="0.5" height="0.5" offsetX="0.0" offsetY="0.1"/>
+        </vinyl>
+        <vinyl id="flame_trunk" name="Trunk Flames" type="flame" cost="550" unlockLevel="4">
+            <shape type="flame_back" width="0.5" height="0.5" offsetX="0.0" offsetY="-0.5"/>
+        </vinyl>
+        <vinyl id="flame_full" name="Full Body Flames" type="flame" cost="1200" unlockLevel="6">
+            <shape type="flame_full" width="0.6" height="2.5"/>
+        </vinyl>
+        <vinyl id="flame_tribal" name="Tribal Flames" type="flame" cost="700" unlockLevel="5">
+            <shape type="tribal_flame" width="0.5" height="0.7"/>
+        </vinyl>
+        
+        <!-- Tribal Patterns (15) -->
+        <vinyl id="tribal_hood" name="Hood Tribal" type="tribal" cost="400" unlockLevel="3">
+            <shape type="tribal_symmetric" width="0.6" height="0.4" offsetX="0.0" offsetY="0.6"/>
+        </vinyl>
+        <vinyl id="tribal_side_left" name="Left Tribal" type="tribal" cost="450" unlockLevel="4">
+            <shape type="tribal_side" width="0.5" height="0.6" offsetX="-0.4" offsetY="0.0"/>
+        </vinyl>
+        <vinyl id="tribal_side_right" name="Right Tribal" type="tribal" cost="450" unlockLevel="4">
+            <shape type="tribal_side" width="0.5" height="0.6" offsetX="0.4" offsetY="0.0" mirrorX="true"/>
+        </vinyl>
+        <vinyl id="tribal_full" name="Full Tribal" type="tribal" cost="900" unlockLevel="6">
+            <shape type="tribal_full" width="0.7" height="2.0"/>
+        </vinyl>
+        
+        <!-- Numbers (15) -->
+        <vinyl id="number_00" name="Racing Number 00" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="00" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_01" name="Racing Number 01" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="01" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_07" name="Racing Number 07" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="07" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_13" name="Racing Number 13" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="13" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_24" name="Racing Number 24" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="24" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_69" name="Racing Number 69" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="69" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_88" name="Racing Number 88" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="88" width="0.3" height="0.4"/>
+        </vinyl>
+        <vinyl id="number_99" name="Racing Number 99" type="number" cost="150" unlockLevel="1">
+            <shape type="number" text="99" width="0.3" height="0.4"/>
+        </vinyl>
+        
+        <!-- Shapes (20) -->
+        <vinyl id="shape_circle" name="Circle" type="shape" cost="100" unlockLevel="1">
+            <shape type="circle" width="0.3" height="0.3"/>
+        </vinyl>
+        <vinyl id="shape_square" name="Square" type="shape" cost="100" unlockLevel="1">
+            <shape type="square" width="0.3" height="0.3"/>
+        </vinyl>
+        <vinyl id="shape_triangle" name="Triangle" type="shape" cost="100" unlockLevel="1">
+            <shape type="triangle" width="0.3" height="0.3"/>
+        </vinyl>
+        <vinyl id="shape_star" name="Star" type="shape" cost="150" unlockLevel="2">
+            <shape type="star" width="0.3" height="0.3"/>
+        </vinyl>
+        <vinyl id="shape_diamond" name="Diamond" type="shape" cost="150" unlockLevel="2">
+            <shape type="diamond" width="0.3" height="0.3"/>
+        </vinyl>
+        <vinyl id="shape_hexagon" name="Hexagon" type="shape" cost="200" unlockLevel="3">
+            <shape type="hexagon" width="0.3" height="0.3"/>
+        </vinyl>
+        <vinyl id="shape_heart" name="Heart" type="shape" cost="150" unlockLevel="2">
+            <shape type="heart" width="0.3" height="0.3"/>
+        </vinyl>
+        
+        <!-- Sponsor Logos (15) -->
+        <vinyl id="sponsor_oil" name="Oil Company Logo" type="sponsor" cost="300" unlockLevel="3">
+            <shape type="logo_oil" width="0.2" height="0.15"/>
+        </vinyl>
+        <vinyl id="sponsor_tire" name="Tire Company Logo" type="sponsor" cost="300" unlockLevel="3">
+            <shape type="logo_tire" width="0.2" height="0.15"/>
+        </vinyl>
+        <vinyl id="sponsor_energy" name="Energy Drink Logo" type="sponsor" cost="350" unlockLevel="4">
+            <shape type="logo_energy" width="0.25" height="0.2"/>
+        </vinyl>
+        
+    </vinyls>
+    
+    <!-- ============ PERFORMANCE UPGRADES (20+) ============ -->
+    <upgrades>
+        
+        <!-- Engine (4 levels) -->
+        <upgrade id="engine_stage1" name="Stage 1 Engine Tune" type="engine" level="1" cost="2000" unlockLevel="2">
+            <stats powerBonus="0.10" torqueBonus="0.08"/>
+            <compatibleClasses>
+                <class>TUNER</class>
+                <class>MUSCLE</class>
+                <class>EXOTIC</class>
+                <class>SPORT</class>
+            </compatibleClasses>
+        </upgrade>
+        <upgrade id="engine_stage2" name="Stage 2 Engine Tune" type="engine" level="2" cost="4000" unlockLevel="4">
+            <stats powerBonus="0.20" torqueBonus="0.15"/>
+            <visual mesh="engine_intake"/>
+            <compatibleClasses>
+                <class>TUNER</class>
+                <class>MUSCLE</class>
+                <class>EXOTIC</class>
+                <class>SPORT</class>
+            </compatibleClasses>
+        </upgrade>
+        <upgrade id="engine_stage3" name="Stage 3 Engine Tune" type="engine" level="3" cost="8000" unlockLevel="7">
+            <stats powerBonus="0.30" torqueBonus="0.25"/>
+            <visual mesh="engine_turbo"/>
+            <compatibleClasses>
+                <class>TUNER</class>
+                <class>MUSCLE</class>
+                <class>EXOTIC</class>
+                <class>SPORT</class>
+            </compatibleClasses>
+        </upgrade>
+        <upgrade id="engine_swap" name="Engine Swap" type="engine" level="4" cost="15000" unlockLevel="10">
+            <stats powerBonus="0.50" torqueBonus="0.40" weightReduction="0.10"/>
+            <visual mesh="engine_race"/>
+            <compatibleClasses>
+                <class>TUNER</class>
+                <class>MUSCLE</class>
+                <class>EXOTIC</class>
+            </compatibleClasses>
+        </upgrade>
+        
+        <!-- Nitrous (3 levels) -->
+        <upgrade id="nitrous_50shot" name="50 Shot Nitrous" type="nitrous" level="1" cost="1500" unlockLevel="2">
+            <stats powerBonus="0.15"/>
+            <visual mesh="nitrous_bottle"/>
+        </upgrade>
+        <upgrade id="nitrous_100shot" name="100 Shot Nitrous" type="nitrous" level="2" cost="3000" unlockLevel="5">
+            <stats powerBonus="0.25"/>
+            <visual mesh="nitrous_dual"/>
+        </upgrade>
+        <upgrade id="nitrous_150shot" name="150 Shot Nitrous" type="nitrous" level="3" cost="5000" unlockLevel="8">
+            <stats powerBonus="0.35"/>
+            <visual mesh="nitrous_race"/>
+        </upgrade>
+        
+        <!-- Tires (3 levels) -->
+        <upgrade id="tires_sport" name="Sport Tires" type="tires" level="1" cost="1000" unlockLevel="1">
+            <stats gripBonus="0.05"/>
+        </upgrade>
+        <upgrade id="tires_race" name="Race Tires" type="tires" level="2" cost="2500" unlockLevel="4">
+            <stats gripBonus="0.10"/>
+        </upgrade>
+        <upgrade id="tires_drag" name="Drag Tires" type="tires" level="3" cost="4000" unlockLevel="7">
+            <stats gripBonus="0.15" accelerationBonus="0.10"/>
+        </upgrade>
+        
+        <!-- Brakes (3 levels) -->
+        <upgrade id="brakes_sport" name="Sport Brakes" type="brakes" level="1" cost="1200" unlockLevel="2">
+            <stats brakeBonus="0.10"/>
+        </upgrade>
+        <upgrade id="brakes_race" name="Race Brakes" type="brakes" level="2" cost="2800" unlockLevel="5">
+            <stats brakeBonus="0.20"/>
+        </upgrade>
+        <upgrade id="brakes_carbon" name="Carbon Brakes" type="brakes" level="3" cost="5000" unlockLevel="8">
+            <stats brakeBonus="0.30" weightReduction="0.05"/>
+        </upgrade>
+        
+        <!-- Suspension (3 levels) -->
+        <upgrade id="suspension_sport" name="Sport Suspension" type="suspension" level="1" cost="1500" unlockLevel="2">
+            <stats handlingBonus="0.05"/>
+        </upgrade>
+        <upgrade id="suspension_race" name="Race Suspension" type="suspension" level="2" cost="3500" unlockLevel="5">
+            <stats handlingBonus="0.10"/>
+        </upgrade>
+        <upgrade id="suspension_coilover" name="Competition Coilovers" type="suspension" level="3" cost="6000" unlockLevel="8">
+            <stats handlingBonus="0.15"/>
+        </upgrade>
+        
+        <!-- Weight Reduction (3 levels) -->
+        <upgrade id="weight_stage1" name="Weight Reduction Stage 1" type="weight" level="1" cost="3000" unlockLevel="3">
+            <stats weightReduction="0.05"/>
+        </upgrade>
+        <upgrade id="weight_stage2" name="Weight Reduction Stage 2" type="weight" level="2" cost="6000" unlockLevel="6">
+            <stats weightReduction="0.10"/>
+        </upgrade>
+        <upgrade id="weight_stage3" name="Weight Reduction Stage 3" type="weight" level="3" cost="10000" unlockLevel="9">
+            <stats weightReduction="0.15"/>
+        </upgrade>
+        
+        <!-- Aerodynamics (3 levels) -->
+        <upgrade id="aero_spoiler" name="Rear Spoiler" type="aero" level="1" cost="2000" unlockLevel="3">
+            <stats handlingBonus="0.05" topSpeedBonus="0.03"/>
+            <visual mesh="spoiler_sport"/>
+        </upgrade>
+        <upgrade id="aero_wing" name="Racing Wing" type="aero" level="2" cost="4500" unlockLevel="6">
+            <stats handlingBonus="0.10" topSpeedBonus="0.05"/>
+            <visual mesh="wing_race"/>
+        </upgrade>
+        <upgrade id="aero_full" name="Full Aero Kit" type="aero" level="3" cost="8000" unlockLevel="9">
+            <stats handlingBonus="0.15" topSpeedBonus="0.08"/>
+            <visual mesh="aero_full"/>
+        </upgrade>
+        
+        <!-- Transmission (3 levels) -->
+        <upgrade id="transmission_sport" name="Sport Transmission" type="transmission" level="1" cost="2500" unlockLevel="3">
+            <stats accelerationBonus="0.05"/>
+        </upgrade>
+        <upgrade id="transmission_race" name="Race Transmission" type="transmission" level="2" cost="5000" unlockLevel="6">
+            <stats accelerationBonus="0.10"/>
+        </upgrade>
+        <upgrade id="transmission_awd" name="AWD Conversion" type="transmission" level="3" cost="12000" unlockLevel="10">
+            <stats accelerationBonus="0.20" handlingBonus="0.10"/>
+            <compatibleClasses>
+                <class>TUNER</class>
+                <class>SPORT</class>
+            </compatibleClasses>
+        </upgrade>
+        
+    </upgrades>
+    
+</customization>

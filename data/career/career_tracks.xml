@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SR3 Career Track Assignments
+Maps real tracks to career districts and events
+-->
+<careerTracks>
+
+    <!-- District 1: Downtown (Beginner) -->
+    <district id="1" name="Downtown" requiredRep="0" requiredBosses="0">
+        <events>
+            <event id="downtown_1" type="sprint" track="Isl2-Sandy" laps="1" difficulty="1" rewardCash="300" rewardRep="50"/>
+            <event id="downtown_2" type="sprint" track="Test1-Flat" laps="1" difficulty="2" rewardCash="400" rewardRep="75"/>
+            <event id="downtown_3" type="circuit" track="Isl2-Sandy" laps="2" difficulty="2" rewardCash="600" rewardRep="120"/>
+            <event id="downtown_4" type="drift" track="Test1-Flat" laps="0" difficulty="2" driftTarget="3000" rewardCash="500" rewardRep="100"/>
+        </events>
+        <boss name="Wolf" car="R3" track="Isl2-Sandy" difficulty="3" rewardCash="2000" rewardRep="500"/>
+    </district>
+
+    <!-- District 2: Industrial (Easy) -->
+    <district id="2" name="Industrial" requiredRep="500" requiredBosses="1">
+        <events>
+            <event id="industrial_1" type="sprint" track="Mos5-Factory" laps="1" difficulty="2" rewardCash="450" rewardRep="80"/>
+            <event id="industrial_2" type="sprint" track="Jng1-Curly" laps="1" difficulty="3" rewardCash="550" rewardRep="100"/>
+            <event id="industrial_3" type="circuit" track="Mos5-Factory" laps="2" difficulty="3" rewardCash="800" rewardRep="180"/>
+            <event id="industrial_4" type="canyon" track="Jng1-Curly" laps="0" difficulty="3" canyonTarget="75" rewardCash="900" rewardRep="200"/>
+        </events>
+        <boss name="Razor" car="FR4" track="Mos5-Factory" difficulty="4" rewardCash="3000" rewardRep="750"/>
+    </district>
+
+    <!-- District 3: Harbor (Medium) -->
+    <district id="3" name="Harbor" requiredRep="1500" requiredBosses="2">
+        <events>
+            <event id="harbor_1" type="sprint" track="Isl12-Beach" laps="1" difficulty="3" rewardCash="600" rewardRep="120"/>
+            <event id="harbor_2" type="sprint" track="Isl6-Flooded" laps="1" difficulty="3" rewardCash="700" rewardRep="140"/>
+            <event id="harbor_3" type="circuit" track="Isl12-Beach" laps="3" difficulty="4" rewardCash="1100" rewardRep="250"/>
+            <event id="harbor_4" type="drift" track="Isl6-Flooded" laps="0" difficulty="4" driftTarget="6000" rewardCash="800" rewardRep="160"/>
+        </events>
+        <boss name="Kaze" car="HI" track="Isl12-Beach" difficulty="4" rewardCash="4000" rewardRep="1000"/>
+    </district>
+
+    <!-- District 4: Airport (Medium-Hard) -->
+    <district id="4" name="Airport" requiredRep="3000" requiredBosses="3">
+        <events>
+            <event id="airport_1" type="sprint" track="Grc9-Oasis" laps="1" difficulty="4" rewardCash="800" rewardRep="160"/>
+            <event id="airport_2" type="sprint" track="Jng6-Fun" laps="1" difficulty="4" rewardCash="900" rewardRep="180"/>
+            <event id="airport_3" type="circuit" track="Grc9-Oasis" laps="3" difficulty="4" rewardCash="1400" rewardRep="320"/>
+            <event id="airport_4" type="canyon_run" track="Jng6-Fun" laps="1" difficulty="4" canyonTarget="70" rewardCash="1000" rewardRep="200"/>
+        </events>
+        <boss name="Jax" car="H2" track="Grc9-Oasis" difficulty="5" rewardCash="5000" rewardRep="1500"/>
+    </district>
+
+    <!-- District 5: Hills (Hard) -->
+    <district id="5" name="Mountain Hills" requiredRep="5000" requiredBosses="4">
+        <events>
+            <event id="hills_1" type="canyon" track="Isl14-Ocean" laps="0" difficulty="4" canyonTarget="85" rewardCash="1000" rewardRep="200"/>
+            <event id="hills_2" type="canyon" track="Isl17-AdapterIslands" laps="0" difficulty="5" canyonTarget="88" rewardCash="1200" rewardRep="250"/>
+            <event id="hills_3" type="canyon_run" track="Isl14-Ocean" laps="1" difficulty="5" canyonTarget="75" rewardCash="1100" rewardRep="220"/>
+            <event id="hills_4" type="drift" track="Isl17-AdapterIslands" laps="0" difficulty="5" driftTarget="7500" rewardCash="900" rewardRep="180"/>
+        </events>
+        <boss name="Darius" car="S8" track="Isl14-Ocean" difficulty="5" rewardCash="10000" rewardRep="5000"/>
+    </district>
+
+    <!-- District 6: Suburbs (Hard) -->
+    <district id="6" name="Suburbs" requiredRep="8000" requiredBosses="5">
+        <events>
+            <event id="suburbs_1" type="sprint" track="Uni7-GlassStairs" laps="1" difficulty="4" rewardCash="900" rewardRep="180"/>
+            <event id="suburbs_2" type="sprint" track="Mos10-City" laps="1" difficulty="5" rewardCash="1000" rewardRep="200"/>
+            <event id="suburbs_3" type="circuit" track="Uni7-GlassStairs" laps="3" difficulty="5" rewardCash="1500" rewardRep="350"/>
+            <event id="suburbs_4" type="pursuit" track="Mos10-City" laps="0" difficulty="4" pursuitHeat="3" rewardCash="1100" rewardRep="220"/>
+        </events>
+        <boss name="Nikki" car="TU" track="Uni7-GlassStairs" difficulty="4" rewardCash="9000" rewardRep="2500"/>
+    </district>
+
+    <!-- District 7: Beach (Expert) -->
+    <district id="7" name="Beach District" requiredRep="12000" requiredBosses="6">
+        <events>
+            <event id="beach_1" type="sprint" track="Isl5-Shore" laps="1" difficulty="5" rewardCash="1100" rewardRep="220"/>
+            <event id="beach_2" type="circuit" track="Isl12-Beach" laps="4" difficulty="5" rewardCash="1600" rewardRep="400"/>
+            <event id="beach_3" type="canyon_run" track="Isl5-Shore" laps="1" difficulty="5" canyonTarget="68" rewardCash="1200" rewardRep="240"/>
+            <event id="beach_4" type="drift" track="Isl12-Beach" laps="0" difficulty="5" driftTarget="8500" rewardCash="1000" rewardRep="200"/>
+        </events>
+        <boss name="Taz" car="BV" track="Isl5-Shore" difficulty="4" rewardCash="11000" rewardRep="3000"/>
+    </district>
+
+    <!-- District 8: Old Town (Expert) -->
+    <district id="8" name="Old Town" requiredRep="17000" requiredBosses="7">
+        <events>
+            <event id="oldtown_1" type="sprint" track="Uni11-Campus" laps="1" difficulty="5" rewardCash="1200" rewardRep="240"/>
+            <event id="oldtown_2" type="sprint" track="Mos1-City" laps="1" difficulty="5" rewardCash="1300" rewardRep="260"/>
+            <event id="oldtown_3" type="circuit" track="Uni11-Campus" laps="4" difficulty="5" rewardCash="1800" rewardRep="450"/>
+            <event id="oldtown_4" type="drift" track="Mos1-City" laps="0" difficulty="5" driftTarget="9000" rewardCash="1100" rewardRep="220"/>
+        </events>
+        <boss name="Sal" car="BE" track="Uni11-Campus" difficulty="5" rewardCash="13000" rewardRep="3500"/>
+    </district>
+
+    <!-- District 9: Financial (Master) -->
+    <district id="9" name="Financial District" requiredRep="23000" requiredBosses="8">
+        <events>
+            <event id="financial_1" type="sprint" track="Mos5-Factory" laps="1" difficulty="5" rewardCash="1400" rewardRep="280"/>
+            <event id="financial_2" type="circuit" track="Mos8-Industrial" laps="5" difficulty="5" rewardCash="2000" rewardRep="500"/>
+            <event id="financial_3" type="canyon_run" track="Mos5-Factory" laps="1" difficulty="5" canyonTarget="62" rewardCash="1500" rewardRep="300"/>
+            <event id="financial_4" type="pursuit" track="Mos8-Industrial" laps="0" difficulty="5" pursuitHeat="4" rewardCash="1300" rewardRep="260"/>
+        </events>
+        <boss name="Victoria" car="ES" track="Mos5-Factory" difficulty="5" rewardCash="15000" rewardRep="4000"/>
+    </district>
+
+    <!-- District 10: Underground (Legend) -->
+    <district id="10" name="Underground" requiredRep="30000" requiredBosses="9">
+        <events>
+            <event id="underground_1" type="sprint" track="Grc13-Acropolis" laps="1" difficulty="5" rewardCash="1600" rewardRep="320"/>
+            <event id="underground_2" type="circuit" track="Uni7-GlassStairs" laps="5" difficulty="5" rewardCash="2200" rewardRep="550"/>
+            <event id="underground_3" type="canyon" track="Grc13-Acropolis" laps="0" difficulty="5" canyonTarget="92" rewardCash="1800" rewardRep="360"/>
+            <event id="underground_4" type="drift" track="Uni7-GlassStairs" laps="0" difficulty="5" driftTarget="10000" rewardCash="1400" rewardRep="280"/>
+            <event id="underground_5" type="ultimate" track="Isl14-Ocean" laps="3" difficulty="5" rewardCash="5000" rewardRep="10000"/>
+        </events>
+        <boss name="The King" car="OT" track="Grc13-Acropolis" difficulty="5" rewardCash="25000" rewardRep="10000"/>
+    </district>
+
+</careerTracks>

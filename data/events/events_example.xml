@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SR3 Event Database Example
+Carbon-style event definitions
+-->
+<events>
+
+	<!-- Sprint Event -->
+	<event type="Sprint" id="sprint_01" name="Highway Sprint" desc="Point-to-point race through the city">
+		<track id="Test1-Flat" reversed="false"/>
+		<params laps="1" timeLimit="0" difficulty="2"/>
+		<rewards cash="500" rep="100"/>
+		<opponents count="3">
+			<car>FN</car>
+			<car>LF</car>
+			<car>MO</car>
+		</opponents>
+		<requirements rep="0"/>
+	</event>
+	
+	<!-- Circuit Event -->
+	<event type="Circuit" id="circuit_01" name="City Circuit" desc="Multi-lap circuit race">
+		<track id="Jng1-Curly" reversed="false"/>
+		<params laps="3" timeLimit="0" difficulty="3"/>
+		<rewards cash="1000" rep="250"/>
+		<opponents count="5">
+			<car>ES</car>
+			<car>FR4</car>
+			<car>H1</car>
+			<car>H2</car>
+			<car>HR</car>
+		</opponents>
+		<requirements rep="200"/>
+	</event>
+	
+	<!-- Drift Event -->
+	<event type="Drift" id="drift_01" name="Drift Battle" desc="Score points by drifting through zones">
+		<track id="Test1-Flat" reversed="false"/>
+		<params laps="0" timeLimit="120" difficulty="3"/>
+		<rewards cash="750" rep="200"/>
+		<drift target="5000"/>
+		<opponents count="0"/>
+		<requirements rep="150"/>
+	</event>
+	
+	<!-- Canyon Duel -->
+	<event type="CanyonDuel" id="canyon_01" name="Canyon Duel" desc="Two-car canyon battle">
+		<track id="Test1-Flat" reversed="false"/>
+		<params laps="0" timeLimit="0" difficulty="4"/>
+		<rewards cash="1500" rep="400"/>
+		<canyon target="90"/>
+		<opponents count="1">
+			<car>R1</car>
+		</opponents>
+		<requirements rep="500"/>
+	</event>
+	
+	<!-- Canyon Run -->
+	<event type="CanyonRun" id="canyon_run_01" name="Canyon Time Attack" desc="Beat the target time">
+		<track id="Test1-Flat" reversed="false"/>
+		<params laps="1" timeLimit="0" difficulty="3"/>
+		<rewards cash="800" rep="200"/>
+		<canyon target="60"/>
+		<opponents count="0"/>
+		<requirements rep="300"/>
+	</event>
+	
+	<!-- Boss Event -->
+	<event type="Boss" id="boss_01" name="Boss: Wolf" desc="Defeat the canyon king">
+		<track id="Test1-Flat" reversed="false"/>
+		<params laps="1" timeLimit="0" difficulty="5"/>
+		<rewards cash="5000" rep="1000"/>
+		<boss name="Wolf" car="R3" difficulty="5"/>
+		<opponents count="1">
+			<car>R3</car>
+		</opponents>
+		<requirements rep="2000"/>
+	</event>
+	
+</events>
