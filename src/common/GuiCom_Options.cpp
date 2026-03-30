@@ -237,23 +237,23 @@ void CGuiCom::GuiInitGraphics()  // ? not yet: called on preset change with bGI 
 	//  🪄 Effects
 	//------------------------------------------------------------
 	ck= &ckSSAO;			ck->Init("SSAO",		&pSet->g.ssao);  // 🕳️ SSAO
-	sv= &svSsaoRadius;		sv->Init("SsaoRadius",	&pSet->ssao_radius, 0.1,6.f, 1.5f);  sv->DefaultF(1.8f);
-	sv= &svSsaoScale;		sv->Init("SsaoScale",	&pSet->ssao_scale,  0.1,6.f, 1.5f);  sv->DefaultF(1.8f);
+	sv= &svSsaoRadius;		sv->Init("SsaoRadius",	&pSet->ssao_radius, 0.1,6.f, 1.5f);
+	sv= &svSsaoScale;		sv->Init("SsaoScale",	&pSet->ssao_scale,  0.1,6.f, 1.5f);
 
 	ck= &ckLensFlare;		ck->Init("LensFlare",	&pSet->g.lens_flare);  // 🔆
 	ck= &ckSunbemas;		ck->Init("SunBeams",	&pSet->g.sunbeams);  // 🌄
 	ck= &ckHDR;				ck->Init("HDR",			&pSet->g.hdr);  CevC(Hdr);  // 🌅 HDR
 
 	//  🟢 Carbon HDR Bloom settings
-	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 1.5f);  sv->DefaultF(0.15f);  SevC(HdrBloom);
-	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,1.5f, 1.5f);  sv->DefaultF(0.65f);  SevC(HdrBloom);
-	sv= &svHdrExposure;		sv->Init("HdrExposure",	&pSet->hdr_exposure, 0.0f,10.0f, 1.5f);  sv->DefaultF(2.0f);  SevC(HdrExposure);
-	sv= &svHdrAdapt;		sv->Init("HdrAdapt",	&pSet->hdr_adapt_speed, 0.0f,5.0f, 1.5f);  sv->DefaultF(1.0f);  SevC(HdrAdapt);
+	sv= &svHdrBloomInt;		sv->Init("HdrBloomInt",	&pSet->hdr_bloom_int, 0.0f,2.0f, 0.15f); SevC(HdrBloom);
+	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,3.0f, 0.1f); SevC(HdrBloom);
+	sv= &svHdrExposure;		sv->Init("HdrExposure",	&pSet->hdr_exposure, 0.0f,10.0f, 1.0f); SevC(HdrExposure);
+	sv= &svHdrAdapt;		sv->Init("HdrAdapt",	&pSet->hdr_adapt_speed, 0.0f,10.0f, 0.1f); SevC(HdrAdapt);
 
 	//  🟢 Legacy Effects
 	ck= &ckAllEffects;		ck->Init("AllEffects",	&pSet->all_effects);  CevC(AllEffects);
 	ck= &ckBloom;			ck->Init("Bloom",		&pSet->bloom_enabled);  CevC(Bloom);
-	sv= &svBloomInt;		sv->Init("BloomInt",	&pSet->bloom_int, 0.0f,1.0f, 1.5f);  sv->DefaultF(0.13f);  SevC(BloomInt);
+	sv= &svBloomInt;		sv->Init("BloomInt",	&pSet->bloom_int, 0.0f,1.0f, 0.2f); SevC(BloomInt);
 	// ck= &ckSoftPar;		ck->Init("SoftParticles",&pSet->softparticles);  CevC(SoftPar);  // todo: add to layout
 
 	ck= &ckGI;				ck->Init("GI",			&pSet->gi);  // 🌇 GI
@@ -362,12 +362,11 @@ void CGuiCom::chkHdr(Ck*)
 	//  Toggle Carbon-style HDR preset when HDR is enabled/disabled
 	if (pSet->g.hdr)
 	{
-		//  HDR enabled - apply Carbon night preset
-		Demo::HdrUtils::setCarbonNightPreset();
-		//  Update sliders to match preset values
-		svHdrBloomInt.SetValueF(0.15f);
-		svHdrBloomThresh.SetValueF(0.65f);
-		//  Update exposure slider if it exists
+		//  Update sliders to match preset values, but keep user's adapt speed
+		svHdrBloomInt.SetValueF(pSet->hdr_bloom_int);
+		svHdrExposure.SetValueF(pSet->hdr_exposure);
+		svHdrBloomThresh.SetValueF(pSet->hdr_bloom_thresh);
+		Demo::HdrUtils::setAdaptationSpeed(pSet->hdr_adapt_speed);
 	}
 	//  When disabled, compositor will be rebuilt without HDR path
 }
@@ -376,7 +375,7 @@ void CGuiCom::chkHdr(Ck*)
 void CGuiCom::slHdrBloom(SV*)
 {
 	//  Update HDR bloom parameters at runtime when user moves sliders
-	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh * 1.308f);
+	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh);
 	Demo::HdrUtils::setBloomIntensity(pSet->hdr_bloom_int);
 }
 

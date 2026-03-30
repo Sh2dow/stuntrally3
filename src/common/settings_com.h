@@ -137,10 +137,10 @@ public:
 	bool gi =0;  // not in presets-
 
 	//  🟢 Carbon bloom params
-	float hdr_bloom_int = 0.15f;  // bloom intensity
-	float hdr_bloom_thresh = 0.65f;  // brightness threshold for bloom
-	float hdr_exposure = 2.0f;  // exposure EV
-	float hdr_adapt_speed = 1.0f;  // adaptation speed (0=instant, higher=slower)
+	float hdr_bloom_int;  // bloom intensity
+	float hdr_bloom_thresh;  // brightness threshold for bloom
+	float hdr_exposure;  // exposure EV
+	float hdr_adapt_speed;  // adaptation speed (5.0=fast, 0.5=medium, 0.05=slow)
 
 	//  🟢 Legacy effects params
 	bool all_effects = 0;  // master effects toggle

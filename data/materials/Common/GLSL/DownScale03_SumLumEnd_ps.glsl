@@ -23,7 +23,7 @@ vulkan( layout( ogre_s1 ) uniform sampler samplerPoint );
 
 vulkan( layout( ogre_P0 ) uniform Params { )
 	uniform vec3 exposure;
-	uniform float timeSinceLast;
+	uniform float adaptSpeed;
 	uniform vec4 tex0Size;
 vulkan( }; )
 
@@ -38,8 +38,23 @@ void main()
 							inPs.uv0 + c_offsets[i] * tex0Size.zw ).x;
 	}
 
-	fLumAvg *= 0.25; // /= 4.0;
+	fLumAvg *= 0.25;
 
-	// Instant exposure response (no temporal adaptation)
-	fragColour = exposure.x / exp( clamp( fLumAvg, exposure.y, exposure.z ) );
+	// Clamp luminance to prevent extreme values
+	float clampedLumAvg = clamp( fLumAvg, 0.1, 5.0 );
+
+	// Calculate new inverse luminance
+	float newInvLum = exposure.x / exp( clamp( clampedLumAvg, exposure.y, exposure.z ) );
+	
+	// Read previous frame and apply temporal adaptation
+	float oldInvLum = texture( vkSampler2D( oldLumRt, samplerPoint ), vec2( 0.0, 0.0 ) ).x;
+
+	// Handle first frame (invalid oldInvLum)
+	bool validOld = !isnan( oldInvLum ) && !isinf( oldInvLum ) && oldInvLum > 0.0;
+	
+	// Use adaptSpeed to control adaptation rate (higher = faster)
+	float adaptFactor = adaptSpeed * 0.01;  // Scale to reasonable range
+	float minLum = oldInvLum * (1.0 - adaptFactor);
+	float maxLum = oldInvLum * (1.0 + adaptFactor);
+	fragColour = validOld ? clamp( newInvLum, minLum, maxLum ) : newInvLum;
 }

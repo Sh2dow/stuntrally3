@@ -38,15 +38,15 @@ using namespace Ogre;
 
 
 /*  Legend, marks for only:
-	[]  Single рџ–ҐпёЏ
-	++  SplitScreen рџ‘Ґ
-	S   SSAO рџ•іпёЏ
+	[]  Single 🖥️
+	++  SplitScreen 👥
+	S   SSAO 🕳️
 	M   MSAA (FSAA)  antialiasing
 	H   HDR ..
 
 ----------------------------------------------------------------------------------------------------
 
-0 S  s0_ssao  [prepare] for ssao рџ•іпёЏ
+0 S  s0_ssao  [prepare] for ssao 🕳️
 	tex rtt_ssao  \   clr0 unused
 	tex depthHalf |   clr1  (all half size, no fsaa)
 	tex gNormals  } rtv
@@ -60,7 +60,7 @@ using namespace Ogre;
 	out2> gFog
 
 
-1 s1_first  [first] в›°пёЏ
+1 s1_first  [first] ⛰️
  S	in0> gNormals
  S	in1> depthHalf
  S	in2> gFog
@@ -68,7 +68,7 @@ using namespace Ogre;
 	tex rtt_first   /
 
 	target rtt_first
-		pass Scene  opaque,transp в›°пёЏ
+		pass Scene  opaque,transp ⛰️
 	out0> rtt_first
 	out1> depthBuffer
 
@@ -82,7 +82,7 @@ using namespace Ogre;
 	out0> resolvedDB
 
 
-3 s3_Final  [Final] рџЄ©
+3 s3_Final  [Final] 🪩
 	>in0 rtt_first    
 	>in1 depthBuffer \
 	>in2 depthBufferNoMsaa  <- resolvedDB
@@ -91,16 +91,16 @@ using namespace Ogre;
 
 	target rtt_final
 		pass copy  rtt_first  to  rtt_final
-		pass Scene  рџЊЉ Refractive Fluids
+		pass Scene  🌊 Refractive Fluids
 			refractions: depthBufferNoMsaa rtt_first
 
-		pass Scene  в­• glass pipes, car glass, рџ’­ particles, pacenotes
+		pass Scene  ⭕ glass pipes, car glass, 💭 particles, pacenotes
 
-	target rtt_lens  рџ”† Lens flare
+	target rtt_lens  🔆 Lens flare
 		pass quad  LensFlare
 			in: depthBufferNoMsaa, rtt_final
 
-	target rtt_beams  рџЊ„ Sunbeams
+	target rtt_beams  🌄 Sunbeams
 		pass quad  SunBeams
 			in: depthBufferNoMsaa, rtt_lens
 
@@ -110,7 +110,7 @@ using namespace Ogre;
 	[]	pass scene  Gui
 
 
-5 ++  sCombine  [Combine]  рџЄџ
+5 ++  sCombine  [Combine]  🪟
 	>in0 rt_renderwindow
 	>in1 rtt_FullIn1  <- rtt_FullOut 1
 	>in2 rtt_FullIn2  <- rtt_FullOut 2  etc more plrs
@@ -141,7 +141,7 @@ const int nCombine = 50;
 #endif
 void AppGui::AddHudGui(CompositorTargetDef* td)  // + 3 ed, + 2 game  pass
 {
-	//  вЏІпёЏ Hud  --------
+	//  ⏲️ Hud  --------
 	auto* ps = AddScene(td);  // + scene Hud
 	ps->setAllStoreActions( StoreAction::Store );
 	ps->mProfilingId = "HUD";  ps->mIdentifier = 10007;
@@ -150,12 +150,12 @@ void AppGui::AddHudGui(CompositorTargetDef* td)  // + 3 ed, + 2 game  pass
 	ps->mLastRQ = RQG_Hud3+1;
 	ps->setVisibilityMask(RV_Hud + RV_Particles);
 
-	//  рџЋ›пёЏ Gui, add MyGUI pass  --------
+	//  🎛️ Gui, add MyGUI pass  --------
 	auto* gui = td->addPass(PASS_CUSTOM, MyGUI::OgreCompositorPassProvider::mPassId);  // + pass Gui
 	gui->mProfilingId = "GUI";  gui->mIdentifier = 99900;
 
 #ifdef SR_EDITOR
-	//  рџЊЌ ed Hud after Gui  --------
+	//  🌍 ed Hud after Gui  --------
 	ps = AddScene(td);  // + scene Hud 2
 	ps->setAllStoreActions( StoreAction::Store );
 	ps->mProfilingId = "HUD2";  ps->mIdentifier = 10007;
@@ -168,7 +168,7 @@ void AppGui::AddHudGui(CompositorTargetDef* td)  // + 3 ed, + 2 game  pass
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------
-//  рџЄ„ Create Compositor  main render setup
+//  🪄 Create Compositor  main render setup
 //------------------------------------------------------------------------------------------------------------------------------------------
 TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float width, float height)
 {
@@ -218,7 +218,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 
 #ifndef SR_EDITOR  // game
-	//  рџЄџ 5 Combine last, final wnd
+	//  🪟 5 Combine last, final wnd
 	//  sum all splits (player views) + add one Hud, Gui
 	//------------------------------------------------------------------------------------------------------------------------------------------
 	if (combine)
@@ -246,7 +246,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					pq->addQuadTextureSource( i, "rtt_FullIn"+toStr(i) );  // input
 				pq->mProfilingId = "Combine to Window";
 
-				//  вЏІпёЏ Hud, рџЋ›пёЏ Gui  --------
+				//  ⏲️ Hud, 🎛️ Gui  --------
 				AddHudGui(td);  // +
 			}
 		}
@@ -261,7 +261,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 	}
 #endif
 
-	//  node  рџЄ© New Refract  * * *
+	//  node  🪩 New Refract  * * *
 	//------------------------------------------------------------------------------------------------------------------------------------------
 	//  Create full compositor when refraction OR any effect (SSAO, lens, sunbeams, HDR) is enabled
 	if (refract || ssao || lens || sunbeams || hdr)
@@ -317,7 +317,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 				ps->mProfilingId = "Pre Ssao-"+si;  // Opaque only, no pipe glass
 				ps->mIdentifier = edTer ? PassId_EdFogOff :
-					edView ? PassId_EdFogOn : PassId_First;  // рџЊ«пёЏ fog on
+					edView ? PassId_EdFogOn : PassId_First;  // 🌫️ fog on
 
 				ps->mFirstRQ = RQG_Sky+1;  // no sky
 				ps->mLastRQ = RQG_Grass+1;  // RQG_Hud3+1;  trail?-
@@ -394,9 +394,9 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				ps->mStoreActionStencil = StoreAction::DontCare;
 				// ps->lod_update_list off  //?
 
-				ps->mProfilingId = "Render First-"+si;  // в›°пёЏ Opaque only
+				ps->mProfilingId = "Render First-"+si;  // ⛰️ Opaque only
 				ps->mIdentifier = edTer ? PassId_EdFogOff :
-					ed ? PassId_EdFogOn : PassId_First;  // рџЊ«пёЏ fog on
+					ed ? PassId_EdFogOn : PassId_First;  // 🌫️ fog on
 
 				if (edTer)
 				{	ps->mLastRQ = RQG_Horizon2+1;  // 20;
@@ -514,7 +514,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			nd->mapOutputChannel(0, "resolvedDB");
 		}
 
-	// 3  s3_Final  рџЄ© Final Refractive
+	// 3  s3_Final  🪩 Final Refractive
 	//--------------------------------------------------------------------------------------------------------------------------
 		{	nd = AddNode(s3_Final+si);  //++ node
 			
@@ -525,9 +525,9 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 			const int post = (lens ? 1 : 0) + (sunbeams ? 1 : 0);
 			//  HDR: 5 luminance passes (LumStart, LumDown1, LumDown2, LumFinal, LumCopy) + 3 bloom passes (Bright, BlurH, BlurV) + 1 FinalToneMapping
-			const int hdrTargets = hdr ? 9 : 0;
-			const int hdrTargetPasses = hdr ? 9 : 0;
-			const int finalLocalTextures = post + (hdr ? 9 : 0);  // 4 lum + 1 prev + 3 bloom + 1 final
+			const int hdrTargets = hdr ? 10 : 0;  // +1 for lum copy pass
+			const int hdrTargetPasses = hdr ? 10 : 0;  // +1 for lum copy pass
+			const int finalLocalTextures = post + (hdr ? 10 : 0);  // 4 lum + 1 prev + 1 lum copy + 3 bloom + 1 final
 			const int finalTargetPasses = post + 2 + hdrTargetPasses;
 			
 			nd->setNumLocalTextureDefinitions( finalLocalTextures );  //* textures
@@ -550,7 +550,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 			nd->setNumTargetPass( finalTargetPasses );  //* targets
 
-			//  рџЊЉ Final  ----
+			//  🌊 Final  ----
 			td = nd->addTargetPass( "rtt_final" );
 			td->setNumPasses( edTer ? 2 : 3 );  //* passes
 			{
@@ -562,7 +562,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				cp->mProfilingId = "copy first to final";
 
 
-			//  рџЊЉ Refracted  Fluids
+			//  🌊 Refracted  Fluids
 				ps = AddScene(td);  // + scene
 				ps->setAllLoadActions( LoadAction::Load );
 				ps->mStoreActionColour[0] = StoreAction::StoreOrResolve;
@@ -573,7 +573,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				ps->mIdentifier = PassId_Reflect;
 
 				ps->mFirstRQ = RQG_Fluid;  ps->mLastRQ = RQG_Refract+1;
-				ps->setVisibilityMask(RV_Fluid);  // рџЊЉ
+				ps->setVisibilityMask(RV_Fluid);  // 🌊
 				
 				// ps->mEnableForwardPlus = 0;  //?
 				AddShadows(ps);  // shadows
@@ -582,7 +582,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			}
 			if (!edTer)
 			{
-			//  в­• glass pipes, car glass, рџ’­ particles, pacenotes
+			//  ⭕ glass pipes, car glass, 💭 particles, pacenotes
 				ps = AddScene(td);  // + scene
 				ps->setAllLoadActions( LoadAction::Load );
 				ps->mStoreActionColour[0] = StoreAction::StoreOrResolve;
@@ -590,7 +590,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				ps->mStoreActionStencil = StoreAction::DontCare;
 
 				ps->mProfilingId = "Glass,Particles";
-				ps->mIdentifier = ed ? PassId_EdFogOff : PassId_First;  // рџЊ«пёЏ fog off
+				ps->mIdentifier = ed ? PassId_EdFogOff : PassId_First;  // 🌫️ fog off
 
 				ps->mFirstRQ = RQG_PipeGlass;  ps->mLastRQ = RQG_Hud3+1;
 				ps->setVisibilityMask(
@@ -605,14 +605,14 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			String final = "rtt_final";  // last rtt
 
 
-			//  рџЊ… Hdr / Carbon Bloom  ----------------
+			//  🌅 Hdr / Carbon Bloom  ----------------
 			if (hdr)
 			{
 				//  Carbon-style bloom: bright pass + blur + final combine.
 				//  Texture/pass counts were reserved before adding any definitions.
 				//  Luminance chain: rtIter0 (64x64) -> rtIter1 (16x16) -> rtIter2 (4x4) -> lumRt (1x1)
 				{
-				//  Luminance reduction chain textures (no temporal adaptation)
+				//  Luminance reduction chain textures (with temporal adaptation)
 				auto* tdef = nd->addTextureDefinition( "hdrLumIter0" );
 				tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";  // non-MSAA
 				tdef->widthFactor = 0.125f;  tdef->heightFactor = 0.125f;  // 64x64 at 1080p
@@ -633,7 +633,15 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				tdef->widthFactor = 0.001953125f;  tdef->heightFactor = 0.001953125f;  // 1x1
 				AddRtv(nd, "hdrLumRt", "hdrLumRt");
 
-				//  Bloom textures (temporal adaptation removed)
+				//  Previous frame luminance for temporal adaptation (1x1)
+				//  RenderToTexture flag = keep content between frames (no discard)
+				tdef = nd->addTextureDefinition( "hdrLumRtPrev" );
+				tdef->format = PFG_R16_FLOAT;  tdef->fsaa = "1";
+				tdef->widthFactor = 0.001953125f;  tdef->heightFactor = 0.001953125f;  // 1x1
+				tdef->textureFlags = TextureFlags::RenderToTexture;  // Keep content
+				AddRtv(nd, "hdrLumRtPrev", "hdrLumRtPrev");
+
+				//  Bloom textures
 				tdef = nd->addTextureDefinition( "hdrBright" );
 				tdef->format = PFG_RGBA16_FLOAT;  tdef->fsaa = "1";  // half size
 				tdef->widthFactor = 0.5f;  tdef->heightFactor = 0.5f;
@@ -688,7 +696,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					pq->addQuadTextureSource( 0, "hdrLumIter1" );  // input: previous luminance
 				}
 
-				//  Step 4: DownScale03_SumLumEnd - final luminance (4x4 -> 1x1)
+				//  Step 4: DownScale03_SumLumEnd - final luminance with rate limiting (4x4 -> 1x1)
 				td = nd->addTargetPass( "hdrLumRt" );
 				td->setNumPasses( 1 );
 				{
@@ -697,7 +705,17 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 					pq->mMaterialName = "HDR/DownScale03_SumLumEnd";  pq->mProfilingId = "HDR Luminance Final";
 					pq->addQuadTextureSource( 0, "hdrLumIter2" );  // input: summed luminance
-					// Note: no temporal adaptation
+					pq->addQuadTextureSource( 1, "hdrLumRtPrev" );  // input: prev frame (rate limiting)
+				}
+
+				//  Copy current luminance to prev for next frame rate limiting
+				td = nd->addTargetPass( "hdrLumRtPrev" );
+				td->setNumPasses( 1 );
+				{
+					auto* pq = AddQuad(td);
+					pq->setAllLoadActions( LoadAction::DontCare );
+					pq->mMaterialName = "Ogre/Copy/1xFP32";  pq->mProfilingId = "HDR Lum Copy";
+					pq->addQuadTextureSource( 0, "hdrLumRt" );
 				}
 
 				//  Bright pass target - uses REAL luminance now
@@ -711,7 +729,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 					pq->mMaterialName = "HDR/BrightPass_Start";  pq->mProfilingId = "HDR Bright Pass";
 					pq->addQuadTextureSource( 0, "rtt_final" );  // input: scene color
 					pq->addQuadTextureSource( 1, "hdrLumRt" );  // input: REAL inverse avg luminance
-					//  рџџў Carbon bloom params - set via material
+					//  🟢 Carbon bloom params - set via material
 				}
 
 				//  Horizontal blur
@@ -753,7 +771,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				final = "hdrFinal";  // use HDR output
 			}
 
-			//  рџ”† Lens flare  ----------------
+			//  🔆 Lens flare  ----------------
 			if (lens)
 			{
 				td = nd->addTargetPass( "rtt_lens" );
@@ -769,7 +787,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				final = "rtt_lens";
 			}
 
-			//  рџЊ„ Sunbeams  ----------------
+			//  🌄 Sunbeams  ----------------
 			if (sunbeams)
 			{
 				td = nd->addTargetPass( "rtt_beams" );
@@ -796,7 +814,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 				pq->mProfilingId = "Copy to Window";
 				pq->addQuadTextureSource( 0, final );  // input
 
-				//  вЏІпёЏ Hud, рџЋ›пёЏ Gui  --------
+				//  ⏲️ Hud, 🎛️ Gui  --------
 				if (addHudGui)
 					AddHudGui(td);  // +
 			}
@@ -821,7 +839,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 	}
 	//------------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------------
-	else  //  node  рџ–ҐпёЏ Old  no refract, no depth, no effects  - - -
+	else  //  node  🖥️ Old  no refract, no depth, no effects  - - -
 	{						// meh todo ssao w/o refract
 		if (createRTT)
 			rtt = AddSplitRTT(si, width, height);
@@ -846,7 +864,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 
 				AddShadows(ps);  // shadows
 			}
-			//  вЏІпёЏ Hud, рџЋ›пёЏ Gui  --------
+			//  ⏲️ Hud, 🎛️ Gui  --------
 			if (addHudGui)
 				AddHudGui(td);  // +
 
@@ -857,12 +875,21 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 			}
 		}
 	}
+
+	//  🟢 Apply HDR settings after compositor creation
+	if (hdr)
+	{
+		Demo::HdrUtils::setBloomIntensity(pSet->hdr_bloom_int);
+		Demo::HdrUtils::setExposureValue(pSet->hdr_exposure);
+		Demo::HdrUtils::setAdaptationSpeed(pSet->hdr_adapt_speed);
+	}
+
 	return rtt;
 }
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------
-//  рџЄ„ Setup Compositors All  рџЄџ splits etc
+//  🪄 Setup Compositors All  🪟 splits etc
 //------------------------------------------------------------------------------------------------------------------------------------------
 void AppGui::SetupCompositors()
 {
@@ -884,10 +911,10 @@ void AppGui::SetupCompositors()
 	// bool vr_mode = pSet->vr_mode;
 #endif
 
-	DestroyCompositors();  // рџ’Ґ ----
+	DestroyCompositors();  // 💥 ----
 
 
-	//  рџЊ’ Shadows  ----
+	//  🌒 Shadows  ----
 	bool esm = pSet->g.shadow_type == 2;
 	if (pSet->g.shadow_type > 0)
 	{
@@ -898,19 +925,19 @@ void AppGui::SetupCompositors()
 	}
 
 
-	//  рџ”® create Reflections  ----
+	//  🔮 create Reflections  ----
 	CreateCubeReflect();
 
 
-	//  рџ–ҐпёЏ Viewports  ----
-	DestroyCameras();  // рџ’ҐрџЋҐ
+	//  🖥️ Viewports  ----
+	DestroyCameras();  // 💥🎥
 
 	for (int i = 0; i < MAX_Players; ++i)
 		mDims[i].Default();
 
 
 #ifndef SR_EDITOR
-	//  рџ‘Ґ Split Screen   ---- ---- ---- ----
+	//  👥 Split Screen   ---- ---- ---- ----
 	//......................................................................................................................................
 	if (views > 1)
 	{
@@ -924,7 +951,7 @@ void AppGui::SetupCompositors()
 			auto& d = mDims[i];
 			d.SetDim(views, !pSet->split_vertically, i);
 
-			//  рџЄ„ Create 1  ----
+			//  🪄 Create 1  ----
 			auto* rtt = CreateCompositor(0, i, views, d.width0, d.height0);
 
 			//  external output to rtt
@@ -936,7 +963,7 @@ void AppGui::SetupCompositors()
 			vWorkspaces.push_back(wOne);
 		}
 
-		//  рџЄ„ Combine []  ----
+		//  🪄 Combine []  ----
 		CreateCompositor(0, nCombine, views, 1.f, 1.f);
 
 			auto c = CreateCamera( "PlayerW", 0, Vector3(0,150,0), Vector3(0,0,0) );
@@ -954,14 +981,14 @@ void AppGui::SetupCompositors()
 	}
 	else
 #endif
-  	//  рџ–ҐпёЏ Single View  --------
+  	//  🖥️ Single View  --------
 	//......................................................................................................................................
 	// if (!vr_mode)
 	{
 		auto c = CreateCamera( "Player", 0, Vector3(0,150,0), Vector3(0,0,0) );
 		mCamera = c->cam;
 
-		//  рџЄ„ Create []  ----
+		//  🪄 Create []  ----
 		IdString wsName;
 		CreateCompositor(0, -1, 1,  1.f, 1.f);
 		wsName = sWork + "0";
@@ -970,7 +997,7 @@ void AppGui::SetupCompositors()
 		CompositorChannelVec chWnd( mCubeReflTex ? 2 : 1 );
 		chWnd[0] = mWindow->getTexture();
 		if (mCubeReflTex)
-			chWnd[1] = mCubeReflTex;  // рџ”®
+			chWnd[1] = mCubeReflTex;  // 🔮
 
 		auto ws = mgr->addWorkspace( mSceneMgr, chWnd,  c->cam, wsName, true );
 		// ws->addListener(listener);
@@ -979,7 +1006,7 @@ void AppGui::SetupCompositors()
 	
 #if 0	//  OLD meh
 	else
-	{	//  рџ‘Ђ VR mode  ---- ----  todo use OpenVR
+	{	//  👀 VR mode  ---- ----  todo use OpenVR
 	//......................................................................................................................................
 		const Real eyeSide = 0.5f, eyeFocus = 0.45f, eyeZ = -10.f;  // dist
 
