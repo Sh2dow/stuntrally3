@@ -403,6 +403,34 @@ Only consider it after the earlier phases work because Carbon's full runtime tra
 
 That is a much larger architectural step than FE previews, track zones, or canyon/event logic.
 
+If the goal expands from "use Carbon track logic" to "port Carbon track content", Phase 8 should itself be split into a tooling pipeline:
+
+1. container extraction from `TRACKS\\*.BUN`, `TRACKS\\STREAM*.BUN`, and related assets,
+2. chunk classification for geometry, textures, collision, path, and road-network data,
+3. geometry conversion into Blender/interchange format first,
+4. texture/material conversion into SR3/Ogre-friendly assets,
+5. separate collision conversion,
+6. track-path / route / zone extraction for gameplay and AI,
+7. SR3-side integration of one imported validation track,
+8. only after that any attempt at live section streaming.
+
+Use these references for that phase:
+
+- `NFS Docs/NFSC-Track-Port-Research.md`
+- `D:\Repos\Games\Binarius`
+- `D:\Repos\Games\Maps\NFSMWMapLoader\NFSMWMapLoader.asm`
+- `D:\Repos\Games\NFSC\hyperlinked`
+- live `ida-pro-mcp` functions:
+  - `TrackStreamer::*`
+  - `WRoadNetwork::*`
+  - `LoaderWCollisionPack`
+  - `UITrackMapStreamer::UITrackMapStreamer`
+
+Important constraint:
+
+- the first full-port milestone should be one imported validation track,
+- not full city/open-world streaming.
+
 ## What Not To Do First
 
 Avoid these as the opening move:

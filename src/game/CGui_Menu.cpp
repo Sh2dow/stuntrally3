@@ -74,9 +74,9 @@ void CGui::InitMainMenu()
 		app->mMainGamesPanels[i] = fImg("PanGames"+s);
 		Btn("BtnGames"+s, btnMainMenu);  app->mMainGamesBtns[i] = btn;
 	}
-	// Career button in games (BtnGames7)
-	app->mMainGamesPanels[7] = fImg("PanGames7");
-	Btn("BtnGames7", btnMainMenu);  app->mMainGamesBtns[7] = btn;
+	// Career button in games (BtnGames7) - disabled
+	// app->mMainGamesPanels[7] = fImg("PanGames7");
+	// Btn("BtnGames7", btnMainMenu);  app->mMainGamesBtns[7] = btn;
 
 	//  center
 	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
@@ -122,59 +122,53 @@ void CGui::InitMainMenu()
 //----------------------------------------------------------------------------------------------------------------
 void CGui::ShowCareerWnd()
 {
-	// Show career window
-	if (app->mWCareer)
+	// Update career info
+	Ed edInfo = fEd("edCareerInfo");
+	if (edInfo)
 	{
-		app->mWCareer->setVisible(true);
-		
-		// Update career info
-		Ed edInfo = fEd("edCareerInfo");
-		if (edInfo)
+		std::string info = "#{CareerDesc}\n\n";
+		info += "#{CareerInstructions}";
+		edInfo->setCaption(TR(info));
+	}
+
+	// Update player stats
+	Ed edStats = fEd("edCareerStats");
+	if (edStats)
+	{
+		std::string stats;
+		stats += "#{Level}: " + toStr(CareerManager::Get().GetLevel()) + "\n";
+		stats += "#{Reputation}: " + toStr(CareerManager::Get().GetProgress().reputation) + "\n";
+		stats += "#{Cash}: $" + toStr(CareerManager::Get().GetProgress().cash) + "\n";
+		stats += "\n#{BossesDefeated}: " + toStr(CareerManager::Get().GetProgress().bossesDefeated) + "/10\n";
+		stats += "#{DistrictsComplete}: " + toStr(0) + "/10";  // TODO: count complete districts
+		edStats->setCaption(stats);
+	}
+
+	// Update district buttons
+	for (int i = 0; i < 10; ++i)
+	{
+		Btn btn = fBtn("BtnDistrict" + toStr(i));
+		if (btn)
 		{
-			std::string info = "#{CareerDesc}\n\n";
-			info += "#{CareerInstructions}";
-			edInfo->setCaption(TR(info));
-		}
-		
-		// Update player stats
-		Ed edStats = fEd("edCareerStats");
-		if (edStats)
-		{
-			std::string stats;
-			stats += "#{Level}: " + toStr(CareerManager::Get().GetLevel()) + "\n";
-			stats += "#{Reputation}: " + toStr(CareerManager::Get().GetProgress().reputation) + "\n";
-			stats += "#{Cash}: $" + toStr(CareerManager::Get().GetProgress().cash) + "\n";
-			stats += "\n#{BossesDefeated}: " + toStr(CareerManager::Get().GetProgress().bossesDefeated) + "/10\n";
-			stats += "#{DistrictsComplete}: " + toStr(0) + "/10";  // TODO: count complete districts
-			edStats->setCaption(stats);
-		}
-		
-		// Update district buttons
-		for (int i = 0; i < 10; ++i)
-		{
-			Btn btn = fBtn("BtnDistrict" + toStr(i));
-			if (btn)
+			const District* district = CareerManager::Get().GetDistrict(i + 1);
+			if (district)
 			{
-				const District* district = CareerManager::Get().GetDistrict(i + 1);
-				if (district)
+				bool unlocked = CareerManager::Get().CanAccessDistrict(district->id);
+				btn->setEnabled(unlocked);
+				btn->setCaption(toStr(i + 1) + ". " + district->name);
+
+				// Color based on completion
+				if (unlocked)
 				{
-					bool unlocked = CareerManager::Get().CanAccessDistrict(district->id);
-					btn->setEnabled(unlocked);
-					btn->setCaption(toStr(i + 1) + ". " + district->name);
-					
-					// Color based on completion
-					if (unlocked)
-					{
-						bool complete = CareerManager::Get().IsDistrictComplete(district->id);
-						if (complete)
-							btn->setTextColour(Colour(0.6, 1.0, 0.6));  // Green
-						else
-							btn->setTextColour(Colour(1.0, 1.0, 0.6));  // Yellow
-					}
+					bool complete = CareerManager::Get().IsDistrictComplete(district->id);
+					if (complete)
+						btn->setTextColour(Colour(0.6, 1.0, 0.6));  // Green
 					else
-					{
-						btn->setTextColour(Colour(0.6, 0.6, 0.6));  // Gray
-					}
+						btn->setTextColour(Colour(1.0, 1.0, 0.6));  // Yellow
+				}
+				else
+				{
+					btn->setTextColour(Colour(0.6, 0.6, 0.6));  // Gray
 				}
 			}
 		}
@@ -222,11 +216,19 @@ void CGui::btnMainMenu(WP wp)
 		case Games_Challenge:  GuiShortcut(MN_Chall,    TAB_Champs, -1, i);  return;
 
 		case Games_Collection: GuiShortcut(MN_Collect, TAB_Champs, -1, i);  break;
-		case Games_Career:     pSet->iMenu = MN_Career;  ShowCareerWnd();  break;  // NEW Career
+		// Games_Career is disabled - Career is only accessible from main menu
 
 		case Games_Stats:      app->mWndStats->setVisible(true);  break;
 		case Games_Back:       pSet->iMenu = MN1_Setup;  break;
 		}
+		app->gui->toggleGui(false);
+		return;
+	}
+
+	// Career back button
+	if (wp == fBtn("BtnCareerBack"))
+	{
+		pSet->iMenu = MN1_Main;
 		app->gui->toggleGui(false);
 		return;
 	}
@@ -255,8 +257,11 @@ void CGui::tabMainMenu(Tab tab, size_t id)
 	
 	if (id != 0)  return;  // <back
 	tab->setIndexSelected(1);  // dont switch to 0
-	
-	if (pSet->iMenu >= MN_Single && pSet->iMenu <= MN_Career)
+
+	// Career is a separate window, go back to main menu
+	if (pSet->iMenu == MN_Career)
+		pSet->iMenu = MN1_Main;
+	else if (pSet->iMenu >= MN_Single && pSet->iMenu <= MN_Career)
 		pSet->iMenu = MN1_Games;
 	else
 		pSet->iMenu = MN1_Main;

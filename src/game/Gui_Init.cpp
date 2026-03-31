@@ -59,6 +59,7 @@ void CGui::InitGui()
 	app->mWMainMenu = fWnd("MainMenuWnd");  // main menus 3 levels
 	app->mWMainSetup = fWnd("MainSetupWnd");
 	app->mWMainGames = fWnd("MainGamesWnd");
+	app->mWCareer = fWnd("CareerWnd");  // Career window
 	app->mWndGameInfo = fWP("GameInfoWnd");
 
 	app->mWndGame = fWnd("GameWnd");  app->mWndReplays = fWnd("ReplaysWnd");

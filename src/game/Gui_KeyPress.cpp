@@ -367,11 +367,12 @@ void App::keyPressed(const SDL_KeyboardEvent &arg)
 				{
 				case MN1_Main:  break;
 				case MN1_Setup:  pSet->iMenu = MN1_Main;  break;
-				
+
 				case MN_Single: case MN_Tutorial: case MN_Champ:
-				case MN_Chall:  case MN_Collect:  case MN_Career:
+				case MN_Chall:  case MN_Collect:
 					pSet->iMenu = MN1_Games;  break;
-				
+
+				case MN_Career:  // Career is separate window, back to main
 				case MN_Replays:
 					if (isFocGui)  pSet->iMenu = MN1_Main;
 					break;

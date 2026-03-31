@@ -10,6 +10,8 @@ This note is based on:
 - live `ida-pro-mcp` reads from the active `NFSC.exe` IDB
 - shipped Carbon assets in `D:\Games\NFSC Redux\TRACKS`
 
+For the separate late-stage problem of importing full Carbon geometry/material/collision content into SR3, see `NFSC-Track-Port-Research.md`.
+
 ## Executive Summary
 
 Carbon does not use tracks as one flat "load a map" asset.

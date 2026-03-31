@@ -94,6 +94,21 @@ This is the execution-facing companion to the higher-level plan.
 
 - Treat direct `TRACKS\\STREAM*.BUN` runtime support as a late architectural milestone, not an opening task.
 - Only approach this after SR3 has FE track previews, track zones/barriers, event flow, AI, and progression shell.
+- If full Carbon track import becomes a goal, split this slice into:
+  - BUN / stream extraction
+  - geometry conversion
+  - texture/material conversion
+  - collision conversion
+  - track-path / road spline extraction
+  - one imported validation track
+  - only later live runtime section streaming
+- Use Carbon references:
+  - repo source: `D:\\Repos\\Games\\NFSC\\hyperlinked`
+  - tooling source: `D:\\Repos\\Games\\Binarius`
+  - external runtime-loader reference: `D:\\Repos\\Games\\Maps\\NFSMWMapLoader\\NFSMWMapLoader.asm`
+  - IDA systems: `TrackStreamer`, `WRoadNetwork`, `WCollisionAssets`, `UITrackMapStreamer`
+- See also:
+  - `NFS Docs/NFSC-Track-Port-Research.md`
 
 ## Immediate Order
 

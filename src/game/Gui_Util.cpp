@@ -76,13 +76,30 @@ void CGui::toggleGui(bool toggle)
 	const bool gui = app->isFocGui;
 	const int mnu = pSet->iMenu;
 
-	app->mWMainMenu->setVisible( gui && mnu == MN1_Main);  // main
-	app->mWMainSetup->setVisible(gui && mnu == MN1_Setup);
-	app->mWMainGames->setVisible(gui && mnu == MN1_Games);
+	// Career window is special - separate from main menu hierarchy
+	// Show Career window when in MN_Career mode, hide all other main windows
+	if (app->mWCareer)
+	{
+		bool showCareer = (mnu == MN_Career);
+		app->mWCareer->setVisible(showCareer);
+		// When showing career, hide all other main menu windows
+		if (showCareer)
+		{
+			app->mWMainMenu->setVisible(false);
+			app->mWMainSetup->setVisible(false);
+			app->mWMainGames->setVisible(false);
+		}
+	}
+	else
+	{
+		app->mWMainMenu->setVisible( gui && mnu == MN1_Main);  // main
+		app->mWMainSetup->setVisible(gui && mnu == MN1_Setup);
+		app->mWMainGames->setVisible(gui && mnu == MN1_Games);
+	}
 
 	app->mWndHowTo->setVisible(  gui && mnu == MN_HowTo);
 	app->mWndReplays->setVisible(gui && mnu == MN_Replays);
-	
+
 	app->mWndHelp->setVisible(     gui && mnu == MN_Help);
 	app->mWndOpts->setVisible(     gui && mnu == MN_Options);
 	app->mWndMaterials->setVisible(gui && mnu == MN_Materials);
