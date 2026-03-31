@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
 
-	<Widget type="Window" skin="WindowC" position="20 932 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
+	<Widget type="Window" skin="WindowC" position="20 696 800 600" align="Center" layer="Overlapped" name="OptionsWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="#{Options}"/>
 		<Property key="Alpha" value="0.3"/>
 		<Property key="Snap" value="true"/>
-		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Stretch" layer="Back" name="TabWndOpts">
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Default" layer="Back" name="TabWndOpts">
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="Colour" value="0.7 0.9 1"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="SmoothShow" value="false"/>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
@@ -19,7 +19,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#C0E0FF#{Screen}"/>
 
-				<Widget type="TextBox" skin="TextBox" position="504 532 312 24">
+				<Widget type="TextBox" skin="TextBox" position="504 542 312 24">
 					<Property key="Caption" value="*#{NeedRestart}"/>
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
@@ -28,7 +28,7 @@
 					<Property key="SmoothShow" value="false"/>
 
 					<Widget type="TabItem" skin="" position="2 24 738 472">
-						<Property key="Caption" value="#D0F0FF#{InputMain}"/>
+						<Property key="Caption" value="#B0F0FF#{InputMain}"/>
 						
 						<!-- Screen Resolution -->
 						<Widget type="ImageBox" skin="ImageBox" position="32 56 96 96">
@@ -138,27 +138,27 @@
 						</Widget>
 
 						<!-- brightness -->
-						<Widget type="TextBox" skin="TextBox" position="32 406 248 24">
+						<Widget type="TextBox" skin="TextBox" position="32 366 248 24">
 							<Property key="Caption" value="#{Brightness}"/>
 							<Property key="TextColour" value="0.9 0.7 0.7"/>
 							<Property key="Alpha" value="0.8"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 406 48 24" name="BrightVal">
+						<Widget type="TextBox" skin="TextBox" position="296 366 48 24" name="BrightVal">
 							<Property key="TextColour" value="0.9 0.7 0.7"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 406 216 16" name="Bright">
+						<Widget type="Slider" skin="Slider" position="344 366 216 16" name="Bright">
 							<Property key="Colour" value="0.9 0.7 0.7"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="32 436 248 24">
+						<Widget type="TextBox" skin="TextBox" position="32 396 248 24">
 							<Property key="Caption" value="#{Contrast}"/>
 							<Property key="TextColour" value="0.9 0.5 0.5"/>
 							<Property key="Alpha" value="0.8"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 436 48 24" name="ContrastVal">
+						<Widget type="TextBox" skin="TextBox" position="296 396 48 24" name="ContrastVal">
 							<Property key="TextColour" value="0.9 0.5 0.5"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 436 216 16" name="Contrast">
+						<Widget type="Slider" skin="Slider" position="344 396 216 16" name="Contrast">
 							<Property key="Colour" value="0.9 0.5 0.5"/>
 						</Widget>
 
@@ -168,7 +168,7 @@
 							<Property key="TextShadow" value="true"/>
 							<Property key="FontName" value="font.big"/>
 						</Widget> -->
-						<Widget type="Button" skin="CheckBox" position="28 30 408 24" name="AllEffects">
+						<Widget type="Button" skin="CheckBox" position="28 328 408 24" name="AllEffects">
 							<Property key="Caption" value="#{AllEffects}"/>
 							<Property key="TextColour" value="1.0 1.0 0.7"/>
 							<Property key="TextShadow" value="true"/>
@@ -187,18 +187,35 @@
 							<Property key="TextColour" value="1.0 1 0.2"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="392 90 320 18" name="BloomInt"/> -->
-						<Widget type="Button" skin="CheckBox" position="28 60 164 24" name="Bloom">
+						<Widget type="TextBox" skin="TextBox" position="28 190 240 24">
+							<Property key="Caption" value="#{HDR}"/>
+							<Property key="TextColour" value="0.8 0.6 0.3"/>
+							<Property key="FontName" value="font.big"/>
+							<Property key="TextShadow" value="true"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 220 360 24">
+							<Property key="Caption" value="#606060#{NotDone}: #{Editor}"/>
+							<Property key="TextColour" value="0.55 0.55 0.55"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="28 250 200 24">
 							<Property key="Caption" value="#{Bloom}"/>
 							<Property key="TextColour" value="1 1 0.3"/>
+							<Property key="FontName" value="font.big"/>
+							<Property key="TextShadow" value="true"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="196 90 128 24">
-							<Property key="Caption" value="#{BloomInt}"/>
+						<Widget type="Button" skin="CheckBox" position="28 278 556 24" name="Bloom">
+							<Property key="Caption" value=""/>
+							<Property key="TextColour" value="1 1 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 308 248 24">
+							<Property key="Caption" value="#{Intensity}"/>
 							<Property key="TextColour" value="1.0 0.9 0.0"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 90 48 24" name="BloomIntVal">
+						<Widget type="TextBox" skin="TextBox" position="296 308 48 24" name="BloomIntVal">
 							<Property key="TextColour" value="1.0 1 0.2"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 90 216 16" name="BloomInt"/>
+						<Widget type="Slider" skin="Slider" position="344 308 216 16" name="BloomInt"/>
 
 
 						<Widget type="TextBox" skin="TextBox" position="362 10 248 24">
@@ -365,12 +382,12 @@
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 136 248 24">
-							<Property key="Caption" value="#{FontSizes}"/>
+							<Property key="Caption" value="#{FontSizes} **"/>
 							<Property key="TextColour" value="0.8 0.7 0.8"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="32 166 248 24">
-							<Property key="Caption" value="#{GUI} **"/>
+							<Property key="Caption" value="#{GUI}"/>
 							<Property key="TextColour" value="0.9 0.5 0.9"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="296 166 48 24" name="FntGuiVal">
