@@ -150,6 +150,8 @@ void CGui::SetGuiTerFromXml()
 void CGui::SetGuiRoadFromXml()
 {
 	SplineRoad* rd = scn->road;
+	if (!rd)
+		return;
 	for (int i=0; i < 4/*MTRs*/; ++i)
 	{	btnRoad[i]->setCaption(rd->sMtrRoad[i]);
 		btnPipe[i]->setCaption(rd->sMtrPipe[i]);

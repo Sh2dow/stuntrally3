@@ -228,6 +228,13 @@ void GraphicsSystem::initialize( const String &windowTitle )
 		}
 	}
 
+#ifdef SR_EDITOR
+	// Editor startup currently hits shader failures on Vulkan and D3D11.
+	// Prefer GL3+ for the editor when it's available.
+	if( RenderSystem *gl3 = mRoot->getRenderSystemByName( "OpenGL 3+ Rendering Subsystem" ) )
+		mRoot->setRenderSystem( gl3 );
+#endif
+
 	//  disable sRGB Gamma Conversion !
 #ifdef DISABLE_SRGB
 	itor = mRoot->getAvailableRenderers().begin();

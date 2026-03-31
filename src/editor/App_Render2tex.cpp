@@ -36,6 +36,12 @@ using namespace Ogre;
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 void App::CreateRnd2Tex()
 {
+#ifdef SR_EDITOR
+	// Editor: skip render-to-texture setup that requires compositor
+	LogO("C-+E ed Create Rnd2Tex - skipped (no compositor in editor)");
+	return;
+#endif
+
 	LogO("C-+E ed Create Rnd2Tex");
 	const char* strWs[RT_ALL] = {  //  names in SR3.compositor
 		"Rtt_RoadDens", "Rtt_RoadPreview", "Rtt_Terrain",
@@ -214,6 +220,11 @@ void App::CreateRnd2Tex()
 
 void App::AddListenerRnd2Tex()
 {
+#ifdef SR_EDITOR
+	// Editor: skip RTT listener setup (no compositor)
+	return;
+#endif
+
 	if (scn->refl.mWsListener)
 	for (int i=0; i < RT_ALL; ++i)
 		rt[i].ws->addListener(scn->refl.mWsListener);
@@ -304,6 +315,11 @@ void App::DestroyRnd2Tex()
 //  🗜️ minimap resize
 void App::UpdMiniSize()
 {
+#ifdef SR_EDITOR
+	// Editor: skip minimap RTT resize (no compositor)
+	return;
+#endif
+
 	float wx = mWindow->getWidth(), wy = mWindow->getHeight();
 	asp = wx / wy;
 	Real s = pSet->size_minimap;
@@ -332,10 +348,15 @@ void App::UpdMiniSize()
 
 void App::UpdMiniVis()
 {
+#ifdef SR_EDITOR
+	// Editor: skip minimap RTT visibility (no compositor)
+	return;
+#endif
+
 	bool full = edMode == ED_PrvCam;
 	for (int i=0; i < RT_ALL; ++i)
 	{
-		bool vis = 
+		bool vis =
 			full ? i == RT_View3D :
 			pSet->trackmap && i == pSet->num_mini;
 		if (rt[i].nd)

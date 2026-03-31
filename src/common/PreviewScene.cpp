@@ -18,6 +18,7 @@
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 #include <OgreItem.h>
+#include <OgreResourceGroupManager.h>
 #include <OgreSubMesh2.h>
 using namespace Ogre;
 
@@ -112,9 +113,11 @@ bool PreviewScene::Load(String mesh, String mtr)
 	LogO("+--P PreviewScene Load: "+mesh);
 
 	try
-	{	item = mgr->createItem(mesh);
+	{	item = mgr->createItem(mesh,
+			ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME, SCENE_STATIC);
 		if (!mtr.empty())
 			item->setDatablockOrMaterialName(mtr);
+		app->SetTexWrap(item);
 		
 		//  txt for info  --------
 		sInfo.clear();
@@ -122,9 +125,18 @@ bool PreviewScene::Load(String mesh, String mtr)
 		for (int i=0; i < all; ++i)
 		{
 			auto* si = item->getSubItem(i);
-			if (!i)  lods = si->getSubMesh()->mVao[0].size();  // once
-			int tris = si->getSubMesh()->mVao[0][0]->getPrimitiveCount();
-			sInfo += " "+si->getSubMesh()->getMaterialName()+"    "+fToStr(tris /1000.f,1,4)+" k  "+"\n";
+			auto* sm = si ? si->getSubMesh() : 0;
+			if (!sm)
+				continue;
+
+			const auto& vaoLods = sm->mVao[0];
+			lods = std::max<int>(lods, vaoLods.size());
+
+			int tris = 0;
+			if (!vaoLods.empty() && vaoLods[0])
+				tris = vaoLods[0]->getPrimitiveCount();
+
+			sInfo += " "+sm->getMaterialName()+"    "+fToStr(tris /1000.f,1,4)+" k  "+"\n";
 			all_tris += tris;
 		}
 		sTotal = ": "+toStr(all)+"  Tris: "+fToStr(all_tris /1000.f,0,2)+" k" + "  LODs: "+toStr(lods);
@@ -136,19 +148,24 @@ bool PreviewScene::Load(String mesh, String mtr)
 			for (int i=0; i < all; ++i)
 			{
 				auto* si = item->getSubItem(i);
-				int lods = si->getSubMesh()->mVao[0].size();
-				if (lod < lods)
-				{	int tris = si->getSubMesh()->mVao[0][lod]->getPrimitiveCount();
-					lod_tris += tris;
-			}	}
+				auto* sm = si ? si->getSubMesh() : 0;
+				if (!sm)
+					continue;
+
+				const auto& vaoLods = sm->mVao[0];
+				if (lod < vaoLods.size() && vaoLods[lod])
+					lod_tris += vaoLods[lod]->getPrimitiveCount();
+			}
+
+			const float percent = all_tris > 0 ? 100.f * lod_tris / all_tris : 0.f;
 			sLods += " "+toStr(lod+1)+"    "+fToStr(lod_tris /1000.f,1,4)+" k   "+
-				fToStr(100.f * lod_tris / all_tris,1,4)+"%\n";
+				fToStr(percent,1,4)+"%\n";
 		}
 		
-		node = mgr->getRootSceneNode()->createChildSceneNode();
+		node = mgr->getRootSceneNode(SCENE_STATIC)->createChildSceneNode(SCENE_STATIC);
 		node->attachObject(item);
 	}
-	catch(Exception e)
+	catch (const Exception&)
 	{
 		LogO("+--P PreviewScene can't create!");
 		return false;

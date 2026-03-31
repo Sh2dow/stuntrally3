@@ -168,6 +168,12 @@
 							<Property key="TextShadow" value="true"/>
 							<Property key="FontName" value="font.big"/>
 						</Widget> -->
+						<Widget type="Button" skin="CheckBox" position="28 30 408 24" name="AllEffects">
+							<Property key="Caption" value="#{AllEffects}"/>
+							<Property key="TextColour" value="1.0 1.0 0.7"/>
+							<Property key="TextShadow" value="true"/>
+							<Property key="FontName" value="font.big"/>
+						</Widget>
 
 						<!-- <Widget type="Button" skin="CheckBox" position="28 60 164 24" name="Bloom">
 							<Property key="Caption" value="#{Bloom}"/>
@@ -181,6 +187,18 @@
 							<Property key="TextColour" value="1.0 1 0.2"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="392 90 320 18" name="BloomInt"/> -->
+						<Widget type="Button" skin="CheckBox" position="28 60 164 24" name="Bloom">
+							<Property key="Caption" value="#{Bloom}"/>
+							<Property key="TextColour" value="1 1 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="196 90 128 24">
+							<Property key="Caption" value="#{BloomInt}"/>
+							<Property key="TextColour" value="1.0 0.9 0.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 90 48 24" name="BloomIntVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 90 216 16" name="BloomInt"/>
 
 
 						<Widget type="TextBox" skin="TextBox" position="362 10 248 24">
@@ -230,28 +248,47 @@
 
 
 						<!-- 🌅 HDR -->
+						<!-- Editor doesn't support HDR yet, causes crash -->
 						<!-- <Widget type="Button" skin="CheckBox" position="28 210 556 24" name="HDR">
-							<Property key="Caption" value="#{HDR} ** #603030 = #{NotDone}"/>
+							<Property key="Caption" value="#{HDR} **"/>
 							<Property key="TextColour" value="0.8 0.6 0.3"/>
-						</Widget> -->
-
-						<!-- <Widget type="Button" skin="CheckBox" position="28 150 256 24" name="SoftParticles">
-							<Property key="Caption" value="#{SoftParticles}"/>
-							<Property key="TextColour" value="1 0.75 0.4"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="196 210 118 24">
-							<Property key="Caption" value="#{HDRAdaptationScale}"/>
+						<Widget type="TextBox" skin="TextBox" position="196 240 128 24">
+							<Property key="Caption" value="#{HDRBloomInt}"/>
+							<Property key="TextColour" value="1.0 0.9 0.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 240 48 24" name="HdrBloomIntVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 240 216 16" name="HdrBloomInt"/>
+
+						<Widget type="TextBox" skin="TextBox" position="196 270 128 24">
+							<Property key="Caption" value="#{HDRBloomThresh}"/>
+							<Property key="TextColour" value="1.0 0.9 0.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 270 48 24" name="HdrBloomThreshVal">
+							<Property key="TextColour" value="1.0 1 0.2"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 270 216 16" name="HdrBloomThresh"/>
+
+						<Widget type="TextBox" skin="TextBox" position="196 300 118 24">
+							<Property key="Caption" value="#{HDRExposure}"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="328 210 60 24" name="HDRAdaptScaleVal">
+						<Widget type="TextBox" skin="TextBox" position="296 300 48 24" name="HdrExposureVal">
 							<Property key="TextColour" value="0.7 0.86 1.0"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="392 210 320 18" name="HDRAdaptScale"/>
-						<Widget type="TextBox" skin="TextBox" position="196 94 128 24">
-							<Property key="Caption" value="#{HDRIntensity}"/>
-							<Property key="TextColour" value="1.0 0.9 0.0"/>
-						</Widget> -->
+						<Widget type="Slider" skin="Slider" position="344 300 216 16" name="HdrExposure"/>
+
+						<Widget type="TextBox" skin="TextBox" position="196 330 118 24">
+							<Property key="Caption" value="#{HDRAdaptSpeed}"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 330 48 24" name="HdrAdaptVal">
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 330 216 16" name="HdrAdapt"/> -->
 					</Widget>
 
 

@@ -53,6 +53,10 @@ void App::Load()
 
 	LogO(">>>> Init editor ----");
 
+	// Editor compositor path does not provide refraction inputs.
+	// Keep runtime rendering on the non-refractive fluid path.
+	pSet->g.water_refract = false;
+
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
 	updBrush();
 

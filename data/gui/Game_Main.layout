@@ -134,11 +134,11 @@
 			<UserString key="tip" value="#{CareerInfo}"/>
 		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="32 422 56 56">
+		<Widget type="ImageBox" skin="ImageBox" position="32 458 56 56">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="sr-editor.png"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 426 404 50" align="Left" name="BtnTrackEditor">
+		<Widget type="Button" skin="Button" position="108 462 404 50" align="Left" name="BtnTrackEditor">
 			<Property key="Caption" value="#{TrackEditor}"/>
 			<Property key="Colour" value="0.7 0.9 0.9"/>
 			<Property key="TextColour" value="0.7 1.0 1.0"/>
@@ -450,19 +450,19 @@
 			<UserString key="tip" value="#{CollectInfo}"/>
 		</Widget>
 
-		<!-- Career Button (NEW - Enabled) -->
-		<Widget type="ImageBox" skin="ImageBox" position="532 380 56 56">
+		<!-- Career Button (NEW - Disabled, accessible only from main menu) -->
+		<Widget type="ImageBox" skin="ImageBox" position="532 380 56 56" Visible="false">
 			<Property key="ImageCoord" value="768 256 128 128"/>
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="592 372 436 72" name="PanGames7">
+		<Widget type="ImageBox" skin="ImageBox" position="592 372 436 72" name="PanGames7" Visible="false">
 			<Property key="Colour" value="1 0.6 0.6"/>
 			<Property key="ImageTexture" value="menu_cur.png"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="608 384 404 50" align="Left" name="BtnGames7">
+		<Widget type="Button" skin="Button" position="608 384 404 50" align="Left" name="BtnGames7" Visible="false">
 			<Property key="Caption" value="#{Career}"/>
 			<Property key="Colour" value="1 0.6 0.6"/>
 			<Property key="TextColour" value="1 0.6 0.6"/>
@@ -527,11 +527,12 @@
 
 
 	<!-- Career Window (NEW) -->
-	<Widget type="Window" skin="WindowC" position="1768 156 1100 730" align="Center" layer="Overlapped" name="CareerWnd">
+	<Widget type="Window" skin="WindowC" position="844 156 1100 730" align="Center" layer="Overlapped" name="CareerWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="#{Career}"/>
 		<Property key="Alpha" value="0.7"/>
 		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="false"/>
 		<UserString key="NotSized" value="1"/>
 
 		<!-- Career Info Panel -->

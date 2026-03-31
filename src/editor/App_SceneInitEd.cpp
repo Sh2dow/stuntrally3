@@ -353,15 +353,19 @@ void App::LoadTrackEv()
 	//  🛣️ Road ~
 	CreateRoads();
 
-	
+
 	//  🚦 pace ~ ~
+#ifndef SR_EDITOR  // Skip pace notes (requires road)
 	Cam* cam = &mCams[0];  // todo: lod cam-
 	scn->pace[0] = new PaceNotes(pSet);
 	scn->pace[0]->Setup(mSceneMgr, cam->cam, scn->ter, gui->mGui, mWindow);
+#endif
 
 	//  🎗️ Trail
+#ifndef SR_EDITOR  // Skip trail (requires road)
 	if (pSet->trail_show)  // meh toggle vis fix
 		scn->CreateTrail(&mCams[0]);
+#endif
 
 	
 	//  📦 Objects

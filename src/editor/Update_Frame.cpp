@@ -413,6 +413,7 @@ void App::update( float dt )
 		(mWndEdObj && mWndEdObj->getVisible() && tabO == TABo_Objects) ||
 		(mWndEdit && mWndEdit->getVisible() && tab == TAB_Veget && st5 == 1);
 
+#ifndef SR_EDITOR  // Skip 3D preview when compositor is disabled
 	if (oldVis != vis && rt[RT_ObjPrv3D].nd)
 	{	oldVis = vis;
 		rt[RT_ObjPrv3D].nd->setVisible(vis);
@@ -429,6 +430,7 @@ void App::update( float dt )
 		{	gui->viewSc = gui->viewBox->injectObject(gui->viewMesh);
 			gui->updVegetInfo();
 	}*/	}
+#endif
 	
 	
 	//  🌧️ Update rain/snow - depends on camera
@@ -474,6 +476,8 @@ void App::update( float dt )
 
 	UpdateEnd(dt);  //^
 
+#ifndef SR_EDITOR  // Skip RTT update when compositor is disabled
 	UpdRnd2Tex();  // * *
+#endif
 
 }

@@ -175,11 +175,20 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 	const auto inp = TextureDefinitionBase::TEXTURE_INPUT;
 	//  cfg
 	const bool ed = edRtt > 0, edView = edRtt == 1, edTer = edRtt == 2,
-		//  force effects in ed preview cam
-		 refract = /*ed ? 1 :*/ pSet->g.water_refract,
-			ssao = edView ? 1 : pSet->g.ssao, hdr = pSet->g.hdr,
+		//  force effects in ed preview cam, disable in editor
+		#ifndef SR_EDITOR
+		 refract = pSet->g.water_refract,
+			ssao = edView ? 1 : pSet->g.ssao,
+			hdr = pSet->g.hdr,
 			lens = edView ? 1 : pSet->g.lens_flare,
-		sunbeams = edView ? 1 : pSet->g.sunbeams,
+			sunbeams = edView ? 1 : pSet->g.sunbeams,
+		#else
+		 refract = false,  // Editor doesn't support water refraction yet
+			ssao = false,  // SSAO causes issues in editor
+			hdr = false,  // Editor doesn't support HDR yet
+			lens = false,  // Lens flare causes issues
+			sunbeams = false,  // Sunbeams causes issues
+		#endif
 		
 		combine = view >= nCombine,  // split, last
 		createRTT = ed ? 0 : splits > 1,  // for split
@@ -264,6 +273,8 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 	//  node  🪩 New Refract  * * *
 	//------------------------------------------------------------------------------------------------------------------------------------------
 	//  Create full compositor when refraction OR any effect (SSAO, lens, sunbeams, HDR) is enabled
+	//  Editor uses simple compositor without effects
+	
 	if (refract || ssao || lens || sunbeams || hdr)
 	{
 		if (createRTT)
