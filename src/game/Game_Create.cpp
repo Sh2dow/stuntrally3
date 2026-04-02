@@ -14,6 +14,8 @@
 #include "CData.h"
 #include "TracksXml.h"
 #include "CInput.h"
+#include "Career.h"
+#include "EventMode.h"
 
 #include <list>
 #include <filesystem>
@@ -89,6 +91,8 @@ void App::Load()
 	sc = scn->sc;
 	
 	pGame->ReloadSimData();
+	CareerManager::Get().Initialize();
+	EventManager::Get().Initialize(pGame);
 
 
 	mRoot = mGraphicsSystem->getRoot();

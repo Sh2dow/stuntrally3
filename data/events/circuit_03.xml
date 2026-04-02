@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Circuit" id="circuit_03" name="Terminal Loop" desc="Airport multi-lap circuit" track="Jng1-Curly" reversed="false" laps="4" timeLimit="0" difficulty="4" rewardCash="1500" rewardRep="350" requiredRep="3500">
+  <opponents>
+    <car>FR4</car>
+    <car>H1</car>
+    <car>H2</car>
+    <car>HR</car>
+    <car>R1</car>
+  </opponents>
+</event>

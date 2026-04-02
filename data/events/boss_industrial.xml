@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Boss" id="boss_industrial" name="Boss: Razor" desc="Defeat Razor in the industrial district" track="Jng1-Curly" reversed="false" laps="1" timeLimit="0" difficulty="4" rewardCash="3000" rewardRep="750" requiredRep="500">
+  <opponents>
+    <car>FR4</car>
+  </opponents>
+</event>

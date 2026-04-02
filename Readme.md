@@ -59,6 +59,7 @@ The old assumption that `A*/DATA.BIN` is a flat stream of 32-byte vertices was w
 | `tools/RunCarbonValidationPackParallel.ps1` | Parallel validation builder | Splits a large section set into chunked packs and runs multiple Blender workers in parallel |
 | `tools/RunCarbonMergeValidationPacks.ps1` | Merged slice builder | Merges selected chunked validation packs back into one larger candidate slice |
 | `tools/RunCarbonRoadNetworkOverlay.ps1` | Road overlay helper | Opens an existing validation/merged pack and overlays `WRoadNetwork.obj` into a dedicated collection |
+| `tools/RunCarbonSliceToSR3.ps1` | SR3 intermediate exporter | Exports a validation/merged Blender scene to SR3M mesh intermediate and can optionally invoke `SR3TrackBuilder` |
 | `tools/RunCarbonUnifiedToolkit.ps1` | Primary wrapper | One-command launcher with local default paths for the current Carbon workflow |
 | `tools/CarbonUnifiedToolkit.py` | Primary | One entry point that merges raw Binarius sections, modelulator output, AssetDumper DAEs, and optional PNG textures into one normalized bundle |
 | `tools/CarbonTrackConverter.py` | Research | Inventories chunked Carbon streaming sections and writes a JSON manifest |
@@ -205,6 +206,17 @@ powershell -ExecutionPolicy Bypass -File tools\RunCarbonRoadNetworkOverlay.ps1 -
 ```
 
 This writes a sibling `_roads.blend` file with the imported `WRoadNetwork.obj` in the `Carbon_RoadNetwork` collection.
+
+To export a merged/validated Blender scene into an SR3 intermediate package:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\RunCarbonSliceToSR3.ps1 -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -TrackName CarbonWholeMap
+```
+
+This writes:
+- `intermediate\track.mesh` as `SR3M`
+- `slice_to_sr3_manifest.json`
+- optionally `generated_track\heightmap.f32`, `road.xml`, and `scene.xml` if `-RunTrackBuilder` is passed
 
 Current limitation:
 - `70` texture refs remain unresolved in the current `L5RA` run and stay recorded in `unified_manifest.json`

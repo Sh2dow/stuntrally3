@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Boss" id="boss_hills" name="Boss: Darius" desc="Final showdown on West Coast Carbon" track="W2C" reversed="false" laps="1" timeLimit="0" difficulty="5" rewardCash="10000" rewardRep="5000" requiredRep="5000">
+  <opponents>
+    <car>S8</car>
+  </opponents>
+</event>

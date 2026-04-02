@@ -50,6 +50,13 @@ public:
 	void InitMainMenu();
 	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
 	void ShowCareerWnd();  // NEW Career window
+	void btnCareerBack(WP);  // Career back button
+	void btnCareerDistrict(WP);
+	void btnCareerStart(WP);
+	void UpdateCareerSelection(int districtId);
+
+	int selectedCareerDistrict = 1;
+	std::string selectedCareerEvent;
 
 	Cmb simList;  void comboSim(CMB);
 	Cmb diffList;  void comboDiff(CMB);

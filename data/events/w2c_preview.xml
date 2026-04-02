@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event type="Sprint" id="w2c_preview" name="W2C Preview Run" desc="Test the West Coast Carbon port in Career mode" track="W2C" reversed="false" laps="1" timeLimit="0" difficulty="2" rewardCash="750" rewardRep="150" requiredRep="0">
+  <opponents>
+    <car>FN</car>
+    <car>LF</car>
+  </opponents>
+</event>

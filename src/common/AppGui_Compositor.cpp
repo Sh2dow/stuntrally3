@@ -185,7 +185,7 @@ TextureGpu* AppGui::CreateCompositor(int edRtt, int view, int splits, float widt
 		#else
 		 refract = false,  // Editor doesn't support water refraction yet
 			ssao = false,  // SSAO causes issues in editor
-			hdr = false,  // Editor doesn't support HDR yet
+			hdr = pSet->g.hdr,  // HDR is now enabled in editor
 			lens = false,  // Lens flare causes issues
 			sunbeams = false,  // Sunbeams causes issues
 		#endif
@@ -909,6 +909,10 @@ void AppGui::SetupCompositors()
 	const bool hdr = pSet->g.hdr;
 	if( hdr && mWindow->getSampleDescription().isMultisample() )
 		Demo::HdrUtils::init( mWindow->getSampleDescription().getColourSamples() );
+
+	//  🌅 Initialize HDR bloom threshold with proper min/full values
+	if (hdr)
+		Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh + 0.5f);
 	
 #ifndef SR_EDITOR  // game
 	const int views = pSet->game.local_players;

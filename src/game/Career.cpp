@@ -2,6 +2,7 @@
 #include "Career.h"
 #include "tinyxml2.h"
 #include "Def_Str.h"
+#include "paths.h"
 
 using namespace tinyxml2;
 
@@ -305,7 +306,7 @@ bool CareerManager::Initialize()
     };
     
     // Load default career data
-    LoadCareer("data/career/career.xml");
+    LoadCareer(PATHS::Data() + "/career/career.xml");
     
     return true;
 }
@@ -320,6 +321,11 @@ void CareerManager::Shutdown()
 
 bool CareerManager::LoadCareer(const std::string& file)
 {
+    districts.clear();
+    districtMap.clear();
+    rivals.clear();
+    rivalMap.clear();
+
     XMLDocument doc;
     XMLError er = doc.LoadFile(file.c_str());
     if (er != XML_SUCCESS) return false;
@@ -443,7 +449,10 @@ bool CareerManager::LoadCareer(const std::string& file)
     }
     
     // Try to load player progress
-    progress.LoadFromXml("data/career/save.xml");
+    progress.LoadFromXml(PATHS::UserConfigDir() + "/career_save.xml");
+    if (progress.currentDistrict == 0 && !districts.empty())
+        progress.currentDistrict = districts.front().id;
+    CheckUnlocks();
     
     return true;
 }

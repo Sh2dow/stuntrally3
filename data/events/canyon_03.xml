@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Canyon Duel" id="canyon_03" name="West Coast Duel" desc="Long-form duel on the Carbon world port" track="W2C" reversed="false" laps="0" timeLimit="0" difficulty="5" rewardCash="2500" rewardRep="700" requiredRep="5000" canyonTarget="88">
+  <opponents>
+    <car>S8</car>
+  </opponents>
+</event>

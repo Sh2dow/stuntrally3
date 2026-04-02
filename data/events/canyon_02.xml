@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Canyon Duel" id="canyon_02" name="Harbor Duel" desc="Canyon-style duel by the waterfront" track="Test1-Flat" reversed="false" laps="0" timeLimit="0" difficulty="4" rewardCash="1700" rewardRep="420" requiredRep="2200" canyonTarget="82">
+  <opponents>
+    <car>H1</car>
+  </opponents>
+</event>

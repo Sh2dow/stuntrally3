@@ -21,6 +21,7 @@ Carbon-style district and rival definitions
                 <event>sprint_01</event>
                 <event>circuit_01</event>
                 <event>drift_01</event>
+                <event>w2c_preview</event>
             </events>
             <bossEvent>boss_downtown</bossEvent>
         </district>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Drift" id="drift_02" name="Pier Drift" desc="Drift along the harbor roads" track="Test1-Flat" reversed="false" laps="0" timeLimit="0" difficulty="4" rewardCash="1100" rewardRep="260" requiredRep="1800" driftTarget="6500">
+  <opponents />
+</event>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Sprint" id="sprint_02" name="Factory Sprint" desc="Sprint through the factory district" track="Jng1-Curly" reversed="false" laps="1" timeLimit="0" difficulty="3" rewardCash="700" rewardRep="180" requiredRep="500">
+  <opponents>
+    <car>LF</car>
+    <car>MO</car>
+    <car>ES</car>
+  </opponents>
+</event>

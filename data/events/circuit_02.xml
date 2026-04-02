@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Circuit" id="circuit_02" name="Industrial Circuit" desc="Three laps through industrial roads" track="Jng1-Curly" reversed="false" laps="3" timeLimit="0" difficulty="3" rewardCash="1200" rewardRep="280" requiredRep="700">
+  <opponents>
+    <car>MO</car>
+    <car>ES</car>
+    <car>FR4</car>
+    <car>H1</car>
+  </opponents>
+</event>

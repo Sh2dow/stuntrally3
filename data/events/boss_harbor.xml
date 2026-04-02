@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Boss" id="boss_harbor" name="Boss: Kaze" desc="Defeat Kaze at the harbor" track="Test1-Flat" reversed="false" laps="1" timeLimit="0" difficulty="4" rewardCash="4000" rewardRep="1000" requiredRep="1500">
+  <opponents>
+    <car>HI</car>
+  </opponents>
+</event>

@@ -5,9 +5,12 @@
 #include "car.h"
 #include "tinyxml2.h"
 #include "Def_Str.h"
+#include "paths.h"
 #include <OgreStringConverter.h>
+#include <filesystem>
 
 using namespace tinyxml2;
+namespace fs = std::filesystem;
 
 
 //--------------------------------------------------------------------------------------------------------------------------
@@ -1052,7 +1055,7 @@ bool EventManager::Initialize(GAME* game)
 	pGame = game;
 	
 	// Load event database
-	LoadEventDatabase("data/events/");
+	LoadEventDatabase(PATHS::Data() + "/events/");
 	
 	return true;
 }
@@ -1158,17 +1161,33 @@ void EventManager::EndCurrentEvent()
 
 bool EventManager::LoadEventDatabase(const std::string& path)
 {
-	// Load all event XML files from directory
-	// TODO: Implement file enumeration and loading
-	
-	// Example: Load single event
-	EventConfig cfg;
-	if (cfg.LoadFromXml(path + "boss_01.xml"))
+	eventDatabase.clear();
+	unlockedEvents.clear();
+
+	fs::path dir(path);
+	if (!fs::exists(dir) || !fs::is_directory(dir))
+		return false;
+
+	std::vector<fs::path> files;
+	for (const auto& entry : fs::directory_iterator(dir))
 	{
-		eventDatabase[cfg.id] = cfg;
-		unlockedEvents.push_back(cfg.id);
+		if (entry.is_regular_file() && entry.path().extension() == ".xml")
+			files.push_back(entry.path());
 	}
-	
+
+	std::sort(files.begin(), files.end());
+
+	for (const auto& file : files)
+	{
+		EventConfig cfg;
+		if (!cfg.LoadFromXml(file.string()) || cfg.id.empty())
+			continue;
+
+		eventDatabase[cfg.id] = cfg;
+		if (cfg.requiredRep <= playerRep)
+			unlockedEvents.push_back(cfg.id);
+	}
+
 	return !eventDatabase.empty();
 }
 

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Drift" id="drift_01" name="Drift Battle" desc="Score points by drifting through zones" track="Test1-Flat" reversed="false" laps="0" timeLimit="0" difficulty="3" rewardCash="750" rewardRep="200" requiredRep="150" driftTarget="5000">
+  <opponents />
+</event>

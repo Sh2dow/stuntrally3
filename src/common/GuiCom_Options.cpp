@@ -242,7 +242,6 @@ void CGuiCom::GuiInitGraphics()  // ? not yet: called on preset change with bGI 
 
 	ck= &ckLensFlare;		ck->Init("LensFlare",	&pSet->g.lens_flare);  // 🔆
 	ck= &ckSunbemas;		ck->Init("SunBeams",	&pSet->g.sunbeams);  // 🌄
-#ifndef SR_EDITOR  // game only - HDR crashes editor
 	ck= &ckHDR;				ck->Init("HDR",			&pSet->g.hdr);  CevC(Hdr);  // 🌅 HDR
 
 	//  🟢 Carbon HDR Bloom settings
@@ -250,7 +249,6 @@ void CGuiCom::GuiInitGraphics()  // ? not yet: called on preset change with bGI 
 	sv= &svHdrBloomThresh;	sv->Init("HdrBloomThresh",&pSet->hdr_bloom_thresh, 0.1f,3.0f, 0.1f); SevC(HdrBloom);
 	sv= &svHdrExposure;		sv->Init("HdrExposure",	&pSet->hdr_exposure, 0.0f,10.0f, 1.0f); SevC(HdrExposure);
 	sv= &svHdrAdapt;		sv->Init("HdrAdapt",	&pSet->hdr_adapt_speed, 0.0f,10.0f, 0.1f); SevC(HdrAdapt);
-#endif
 
 	//  🟢 Legacy Effects
 	ck= &ckAllEffects;		ck->Init("AllEffects",	&pSet->all_effects);  CevC(AllEffects);
@@ -377,7 +375,8 @@ void CGuiCom::chkHdr(Ck*)
 void CGuiCom::slHdrBloom(SV*)
 {
 	//  Update HDR bloom parameters at runtime when user moves sliders
-	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh);
+	//  fullColourThreshold = minThreshold + 0.5 to ensure proper fade range
+	Demo::HdrUtils::setBloomThreshold(pSet->hdr_bloom_thresh, pSet->hdr_bloom_thresh + 0.5f);
 	Demo::HdrUtils::setBloomIntensity(pSet->hdr_bloom_int);
 }
 

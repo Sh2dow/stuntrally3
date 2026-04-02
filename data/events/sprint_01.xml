@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Sprint" id="sprint_01" name="Highway Sprint" desc="Point-to-point race through the city" track="Test1-Flat" reversed="false" laps="1" timeLimit="0" difficulty="2" rewardCash="500" rewardRep="100" requiredRep="0">
+  <opponents>
+    <car>FN</car>
+    <car>LF</car>
+    <car>MO</car>
+  </opponents>
+</event>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Canyon Run" id="canyon_run_01" name="Airport Time Attack" desc="Single canyon-style run through the airport district" track="Jng1-Curly" reversed="false" laps="1" timeLimit="0" difficulty="4" rewardCash="1300" rewardRep="300" requiredRep="3800" canyonTarget="70">
+  <opponents />
+</event>

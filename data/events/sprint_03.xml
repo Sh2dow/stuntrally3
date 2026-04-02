@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Sprint" id="sprint_03" name="Harbor Sprint" desc="Sprint along the waterfront" track="Test1-Flat" reversed="false" laps="1" timeLimit="0" difficulty="3" rewardCash="900" rewardRep="220" requiredRep="1500">
+  <opponents>
+    <car>MO</car>
+    <car>ES</car>
+    <car>FR4</car>
+    <car>H1</car>
+  </opponents>
+</event>

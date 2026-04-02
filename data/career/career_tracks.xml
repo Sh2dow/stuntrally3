@@ -112,8 +112,9 @@ Maps real tracks to career districts and events
             <event id="underground_3" type="canyon" track="Grc13-Acropolis" laps="0" difficulty="5" canyonTarget="92" rewardCash="1800" rewardRep="360"/>
             <event id="underground_4" type="drift" track="Uni7-GlassStairs" laps="0" difficulty="5" driftTarget="10000" rewardCash="1400" rewardRep="280"/>
             <event id="underground_5" type="ultimate" track="Isl14-Ocean" laps="3" difficulty="5" rewardCash="5000" rewardRep="10000"/>
+            <event id="underground_6" type="ultimate" track="W2C" laps="1" difficulty="5" rewardCash="7500" rewardRep="15000"/>
         </events>
-        <boss name="The King" car="OT" track="Grc13-Acropolis" difficulty="5" rewardCash="25000" rewardRep="10000"/>
+        <boss name="The King" car="OT" track="W2C" difficulty="5" rewardCash="25000" rewardRep="10000"/>
     </district>
 
 </careerTracks>

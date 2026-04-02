@@ -230,8 +230,22 @@ class HeightmapGenerator:
     
     def _smooth_heightmap(self, heightmap: np.ndarray, iterations: int = 1) -> np.ndarray:
         """Apply Gaussian-like smoothing"""
-        from scipy.ndimage import gaussian_filter
-        return gaussian_filter(heightmap, sigma=1.0)
+        try:
+            from scipy.ndimage import gaussian_filter
+            return gaussian_filter(heightmap, sigma=1.0)
+        except ImportError:
+            pass
+
+        # Fallback: separable 3x3 box blur repeated a few times.
+        smoothed = heightmap.astype(np.float32, copy=True)
+        for _ in range(max(1, iterations)):
+            padded = np.pad(smoothed, 1, mode='edge')
+            smoothed = (
+                padded[:-2, :-2] + padded[:-2, 1:-1] + padded[:-2, 2:] +
+                padded[1:-1, :-2] + padded[1:-1, 1:-1] + padded[1:-1, 2:] +
+                padded[2:, :-2] + padded[2:, 1:-1] + padded[2:, 2:]
+            ) / 9.0
+        return smoothed
 
 
 # ============================================================================

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Boss" id="boss_downtown" name="Boss: Wolf" desc="Defeat Wolf downtown" track="Test1-Flat" reversed="false" laps="1" timeLimit="0" difficulty="3" rewardCash="2000" rewardRep="500" requiredRep="0">
+  <opponents>
+    <car>R3</car>
+  </opponents>
+</event>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Canyon Duel" id="canyon_01" name="Factory Canyon" desc="Industrial canyon duel" track="Jng1-Curly" reversed="false" laps="0" timeLimit="0" difficulty="4" rewardCash="1500" rewardRep="400" requiredRep="1000" canyonTarget="75">
+  <opponents>
+    <car>FR4</car>
+  </opponents>
+</event>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Drift" id="drift_03" name="West Coast Drift" desc="High-speed drift challenge on W2C" track="W2C" reversed="false" laps="0" timeLimit="0" difficulty="5" rewardCash="1800" rewardRep="500" requiredRep="5200" driftTarget="12000">
+  <opponents />
+</event>

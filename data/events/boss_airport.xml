@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Boss" id="boss_airport" name="Boss: Jax" desc="Defeat Jax at the airport" track="Jng1-Curly" reversed="false" laps="1" timeLimit="0" difficulty="5" rewardCash="5000" rewardRep="1500" requiredRep="3000">
+  <opponents>
+    <car>H2</car>
+  </opponents>
+</event>

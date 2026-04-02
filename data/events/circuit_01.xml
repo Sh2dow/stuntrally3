@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Circuit" id="circuit_01" name="City Circuit" desc="Multi-lap circuit race" track="Jng1-Curly" reversed="false" laps="3" timeLimit="0" difficulty="3" rewardCash="1000" rewardRep="250" requiredRep="200">
+  <opponents>
+    <car>ES</car>
+    <car>FR4</car>
+    <car>H1</car>
+    <car>H2</car>
+    <car>HR</car>
+  </opponents>
+</event>

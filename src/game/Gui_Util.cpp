@@ -78,17 +78,15 @@ void CGui::toggleGui(bool toggle)
 
 	// Career window is special - separate from main menu hierarchy
 	// Show Career window when in MN_Career mode, hide all other main windows
-	if (app->mWCareer)
+	bool showCareer = (app->mWCareer && mnu == MN_Career);
+	app->mWCareer->setVisible(showCareer);
+	
+	// Hide main menu windows when Career is shown
+	if (showCareer)
 	{
-		bool showCareer = (mnu == MN_Career);
-		app->mWCareer->setVisible(showCareer);
-		// When showing career, hide all other main menu windows
-		if (showCareer)
-		{
-			app->mWMainMenu->setVisible(false);
-			app->mWMainSetup->setVisible(false);
-			app->mWMainGames->setVisible(false);
-		}
+		app->mWMainMenu->setVisible(false);
+		app->mWMainSetup->setVisible(false);
+		app->mWMainGames->setVisible(false);
 	}
 	else
 	{

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<event type="Canyon Run" id="canyon_run_02" name="West Coast Run" desc="Full-map canyon run on the Carbon world port" track="W2C" reversed="false" laps="1" timeLimit="0" difficulty="5" rewardCash="2200" rewardRep="600" requiredRep="5500" canyonTarget="74">
+  <opponents />
+</event>

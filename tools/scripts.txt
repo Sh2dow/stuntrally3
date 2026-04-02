@@ -1,0 +1,163 @@
+Debuggin SR-Editor:
+  
+$exe = 'D:\Repos\Games\OTHER GAMES\stuntrally3\bin\Release\SR-Editor3.exe'; $wd = 'D:\Repos\Games\OTHER GAMES\stuntrally3\bin\Release'; $p = Start-Process -FilePath $exe -WorkingDirectory $wd -PassThru;
+  │ $p.WaitForExit(); Write-Output "EXIT=$($p.ExitCode)"; Get-Content -Path 'D:\Users\sh2dow\AppData\Roaming\stuntrally3\Ogre_ed.log' | Select-Object -Last 10
+
+
+
+Scaffolding W2C, generating SR3 format tracks:
+
+
+
+.\RunCarbonSectionBlendBatch.ps1 -SectionNumbers $sections -UnifiedRoot 'D:\Repos\Games\NFS-ModTools\AssetDumper\output\L5RA_unified' -HideModelulatorExternal
+
+
+$manifest = Get-Content "D:\Repos\Games\NFS-ModTools\AssetDumper\output\L5RA_unified\unified_manifest.json" -Raw | ConvertFrom-Json;
+$sections = (1001..1100 | Where-Object { $_ -in $manifest.sections.section_number }) -join ',';
+powershell -ExecutionPolicy Bypass -File "D:\Repos\Games\OTHER GAMES\stuntrally3\tools\RunCarbonValidationPack.ps1" -SectionNumbers $sections -PackName sections_1001_1100 -HideAssetDumperReference
+
+
+$manifest = Get-Content "D:\Repos\Games\NFS-ModTools\AssetDumper\output\L5RA_unified\unified_manifest.json" -Raw | ConvertFrom-Json;
+$sections = ($manifest.sections.section_number | Sort-Object -Unique) -join ',';
+powershell -ExecutionPolicy Bypass -File "D:\Repos\Games\OTHER GAMES\stuntrally3\tools\RunCarbonValidationPack.ps1" -SectionNumbers $sections -PackName sections_all -HideAssetDumperReference
+
+
+.\RunCarbonRoadNetworkOverlay.ps1 -BlendPath "D:\Repos\Games\NFS-ModTools\AssetDumper\output\L5RA_unified\validation_packs_parallel\sections_bridge\merged\slice_0001_0003\slice_0001_0003.blend"
+
+.\RunCarbonMergeValidationPacks.ps1 -ChunkIndices ((1..38) -join ',') -PackName whole_map -SkipColladaExport
+
+.\RunCarbonRoadNetworkOverlay.ps1 -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map.blend"
+
+.\RunCarbonRoadNetworkOverlay.ps1 -RoadObj "D:\Repos\Games\NFS-ModTools\AssetDumper\output\modelulator\RoadNetworks\WRoadNetwork.obj" -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map.blend" -OutBlend "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -Translate @(-1344.130859375, -0.00146484375, 540.1627197265625)
+
+
+$offset = @(-1344.130859375, -0.00146484375, 540.1627197265625)
+.\RunCarbonRoadNetworkOverlay.ps1 -RoadObj "D:\Repos\Games\NFS-ModTools\AssetDumper\output\modelulator\RoadNetworks\WRoadNetwork.obj" -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map.blend" -OutBlend "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -Translate $offset
+
+
+
+Built the exporter.
+
+New entry point:
+D:/Repos/Games/OTHER%20GAMES/stuntrally3/tools/RunCarbonSliceToSR3.ps1
+
+It now works end-to-end:
+
+- exports a real SR3M mesh from the Blender pack
+- writes slice_to_sr3_manifest.json
+- optionally runs D:/Repos/Games/OTHER%20GAMES/stuntrally3/tools/SR3TrackBuilder.py to generate heightmap.f32, heightmap2.f32, road.xml, and scene.xml
+
+I also patched D:/Repos/Games/OTHER%20GAMES/stuntrally3/tools/SR3TrackBuilder.py to stop requiring SciPy.
+
+For your whole map, run:
+  
+.\RunCarbonSliceToSR3.ps1 -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -TrackName CarbonWholeMap -OutputRoot "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\sr3_export" -RunTrackBuilder
+
+
+Added the track files and registration for W2C.
+
+Created:
+
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/tools/GenerateTrackMaterialsIni.py
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/tracks/W2C/materials.ini
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/tracks/W2C.xml
+
+Updated:
+
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/tracks/TrackDatabase.xml
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/career/career_tracks.xml
+
+Details:
+
+- materials.ini was generated from the W2C/textures folder and currently indexes all 3763 textures with simple opaque/alpha hints.
+- W2C is now registered as a track in the track database.
+- career_tracks.xml now references W2C in the Underground district and uses it for the final boss track.
+
+Useful command if you want to regenerate materials later:
+
+python "D:\Repos\Games\OTHER GAMES\stuntrally3\tools\GenerateTrackMaterialsIni.py" "D:\Repos\Games\OTHER GAMES\stuntrally3\data\tracks\W2C"
+
+One important caveat: the runtime career loader currently reads D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/career/career.xml, while D:/Repos/Games/OTHER%20GAMES/
+stuntrally3/data/career/career_tracks.xml looks like a separate track-assignment sheet. So your requested file is updated, but if you want W2C to actually show up in the
+current playable career flow, the next step is wiring it through the real event/career path too.
+
+
+
+
+
+.\RunCarbonObjectScaffold.ps1 -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -TrackId W2C -OutputRoot "D:\Repos\Games\OTHER GAMES\stuntrally3\data\tracks\W2C\objects_scaffold" -ChunkSize 1200 -MaxChunks 1
+
+Full whole-map scaffold:
+ 
+.\RunCarbonObjectScaffold.ps1 -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -TrackId W2C -OutputRoot "D:\Repos\Games\OTHER GAMES\stuntrally3\data\tracks\W2C\objects_scaffold" -ChunkSize 1200
+
+After external .mesh conversion, apply the generated placements into scene.xml:
+
+.\RunApplyCarbonObjectScaffold.ps1" -TrackId W2C
+
+
+The scaffold stage is complete.
+
+What you have now:
+
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/tracks/W2C/objects_scaffold/objects_scaffold_manifest.json
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/tracks/W2C/objects_scaffold/scene_objects_scaffold.xml
+- D:/Repos/Games/OTHER%20GAMES/stuntrally3/data/tracks/W2C/objects_scaffold/dae
+
+What remains:
+
+1. Convert each dae/w2c_chunk_XXXX.dae to w2c_chunk_XXXX.mesh
+2. Put those .mesh files into data/models/objectsC/
+3. Apply the generated <objects> block into data/tracks/W2C/scene.xml
+
+Exact apply command:
+
+.\RunApplyCarbonObjectScaffold.ps1 -TrackId W2C
+
+
+
+Yes, that tree is the right source. It is not a built tool yet; it is the OgreMeshTool source inside the Ogre root.
+
+Use the Ogre root, not Tools\MeshTool directly:
+
+- Ogre root: D:/Users/sh2dow/.conan2/p/ogre31836e56c68908/s
+- MeshTool source: D:/Users/sh2dow/.conan2/p/ogre31836e56c68908/s/Tools/MeshTool
+
+Exact build commands:
+
+cmake -S "D:\Users\sh2dow\.conan2\p\ogre31836e56c68908\s" -B "D:\Users\sh2dow\.conan2\p\ogre31836e56c68908\build-meshtool" -G "Visual Studio 17 2022" -A x64 -DOGRE_BUILD_TOOLS=ON -DOGRE_BUILD_SAMPLES=OFF -DOGRE_BUILD_COMPONENT_CSHARP=OFF -DOGRE_BUILD_COMPONENT_JAVA=OFF -DOGRE_BUILD_PLUGIN_ASSIMP=OFF -DRapidjson_INCLUDE_DIR="D:\Users\sh2dow\.conan2\p\rapidf7a3355ba53c4\p\include" -DCMAKE_INCLUDE_PATH="D:\Users\sh2dow\.conan2\p\rapidf7a3355ba53c4\p\include"
+
+cmake --build "D:\Users\sh2dow\.conan2\p\ogre31836e56c68908\build-meshtool" --config Release --target OgreMeshTool
+
+cmake --build "D:\Users\sh2dow\.conan2\p\ogre31836e56c68908\build-meshtool" --config Release --target RenderSystem_NULL
+
+.\RunConvertCarbonObjectScaffold.ps1 -TrackId W2C -First 1 -MaxCount 1 -ObjectsDir "$env:TEMP\w2c_objects_smoke" -Overwrite
+
+
+
+The corrected pipeline works now.
+
+Important: your current W2C\objects_scaffold is the old DAE version. Rerun the scaffold once so it writes mesh_xml instead.
+
+1. Regenerate scaffold as Ogre mesh.xml
+
+.\RunCarbonObjectScaffold.ps1 -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -TrackId W2C -OutputRoot "D:\Repos\Games\OTHER GAMES\stuntrally3\data\tracks\W2C\objects_scaffold" -ChunkSize 1200
+
+2. Convert all 209 chunks to .mesh
+
+.\RunConvertCarbonObjectScaffold.ps1 -TrackId W2C -MeshToolExe "D:\Users\sh2dow\.conan2\p\ogre31836e56c68908\build-meshtool\bin\release\OgreMeshTool.exe" -ObjectsDir "D:\Repos\Games\OTHER GAMES\stuntrally3\data\models\objectsC" -Overwrite
+
+3. If needed, reapply placements to scene.xml
+
+.\RunApplyCarbonObjectScaffold.ps1 -TrackId W2C
+
+
+
+
+.\RunCarbonObjectScaffold.ps1 -BlenderExe "D:\Development\Blender K-Cycles\blender.exe" -BlendPath "F:\NFS\NFSC_Mods\W2C\Blender\validation_packs_parallel\sections_bridge\merged\whole_map\whole_map_roads.blend" -TrackId W2C -OutputRoot "D:\Repos\Games\OTHER GAMES\stuntrally3\data\tracks\W2C\objects_scaffold" -ChunkSize 1200
+
+.\RunConvertCarbonObjectScaffold.ps1 -TrackId W2C -MeshToolExe "D:\Users\sh2dow\.conan2\p\ogre31836e56c68908\build-meshtool\bin\release\OgreMeshTool.exe" -ObjectsDir "D:\Repos\Games\OTHER GAMES\stuntrally3\data\models\objectsC" -Overwrite
+
+.\RunApplyCarbonObjectScaffold.ps1 -TrackId W2C
+
+

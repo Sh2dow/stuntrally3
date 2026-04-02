@@ -8,6 +8,7 @@
 #include "CScene.h"
 #include "settings.h"
 #include "Career.h"
+#include "EventMode.h"
 
 #include <OgreRoot.h>
 #include <OgreOverlay.h>
@@ -90,6 +91,26 @@ void CGui::InitMainMenu()
 	wnd = app->mWMainGames;  w = wnd->getSize();
 	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
+	// Center Career window
+	wnd = app->mWCareer;  if (wnd) { w = wnd->getSize();
+		wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f); }
+
+	// Career back button
+	Btn btnCareerBack = fBtn("BtnCareerBack");
+	if (btnCareerBack)
+		btnCareerBack->eventMouseButtonClick += newDelegate(this, &CGui::btnCareerBack);
+
+	Btn btnCareerStart = fBtn("BtnStartCareer");
+	if (btnCareerStart)
+		btnCareerStart->eventMouseButtonClick += newDelegate(this, &CGui::btnCareerStart);
+
+	for (i=0; i < 10; ++i)
+	{
+		Btn btnDistrict = fBtn("BtnDistrict" + toStr(i));
+		if (btnDistrict)
+			btnDistrict->eventMouseButtonClick += newDelegate(this, &CGui::btnCareerDistrict);
+	}
+
 
 	//  Difficulty  ---
 	Cmb(diffList, "DiffList", comboDiff);
@@ -122,13 +143,15 @@ void CGui::InitMainMenu()
 //----------------------------------------------------------------------------------------------------------------
 void CGui::ShowCareerWnd()
 {
+	auto& career = CareerManager::Get();
+
 	// Update career info
 	Ed edInfo = fEd("edCareerInfo");
 	if (edInfo)
 	{
-		std::string info = "#{CareerDesc}\n\n";
-		info += "#{CareerInstructions}";
-		edInfo->setCaption(TR(info));
+		std::string info = "Career mode\n\n";
+		info += "Select a district, then launch one of its unlocked events.";
+		edInfo->setCaption(info);
 	}
 
 	// Update player stats
@@ -136,11 +159,11 @@ void CGui::ShowCareerWnd()
 	if (edStats)
 	{
 		std::string stats;
-		stats += "#{Level}: " + toStr(CareerManager::Get().GetLevel()) + "\n";
-		stats += "#{Reputation}: " + toStr(CareerManager::Get().GetProgress().reputation) + "\n";
-		stats += "#{Cash}: $" + toStr(CareerManager::Get().GetProgress().cash) + "\n";
-		stats += "\n#{BossesDefeated}: " + toStr(CareerManager::Get().GetProgress().bossesDefeated) + "/10\n";
-		stats += "#{DistrictsComplete}: " + toStr(0) + "/10";  // TODO: count complete districts
+		stats += "Level: " + toStr(career.GetLevel()) + "\n";
+		stats += "Reputation: " + toStr(career.GetProgress().reputation) + "\n";
+		stats += "Cash: $" + toStr(career.GetProgress().cash) + "\n";
+		stats += "\nBosses defeated: " + toStr(career.GetProgress().bossesDefeated) + "/10\n";
+		stats += "Districts complete: " + toStr(0) + "/10";  // TODO: count complete districts
 		edStats->setCaption(stats);
 	}
 
@@ -150,17 +173,17 @@ void CGui::ShowCareerWnd()
 		Btn btn = fBtn("BtnDistrict" + toStr(i));
 		if (btn)
 		{
-			const District* district = CareerManager::Get().GetDistrict(i + 1);
+			const District* district = career.GetDistrict(i + 1);
 			if (district)
 			{
-				bool unlocked = CareerManager::Get().CanAccessDistrict(district->id);
+				bool unlocked = career.CanAccessDistrict(district->id);
 				btn->setEnabled(unlocked);
 				btn->setCaption(toStr(i + 1) + ". " + district->name);
 
 				// Color based on completion
 				if (unlocked)
 				{
-					bool complete = CareerManager::Get().IsDistrictComplete(district->id);
+					bool complete = career.IsDistrictComplete(district->id);
 					if (complete)
 						btn->setTextColour(Colour(0.6, 1.0, 0.6));  // Green
 					else
@@ -173,6 +196,123 @@ void CGui::ShowCareerWnd()
 			}
 		}
 	}
+
+	if (!career.CanAccessDistrict(selectedCareerDistrict))
+	{
+		selectedCareerDistrict = 1;
+		for (int districtId = 1; districtId <= 10; ++districtId)
+		{
+			if (career.CanAccessDistrict(districtId))
+			{
+				selectedCareerDistrict = districtId;
+				break;
+			}
+		}
+	}
+
+	UpdateCareerSelection(selectedCareerDistrict);
+}
+
+//  🔙 Career Back button
+//----------------------------------------------------------------------------------------------------------------
+void CGui::btnCareerBack(WP)
+{
+	pSet->iMenu = MN1_Main;
+	app->gui->toggleGui(false);
+}
+
+void CGui::btnCareerDistrict(WP wp)
+{
+	if (!wp)
+		return;
+
+	std::string name = wp->getName().c_str();
+	auto pos = name.find("BtnDistrict");
+	if (pos == std::string::npos)
+		return;
+
+	int districtIndex = s2i(name.substr(pos + 11));
+	UpdateCareerSelection(districtIndex + 1);
+}
+
+void CGui::UpdateCareerSelection(int districtId)
+{
+	auto& career = CareerManager::Get();
+	const District* district = career.GetDistrict(districtId);
+	if (!district)
+		return;
+
+	selectedCareerDistrict = districtId;
+	selectedCareerEvent.clear();
+
+	auto events = career.GetDistrictEvents(districtId);
+	if (events.empty())
+		events = district->events;
+	if (!events.empty())
+		selectedCareerEvent = events.front();
+
+	Ed edInfo = fEd("edCareerInfo");
+	if (edInfo)
+	{
+		std::string info = district->name + "\n";
+		info += district->description + "\n\n";
+		info += "Events:\n";
+		for (const auto& eventId : events)
+		{
+			const EventConfig* cfg = EventManager::Get().GetEventConfig(eventId);
+			if (cfg)
+			{
+				info += " - " + cfg->name + " [" + cfg->trackId + "]";
+				if (eventId == selectedCareerEvent)
+					info += "  <Selected>";
+				info += "\n";
+			}
+			else
+			{
+				info += " - " + eventId + "\n";
+			}
+		}
+
+		if (events.empty())
+			info += " - No unlocked events\n";
+
+		edInfo->setCaption(info);
+	}
+
+	Btn btnStart = fBtn("BtnStartCareer");
+	if (btnStart)
+	{
+		bool canStart = false;
+		std::string caption = "Start Career";
+		if (!selectedCareerEvent.empty())
+		{
+			const EventConfig* cfg = EventManager::Get().GetEventConfig(selectedCareerEvent);
+			if (cfg)
+			{
+				canStart = true;
+				caption = "Start: " + cfg->name;
+			}
+		}
+		btnStart->setEnabled(canStart);
+		btnStart->setCaption(caption);
+	}
+}
+
+void CGui::btnCareerStart(WP)
+{
+	if (selectedCareerEvent.empty())
+		return;
+
+	const EventConfig* cfg = EventManager::Get().GetEventConfig(selectedCareerEvent);
+	if (!cfg || cfg->trackId.empty())
+		return;
+
+	pSet->gui.track = cfg->trackId;
+	pSet->gui.track_user = false;
+	pSet->gui.track_reversed = cfg->trackReversed;
+	gcom->sListTrack = cfg->trackId;
+	gcom->bListTrackU = 0;
+	btnNewGame(0);
 }
 
 
@@ -221,14 +361,6 @@ void CGui::btnMainMenu(WP wp)
 		case Games_Stats:      app->mWndStats->setVisible(true);  break;
 		case Games_Back:       pSet->iMenu = MN1_Setup;  break;
 		}
-		app->gui->toggleGui(false);
-		return;
-	}
-
-	// Career back button
-	if (wp == fBtn("BtnCareerBack"))
-	{
-		pSet->iMenu = MN1_Main;
 		app->gui->toggleGui(false);
 		return;
 	}

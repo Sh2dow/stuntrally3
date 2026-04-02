@@ -77,24 +77,25 @@ void CGui::UpdGamesTabVis()
 	//  img prv, detail
 	for (int i=0; i < ImgTrk; ++i)
 		imgTrk[i]->setVisible(0);
-	imgTrkBig->setVisible(collect);
-	txColDetail[0]->setVisible(collect);
-	txColDetail[1]->setVisible(collect);
+	imgTrkBig->setVisible(collect && !career);
+	txColDetail[0]->setVisible(collect && !career);
+	txColDetail[1]->setVisible(collect && !career);
 
 	//if (pSet->inRace == Race_Single)
 	//	BackFromChs();
-	
+
 	updGameInfo();
 	btChRestart->setVisible(false);
 
 
 	///  update track tab, for champs wnd
 	UString sCh =
-		collect ? TR("#C080FF#{Collection}") : career ? TR("#FF8080#{Career}") :
+		collect ? TR("#C080FF#{Collection}") :
 		chall ? TR("#C0C0FF#{Challenge}") :
 		champ ? TR("#B0FFB0#{Championship}") : TR("#FFC020#{Tutorial}");
 
-	bool notMain = gui && !(mnu == MN1_Main || mnu == MN1_Setup || mnu == MN1_Games);
+	// Career is a separate window, don't show the game window for it
+	bool notMain = gui && !(mnu == MN1_Main || mnu == MN1_Setup || mnu == MN1_Games || mnu == MN_Career);
 	bool vis = notMain && gc;
 	app->mWndGame->setVisible(vis);
 	if (vis)
